@@ -1,0 +1,102 @@
+.main-container {
+    display: flex;
+}
+
+
+main {
+    width: 100%;
+    padding: 20px 50px;
+    background-color: #F7F6F6;
+}
+
+
+.sidebar-container {
+    width: 20%;
+    height: 100vh;
+    color: #fff;
+
+}
+
+.sidebar-logo {
+    width: 70%;
+    margin: 0 10%;
+}
+
+.sidebar-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0px 5px 25px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    height: 40px;
+    color: black;
+
+}
+
+.sidebar-label {
+    margin-left: 30px;
+}
+
+.sidebar-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.active {
+    background: darkslateblue;
+    color: #fff;
+    padding: 5px 0px 5px 25px;
+    border-radius: 4px;
+
+}
+
+.active .sidebar-icon img {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar-account {
+    margin-top: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.sidebar-account .avatar {
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+
+}
+
+.sidebar-item:hover {
+    background-color: darkslateblue;
+    color: white;
+
+    .sidebar-icon {
+        filter: brightness(0) invert(1);
+    }
+
+}
+
+
+
+.sidebar-account-name {
+    font-size: 0.8em;
+    color: black;
+    margin-top: 5px;
+
+}
+
+.sidebar-account-email {
+    color: #777777;
+    font-size: 0.7em;
+    margin-top: -10px;
+}
+
+.icon__logout {
+    width: 9%;
+    height: 14%;
+    margin: 7% 0 0 -10px;
+    cursor: pointer;
+}

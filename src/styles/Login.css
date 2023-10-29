@@ -63,3 +63,21 @@
     background-color: #777;
     color: #000;
 }
+
+@media (max-width:739px) {
+    .container__form__login {
+        width: 90%;
+    }
+
+}
+
+@media (min-width:740px) and (max-width:1023px) {
+    .container__form__login {
+        width: 90%;
+    }
+
+    .logo__login {
+        width: 13rem;
+    }
+
+}
