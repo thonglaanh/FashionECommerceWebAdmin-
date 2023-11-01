@@ -1,5 +1,5 @@
 import React from 'react'
-import Item from '../components/Items/ItemProducts'
+import '../styles/DashBroad.css'
 import Pagingation from '../components/Pagingation'
 import ItemCustomers from '../components/Items/ItemCustomers'
 
@@ -7,49 +7,49 @@ const Customers = () => {
     const itemCustomers = [
 
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 1
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 2
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 3
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 4
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 5
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
             index: 6
         },
         {
-            image: 'https://bizweb.dktcdn.net/100/415/697/products/1-a76844f8-43b5-4ba4-8f94-08ff2f36394a.jpg?v=1657108723990',
+            image: 'https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg',
             name: 'Nguyễn Văn A',
             email: 'nguyenvana123@gmail.com',
             location: 'Hà Nội',
@@ -58,7 +58,19 @@ const Customers = () => {
     ]
     return (
         <div className="selling">
+         
             <p className="title-product">Product</p>
+            <div className='option-menu'>
+                <button class="add-button">Thêm dữ liệu</button>
+                <div class="filter-dropdown">
+                    <select class="filter-dropdown-select">
+                        <option value="all">Tất cả</option>
+                        <option value="option1">Tùy chọn 1</option>
+                        <option value="option2">Tùy chọn 2</option>
+                        <option value="option3">Tùy chọn 3</option>
+                    </select>
+                </div>
+            </div>
 
             <div className="title-table">
                 <p>Index</p>

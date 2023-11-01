@@ -43,6 +43,17 @@ const Shop = () => {
     return (
         <div className="selling">
             <p className="title-product">Product</p>
+            <div className='option-menu'>
+                <button class="add-button">Thêm dữ liệu</button>
+                <div class="filter-dropdown">
+                    <select class="filter-dropdown-select">
+                        <option value="all">Tất cả</option>
+                        <option value="option1">Tùy chọn 1</option>
+                        <option value="option2">Tùy chọn 2</option>
+                        <option value="option3">Tùy chọn 3</option>
+                    </select>
+                </div>
+            </div>
 
             <div className="title-table">
                 <p>Index</p>

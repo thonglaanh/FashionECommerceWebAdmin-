@@ -9,6 +9,17 @@
     grid-template-columns: 0.5fr 0.5fr 1fr 1fr 1fr 1fr;
 
 }
+.category-container{
+    display: grid;
+    flex-direction: row;
+    font-size: 14px;
+    align-items: center;
+    border: 1px solid #e0e0e0e0;
+    border-top: none;
+    padding: 10px 0px 10px 30px;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+
+}
 
 .product-image {
     width: 50px;
@@ -40,4 +51,13 @@
 
 .view-detail {
     text-decoration: none;
+}
+.view-delete,.view-update{
+    color: red;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.view-update{
+    color:green;
+    
 }

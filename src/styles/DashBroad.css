@@ -65,3 +65,58 @@
     background-color: #f0f0f0f0;
     font-weight: 500;
 }
+.title-table-category {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    border: 1px solid #e0e0e0e0;
+    padding: 10px 0px 0px 30px;
+    background-color: #f0f0f0f0;
+    font-weight: 500;
+}
+.add-button {
+    background-color: #0074d9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* CSS cho dropdown */
+.filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-dropdown-select {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Styles cho dropdown menu */
+.filter-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.option-menu{
+    width: 95%;
+    display: flex;
+    margin: 10px 20px;
+    justify-content: space-between;
+}
+.filter-dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+.filter-dropdown-content a:hover {
+    background-color: #ddd;
+}
