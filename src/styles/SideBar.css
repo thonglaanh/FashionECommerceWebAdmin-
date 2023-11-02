@@ -1,102 +1,94 @@
 .main-container {
-    display: flex;
+  display: flex;
+  max-height: 100vh;
 }
-
 
 main {
-    width: 100%;
-    padding: 20px 50px;
-    background-color: #F7F6F6;
+  width: 100%;
+  padding: 0px 50px;
+  max-height: 100vh;
+  background-color: #f7f6f6;
 }
 
-
 .sidebar-container {
-    width: 20%;
-    height: 100vh;
-    color: #fff;
-
+  width: 20%;
+  height: 100vh;
+  background-color: #fff;
 }
 
 .sidebar-logo {
-    width: 70%;
-    margin: 0 10%;
+  width: 70%;
+  margin: 0 10%;
 }
 
 .sidebar-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px 0px 5px 25px;
-    margin-bottom: 20px;
-    text-decoration: none;
-    height: 40px;
-    color: black;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 0px 5px 25px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  height: 40px;
+  color: black;
 }
 
 .sidebar-label {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 .sidebar-icon img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .active {
-    background: darkslateblue;
-    color: #fff;
-    padding: 5px 0px 5px 25px;
-    border-radius: 4px;
-
+  background: darkslateblue;
+  color: #fff;
+  padding: 5px 0px 5px 25px;
+  border-radius: 4px;
 }
 
 .active .sidebar-icon img {
-    filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .sidebar-account {
-    margin-top: 30%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  margin-top: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .sidebar-account .avatar {
-    width: 20%;
-    height: 20%;
-    border-radius: 50%;
-
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
 }
 
 .sidebar-item:hover {
-    background-color: darkslateblue;
-    color: white;
+  background-color: darkslateblue;
+  color: white;
 
-    .sidebar-icon {
-        filter: brightness(0) invert(1);
-    }
-
+  .sidebar-icon {
+    filter: brightness(0) invert(1);
+  }
 }
 
-
-
 .sidebar-account-name {
-    font-size: 0.8em;
-    color: black;
-    margin-top: 5px;
-
+  font-size: 0.8em;
+  color: black;
+  margin-top: 5px;
 }
 
 .sidebar-account-email {
-    color: #777777;
-    font-size: 0.7em;
-    margin-top: -10px;
+  color: #777777;
+  font-size: 0.7em;
+  margin-top: -10px;
 }
 
 .icon__logout {
-    width: 9%;
-    height: 14%;
-    margin: 7% 0 0 -10px;
-    cursor: pointer;
+  width: 9%;
+  height: 14%;
+  margin: 7% 0 0 -10px;
+  cursor: pointer;
 }
