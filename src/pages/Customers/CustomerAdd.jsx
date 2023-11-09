@@ -66,7 +66,7 @@ const CustomerAdd = ({ openModal, setOpenModal }) => {
             <div
               style={{
                 position: "absolute",
-                top: 190,
+                top: 170,
                 left: 320,
                 width: "40px",
                 height: "40px",

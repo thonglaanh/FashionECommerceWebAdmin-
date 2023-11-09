@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Pagingation from "../../components/Pagingation";
 import ItemCategory from "../../components/Items/ItemCategory";
+import CategoryAdd from "./CategoryAdd";
+import ModalDelete from "../../components/ModalDelete";
 
 const Categoties = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+
   const itemProducts = [
     {
       image:
@@ -25,9 +30,17 @@ const Categoties = () => {
   ];
   return (
     <div className="selling">
-      <p className="title-product">Product</p>
+      {openModal && (
+        <CategoryAdd openModal={openModal} setOpenModal={setOpenModal} />
+      )}
+      {openModalDelete && (
+        <ModalDelete openModal={openModal} setOpenModal={setOpenModal} />
+      )}
+      <p className="title-product">Categories</p>
       <div className="option-menu">
-        <button class="add-button">Thêm dữ liệu</button>
+        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+          Thêm dữ liệu
+        </button>
         <div class="filter-dropdown">
           <select class="filter-dropdown-select">
             <option value="all">Tất cả</option>
@@ -47,10 +60,12 @@ const Categoties = () => {
 
       {itemProducts.map((item, index) => (
         <div key={index}>
-          <ItemCategory category={item} />
+          <ItemCategory
+            category={item}
+            setOpenModalDelete={setOpenModalDelete}
+          />
         </div>
       ))}
-      <Pagingation />
     </div>
   );
 };

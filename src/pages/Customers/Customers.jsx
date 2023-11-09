@@ -60,7 +60,7 @@ const Customers = () => {
       {openModal && (
         <CustomerAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
-      <p className="title-product">Product</p>
+      <p className="title-product">Customers</p>
       <div className="option-menu">
         <button class="add-button" onClick={() => setOpenModal(!openModal)}>
           Thêm dữ liệu

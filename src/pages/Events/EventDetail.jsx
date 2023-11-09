@@ -1,29 +1,28 @@
 import React, { useState } from "react";
 import "../../styles/Detail.css";
+import EventAdd from "./EventAdd";
 import { useLocation } from "react-router-dom";
 import ModalDelete from "../../components/ModalDelete";
-import CustomerAdd from "../Customers/CustomerAdd";
 
-const ShopDetail = () => {
+const DetailEvent = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const location = useLocation();
   //   const customer = location.state.product;
   const customer = {
     image:
-      "https://bizweb.dktcdn.net/100/369/010/themes/914385/assets/brand1.png?1697908711435",
-    name: "Dirty coin",
+      "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
+    name: "Nguyễn Văn A",
     email: "nguyenvana123@gmail.com",
     location: "Phú Diễn, Từ Liêm, Hà Nội",
     phone: "0964863417",
     index: 6,
-    description:
-      "Là local brand được ra mắt vào năm 2020 tại thành phố Hồ Chí Minh",
+    gender: "Nam",
   };
   return (
     <div>
       {openModal && (
-        <CustomerAdd openModal={openModal} setOpenModal={setOpenModal} />
+        <EventAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
       {openModalDelete && (
         <ModalDelete
@@ -37,10 +36,10 @@ const ShopDetail = () => {
         </div>
         <div className="detail_content">
           <div className="detail_content_customer">
-            <p className="detail_title">Thông tin cửa hàng : </p>
+            <p className="detail_title">Thông tin khách hàng : </p>
             <div>
               <img src={require("../../assets/signature.png")} />
-              <p>Tên shop: </p>
+              <p>Họ và tên : </p>
               <div className="detail_name">{customer.name}</div>
             </div>
             <div>
@@ -60,8 +59,8 @@ const ShopDetail = () => {
             </div>
             <div>
               <img src={require("../../assets/gender.png")} />
-              <p>Description : </p>
-              <div className="detail_gender">{customer.description}</div>
+              <p>Giới tính : </p>
+              <div className="detail_gender">{customer.gender}</div>
             </div>
           </div>
           <div
@@ -86,4 +85,4 @@ const ShopDetail = () => {
   );
 };
 
-export default ShopDetail;
+export default DetailEvent;

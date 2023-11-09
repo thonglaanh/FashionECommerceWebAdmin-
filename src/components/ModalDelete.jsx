@@ -5,7 +5,7 @@ const ModalDelete = ({ openModal, setOpenModal }) => {
   return (
     <div className="main-container">
       <div className="modal-container-delete">
-        <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
+        <p className="title_dialog_delete">
           Bạn có chắc chắn muốn xóa dữ liệu này chứ ?
         </p>
         <div

@@ -8,6 +8,7 @@ import Shop from "./pages/Shops/Shop";
 import Categories from "./pages/Categories/Categories";
 import Products from "./pages/Products/Products.jsx";
 import CustomerDetail from "./pages/Customers/CustomerDetail";
+import ShopDetail from "./pages/Shops/ShopDetail.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -69,14 +70,30 @@ function App() {
             </SideBar>
           }
         />
-        {/* <Route
-          path="/customer/:slug"
+        <Route
+          path="/shop/:slug"
           element={
             <SideBar>
-              <Products />
+              <ShopDetail />
             </SideBar>
           }
-        /> */}
+        />
+        <Route
+          path="/products/:slug"
+          element={
+            <SideBar>
+              <ShopDetail />
+            </SideBar>
+          }
+        />
+        <Route
+          path="/events/:slug"
+          element={
+            <SideBar>
+              <ShopDetail />
+            </SideBar>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,9 @@
-import React from "react";
-import Item from "../../components/Items/ItemProducts";
+import React, { useState } from "react";
 import Pagingation from "../../components/Pagingation";
 import ItemShop from "../../components/Items/ItemShop";
+import ShopAdd from "./ShopAdd";
 const Shop = () => {
+  const [openModal, setOpenModal] = useState(false);
   const itemProducts = [
     {
       image:
@@ -46,9 +47,14 @@ const Shop = () => {
   ];
   return (
     <div className="selling">
-      <p className="title-product">Product</p>
+      {openModal && (
+        <ShopAdd openModal={openModal} setOpenModal={setOpenModal} />
+      )}
+      <p className="title-product">Shops</p>
       <div className="option-menu">
-        <button class="add-button">Thêm dữ liệu</button>
+        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+          Thêm dữ liệu
+        </button>
         <div class="filter-dropdown">
           <select class="filter-dropdown-select">
             <option value="all">Tất cả</option>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Item from "../../components/Items/ItemProducts";
 import Pagingation from "../../components/Pagingation";
+import ProductAdd from "./ProductAdd";
 
 const Products = () => {
+  const [openModal, setOpenModal] = useState(false);
   const itemProducts = [
     {
       image:
@@ -12,6 +14,7 @@ const Products = () => {
       quantity: "100",
       index: 1,
     },
+
     {
       image:
         "https://mcdn.coolmate.me/image/June2021/top-7-dia-chi-mua-giay-da-nam-cao-cap-ha-noi-11.jpg",
@@ -55,9 +58,14 @@ const Products = () => {
   ];
   return (
     <div className="selling">
-      <p className="title-product">Product</p>
+      {openModal && (
+        <ProductAdd openModal={openModal} setOpenModal={setOpenModal} />
+      )}
+      <p className="title-product">Products</p>
       <div className="option-menu">
-        <button class="add-button">Thêm dữ liệu</button>
+        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+          Thêm dữ liệu
+        </button>
         <div class="filter-dropdown">
           <select class="filter-dropdown-select">
             <option value="all">Tất cả</option>

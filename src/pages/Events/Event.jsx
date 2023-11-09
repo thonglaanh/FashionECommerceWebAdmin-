@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Pagingation from "../../components/Pagingation";
 import ItemEvents from "../../components/Items/ItemEvents";
+import EventAdd from "./EventAdd";
 
 const Event = () => {
+  const [openModal, setOpenModal] = useState(false);
   const itemEvents = [
     {
       image:
@@ -47,9 +49,14 @@ const Event = () => {
   ];
   return (
     <div className="selling">
-      <p className="title-product">Product</p>
+      {openModal && (
+        <EventAdd openModal={openModal} setOpenModal={setOpenModal} />
+      )}
+      <p className="title-product">Event</p>
       <div className="option-menu">
-        <button class="add-button">Thêm dữ liệu</button>
+        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+          Thêm dữ liệu
+        </button>
         <div class="filter-dropdown">
           <select class="filter-dropdown-select">
             <option value="all">Tất cả</option>
