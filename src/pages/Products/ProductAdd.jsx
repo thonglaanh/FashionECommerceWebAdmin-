@@ -4,19 +4,17 @@ import axios from "axios";
 
 const ProductAdd = ({ openModal, setOpenModal }) => {
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
+  const [price, setPrice] = useState();
   const [img, setImg] = useState(
     "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
   );
-  const [date, setDate] = useState();
+  const [quantity, setQuantity] = useState();
+  const [description, setDescription] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("email", email);
-      formData.append("date", date);
-      formData.append("name", name);
       formData.append("img", selectedImage); // Gửi ảnh đã chọn lên server
       const response = await axios.post(formData);
       localStorage.setItem(
@@ -30,7 +28,7 @@ const ProductAdd = ({ openModal, setOpenModal }) => {
 
   return (
     <div className="main-container">
-      <div className="modal-container">
+      <div className="modal_container_product modal-container">
         <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
           Thêm sản phẩm
         </p>
@@ -79,33 +77,43 @@ const ProductAdd = ({ openModal, setOpenModal }) => {
               />
             </div>
           </label>
+          <label>Cửa hàng: </label>
+          <div>
+            <select class="filter-dropdown-select">
+              <option value="all">Tất cả</option>
+              <option value="option1">Tùy chọn 1</option>
+              <option value="option2">Tùy chọn 2</option>
+              <option value="option3">Tùy chọn 3</option>
+            </select>
+          </div>
 
-          <label>Họ và tên : </label>
+          <label>Tên sản phẩm : </label>
           <input
             type="text"
             value={name}
-            placeholder={"Vui lòng nhập họ tên của bạn"}
+            placeholder={"Vui lòng nhập tên sản phẩm"}
             onChange={(e) => setName(e.target.value)}
           />
-          <label>Điện thoại :</label>
+          <label>Nhập giá sản phẩm :</label>
           <input
-            type="email"
-            value={email}
-            placeholder={"Vui lòng nhập số điện thoại"}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={price}
+            placeholder={"Vui lòng nhập giá sản phẩm"}
+            onChange={(e) => setPrice(e.target.value)}
           />
-          <label>Địa chỉ:</label>
+          <label>Số lượng:</label>
           <input
-            type="email"
-            value={email}
-            placeholder={"Vui lòng nhập số địa chỉ"}
-            onChange={(e) => setEmail(e.target.value)}
+            type="number"
+            value={quantity}
+            placeholder={"Vui lòng nhập số lượng  "}
+            onChange={(e) => setQuantity(e.target.value)}
           />
-          <label>Ngày sinh :</label>
+          <label>Chi tiết:</label>
           <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="text"
+            value={description}
+            placeholder={"Vui lòng nhập chi tiết  "}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <button
             onClick={() => setOpenModal(false)}
@@ -117,7 +125,7 @@ const ProductAdd = ({ openModal, setOpenModal }) => {
           >
             Hủy
           </button>
-          <button onClick={() => handleSubmit()}>Thay đổi</button>
+          <button onClick={() => handleSubmit()}>Thêm mới</button>
         </form>
       </div>
     </div>

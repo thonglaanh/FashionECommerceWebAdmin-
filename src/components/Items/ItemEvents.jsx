@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/Item.css";
 import { Link } from "react-router-dom";
 import slug from "slugifi";
-const ItemEvents = ({ event }) => {
+const ItemEvents = ({ event, setOpenModalUpdate, setOpenModalDelete }) => {
   const convertToSlug = (text) => {
     return slug(text, {
       lower: true,
@@ -18,15 +18,15 @@ const ItemEvents = ({ event }) => {
       </>
       <p className="product-price">{event.start}</p>
       <p className="event-end">{event.end}</p>
-      <Link
-        to={`/events/${convertToSlug(event.name)}`}
-        state={{ event }}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
-        <a href="" className="view-detail">
-          View detail
-        </a>
-      </Link>
+      <div>
+        <button className="btn_update" onClick={() => setOpenModalUpdate(true)}>
+          Update
+        </button>
+
+        <button className="btn_delete" onClick={() => setOpenModalDelete(true)}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

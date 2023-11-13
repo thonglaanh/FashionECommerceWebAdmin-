@@ -30,9 +30,12 @@ const CategoryUpdate = ({ openModal, setOpenModal }) => {
 
   return (
     <div className="main-container">
-      <div className="modal-container" style={{ height: "370px" }}>
+      <div
+        className="modal_container_category modal-container"
+        style={{ height: "370px" }}
+      >
         <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
-          Thêm danh mục
+          Thay đổi danh mục
         </p>
         <form>
           {(selectedImage || img) && (

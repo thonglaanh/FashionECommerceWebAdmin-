@@ -8,7 +8,7 @@
   justify-content: center;
 }
 .detail_image {
-  width: 100%;
+  width: 90%;
   height: 80%;
   object-fit: contain;
 }
@@ -49,8 +49,8 @@
 }
 .detail_content div p {
   color: green;
-  font-size: 18px;
-  margin: 10px 10px;
+  font-size: 17px;
+  margin: 10px 20px;
 }
 .detail_title {
   font-size: 1.4rem;

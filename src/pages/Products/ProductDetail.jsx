@@ -9,15 +9,16 @@ const ProductDetail = () => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const location = useLocation();
   //   const customer = location.state.product;
-  const customer = {
+  const product = {
     image:
-      "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-    name: "Nguyễn Văn A",
-    email: "nguyenvana123@gmail.com",
-    location: "Phú Diễn, Từ Liêm, Hà Nội",
-    phone: "0964863417",
-    index: 6,
-    gender: "Nam",
+      "https://mcdn.coolmate.me/image/June2021/top-7-dia-chi-mua-giay-da-nam-cao-cap-ha-noi-11.jpg",
+    name: "Dày gia nam",
+    price: "590.000vnd",
+    quantity: "98",
+    index: 2,
+    descpition: "Là sản phẩm mới nhất của cửa hàng",
+    shop: "Dirty coin",
+    rating: "4.5",
   };
   return (
     <div>
@@ -32,35 +33,40 @@ const ProductDetail = () => {
       )}
       <div className="detail_container">
         <div className="detail_container_image">
-          <img className="detail_image" src={customer.image} />
+          <img className="detail_image" src={product.image} />
         </div>
         <div className="detail_content">
           <div className="detail_content_customer">
-            <p className="detail_title">Thông tin khách hàng : </p>
+            <p className="detail_title">Thông tin sản phẩm : </p>
             <div>
               <img src={require("../../assets/signature.png")} />
-              <p>Họ và tên : </p>
-              <div className="detail_name">{customer.name}</div>
+              <p>Tên sản phẩm : </p>
+              <div className="detail_name">{product.name}</div>
             </div>
             <div>
-              <img src={require("../../assets/gmail.png")} />
-              <p>Email : </p>
-              <div className="detail_email">{customer.email}</div>
+              <img src={require("../../assets/price-tag.png")} />
+              <p>Giá sản phẩm : </p>
+              <div className="detail_email">{product.price}</div>
             </div>
             <div>
               <img src={require("../../assets/phone-call.png")} />
-              <p>Số điện thoại : </p>
-              <div className="detail_phone">{customer.phone}</div>
+              <p>Số lượng : </p>
+              <div className="detail_phone">{product.quantity}</div>
             </div>
             <div>
-              <img src={require("../../assets/placeholder.png")} />
-              <p>Địa chỉ : </p>
-              <div className="detail_location">{customer.location}</div>
+              <img src={require("../../assets/star.png")} />
+              <p>Đánh giá : </p>
+              <div className="detail_gender">{product.rating}</div>
             </div>
             <div>
-              <img src={require("../../assets/gender.png")} />
+              <img src={require("../../assets/shop.png")} />
+              <p>Cửa hàng : </p>
+              <div className="detail_gender">{product.shop}</div>
+            </div>
+            <div>
+              <img src={require("../../assets/three.png")} />
               <p>Giới tính : </p>
-              <div className="detail_gender">{customer.gender}</div>
+              <div className="detail_gender">{product.descpition}</div>
             </div>
           </div>
           <div

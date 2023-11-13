@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import Pagingation from "../../components/Pagingation";
 import ItemEvents from "../../components/Items/ItemEvents";
 import EventAdd from "./EventAdd";
+import ModalDelete from "../../components/ModalDelete";
+import EventUpdate from "./EventUpdate";
 
 const Event = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const itemEvents = [
     {
       image:
@@ -52,6 +56,18 @@ const Event = () => {
       {openModal && (
         <EventAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
+      {openModalDelete && (
+        <ModalDelete
+          openModal={openModalDelete}
+          setOpenModal={setOpenModalDelete}
+        />
+      )}
+      {openModalUpdate && (
+        <EventUpdate
+          openModal={openModalUpdate}
+          setOpenModal={setOpenModalUpdate}
+        />
+      )}
       <p className="title-product">Event</p>
       <div className="option-menu">
         <button class="add-button" onClick={() => setOpenModal(!openModal)}>
@@ -78,7 +94,11 @@ const Event = () => {
 
       {itemEvents.map((item, index) => (
         <div key={index}>
-          <ItemEvents event={item} />
+          <ItemEvents
+            event={item}
+            setOpenModalDelete={setOpenModalDelete}
+            setOpenModalUpdate={setOpenModalUpdate}
+          />
         </div>
       ))}
       <Pagingation />

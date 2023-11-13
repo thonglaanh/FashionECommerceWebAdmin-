@@ -3,10 +3,12 @@ import Pagingation from "../../components/Pagingation";
 import ItemCategory from "../../components/Items/ItemCategory";
 import CategoryAdd from "./CategoryAdd";
 import ModalDelete from "../../components/ModalDelete";
+import CategoryUpdate from "./CategoryUpdate";
 
 const Categoties = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openModalUpdate, setOpenModalUpdate] = useState(false);
 
   const itemProducts = [
     {
@@ -34,7 +36,16 @@ const Categoties = () => {
         <CategoryAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
       {openModalDelete && (
-        <ModalDelete openModal={openModal} setOpenModal={setOpenModal} />
+        <ModalDelete
+          openModal={openModalDelete}
+          setOpenModal={setOpenModalDelete}
+        />
+      )}
+      {openModalUpdate && (
+        <CategoryUpdate
+          openModal={openModalUpdate}
+          setOpenModal={setOpenModalUpdate}
+        />
       )}
       <p className="title-product">Categories</p>
       <div className="option-menu">
@@ -63,6 +74,7 @@ const Categoties = () => {
           <ItemCategory
             category={item}
             setOpenModalDelete={setOpenModalDelete}
+            setOpenModalUpdate={setOpenModalUpdate}
           />
         </div>
       ))}

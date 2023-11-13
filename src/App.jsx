@@ -9,6 +9,7 @@ import Categories from "./pages/Categories/Categories";
 import Products from "./pages/Products/Products.jsx";
 import CustomerDetail from "./pages/Customers/CustomerDetail";
 import ShopDetail from "./pages/Shops/ShopDetail.jsx";
+import ProductDetail from "./pages/Products/ProductDetail.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -82,15 +83,7 @@ function App() {
           path="/products/:slug"
           element={
             <SideBar>
-              <ShopDetail />
-            </SideBar>
-          }
-        />
-        <Route
-          path="/events/:slug"
-          element={
-            <SideBar>
-              <ShopDetail />
+              <ProductDetail />
             </SideBar>
           }
         />

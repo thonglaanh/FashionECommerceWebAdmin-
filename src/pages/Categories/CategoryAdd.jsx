@@ -4,18 +4,14 @@ import axios from "axios";
 
 const CategoryAdd = ({ openModal, setOpenModal }) => {
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
   const [img, setImg] = useState(
     "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
   );
-  const [date, setDate] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("email", email);
-      formData.append("date", date);
       formData.append("name", name);
       formData.append("img", selectedImage); // Gửi ảnh đã chọn lên server
       const response = await axios.post(formData);
@@ -30,7 +26,10 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
 
   return (
     <div className="main-container">
-      <div className="modal-container" style={{ height: "370px" }}>
+      <div
+        className="modal_container_category modal-container"
+        style={{ height: "370px" }}
+      >
         <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
           Thêm danh mục
         </p>
@@ -59,7 +58,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
             <input
               type="file"
               onChange={(event) => {
-                setSelectedImage(event.target.files[0]); // Cập nhật ảnh đã chọn vào trạng thái selectedImage
+                setSelectedImage(event.target.files[0]);
               }}
               style={{ display: "none" }}
             />
@@ -97,7 +96,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
           >
             Hủy
           </button>
-          <button onClick={() => handleSubmit()}>Thay đổi</button>
+          <button onClick={() => handleSubmit()}>Thêm</button>
         </form>
       </div>
     </div>

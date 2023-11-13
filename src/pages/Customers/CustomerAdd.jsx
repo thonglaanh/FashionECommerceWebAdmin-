@@ -30,7 +30,7 @@ const CustomerAdd = ({ openModal, setOpenModal }) => {
 
   return (
     <div className="main-container">
-      <div className="modal-container">
+      <div className="modal_container_customer modal-container">
         <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
           Thêm tài khoản khách hàng
         </p>

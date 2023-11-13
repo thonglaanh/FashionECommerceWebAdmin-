@@ -59,8 +59,8 @@ const ShopDetail = () => {
               <div className="detail_location">{customer.location}</div>
             </div>
             <div>
-              <img src={require("../../assets/gender.png")} />
-              <p>Description : </p>
+              <img src={require("../../assets/three.png")} />
+              <p>Description :</p>
               <div className="detail_gender">{customer.description}</div>
             </div>
           </div>

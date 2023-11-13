@@ -4,7 +4,7 @@ import "../styles/Modal.css";
 const ModalDelete = ({ openModal, setOpenModal }) => {
   return (
     <div className="main-container">
-      <div className="modal-container-delete">
+      <div className="modal_container_delete modal-container">
         <p className="title_dialog_delete">
           Bạn có chắc chắn muốn xóa dữ liệu này chứ ?
         </p>
@@ -23,6 +23,7 @@ const ModalDelete = ({ openModal, setOpenModal }) => {
               height: "35px",
               border: "1px solid #e0e0e0",
             }}
+            onClick={() => setOpenModal(!openModal)}
           >
             Hủy
           </button>

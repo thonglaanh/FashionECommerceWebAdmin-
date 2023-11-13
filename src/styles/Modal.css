@@ -1,14 +1,11 @@
-.main-container {
-  background-color: rgb(46 56 77 / 30%);
-  display: flex;
-  justify-content: center;
-}
-
-.modal-container {
+.modal_container_category,
+.modal_container_event,
+.modal_container_delete,
+.modal_container_shop,
+.modal_container_customer,
+.modal_container_product {
   z-index: 999;
   width: 600px;
-  height: 600px;
-  margin-top: 50px;
   pointer-events: auto;
   position: absolute;
   flex-direction: column;
@@ -21,21 +18,14 @@
   padding: 0px 20px;
   color: #333333;
 }
-.modal-container-delete {
-  width: 600px;
-  height: 200px;
-  margin-top: 25vh;
-  pointer-events: auto;
-  position: absolute;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border: 1px solid var(--gh-grey-4);
-  border-radius: 4px;
-  padding: 0px 20px;
-  color: #333333;
+.main-container {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  height: 100vh;
+  z-index: 9999;
 }
 
 .modal-container input {
@@ -48,8 +38,8 @@
   font-size: 14px;
 }
 
-.modal-container button {
-  padding: 10px;
+.modal-container button,
+.modal_container_delete button {
   background-color: #47474c;
   color: #fff;
   border: none;
@@ -57,6 +47,13 @@
   width: 45%;
   margin: 15px 10px;
 }
+.modal-container button {
+  padding: 10px;
+}
+.modal_container_delete button {
+  padding: 0px;
+}
+
 .title_dialog_delete {
   font-size: 25px;
   font-weight: 400;

@@ -1,13 +1,13 @@
-.main-container {
-  display: flex;
-  max-height: 100vh;
-}
-
 main {
   width: 100%;
   padding: 0px 50px;
   max-height: 100vh;
   background-color: #f7f6f6;
+}
+.main-container-sidebar {
+  background-color: rgba(46, 56, 77, 0.3);
+  display: flex;
+  justify-content: center;
 }
 
 .sidebar-container {

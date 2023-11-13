@@ -31,7 +31,7 @@ const ShopAdd = ({ openModal, setOpenModal }) => {
 
   return (
     <div className="main-container">
-      <div className="modal-container">
+      <div className="modal_container_shop modal-container">
         <p style={{ fontSize: "25px", fontWeight: "400", textAlign: "center" }}>
           Thêm cửa hàng
         </p>
@@ -85,28 +85,36 @@ const ShopAdd = ({ openModal, setOpenModal }) => {
           <input
             type="text"
             value={name}
-            placeholder={"Vui lòng nhập họ tên của bạn"}
+            placeholder={"Vui lòng nhập tên shop của bạn"}
             onChange={(e) => setName(e.target.value)}
+          />
+          <label>Email :</label>
+          <input
+            type="text"
+            value={email}
+            placeholder={"Vui lòng nhập email shop"}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label>Điện thoại :</label>
           <input
-            type="email"
+            type="text"
             value={email}
-            placeholder={"Vui lòng nhập số điện thoại"}
+            placeholder={"Vui lòng nhập số điện thoại shop"}
             onChange={(e) => setEmail(e.target.value)}
           />
           <label>Địa chỉ:</label>
           <input
-            type="email"
+            type="text"
             value={email}
             placeholder={"Vui lòng nhập số địa chỉ"}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Ngày sinh :</label>
+          <label>Nhập chi tiết shop :</label>
           <input
-            type="date"
+            type="text"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            placeholder={"Vui lòng nhập chi tiết shop của bạn"}
           />
           <button
             onClick={() => setOpenModal(false)}

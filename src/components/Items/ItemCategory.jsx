@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/Item.css";
-const ItemCategory = ({ category, setOpenModalDelete }) => {
+const ItemCategory = ({ category, setOpenModalDelete, setOpenModalUpdate }) => {
   return (
     <div className="category-container">
       <p className="product-index">#{category.index}</p>
@@ -9,7 +9,9 @@ const ItemCategory = ({ category, setOpenModalDelete }) => {
         <p>{category.name}</p>
       </>
       <div>
-        <button className="btn_update">Update</button>
+        <button className="btn_update" onClick={() => setOpenModalUpdate(true)}>
+          Update
+        </button>
 
         <button className="btn_delete" onClick={() => setOpenModalDelete(true)}>
           Delete
