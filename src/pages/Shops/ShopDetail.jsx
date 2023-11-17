@@ -17,6 +17,7 @@ const ShopDetail = () => {
     location: "Phú Diễn, Từ Liêm, Hà Nội",
     phone: "0964863417",
     index: 6,
+    rating: "4.5/5",
     description:
       "Là local brand được ra mắt vào năm 2020 tại thành phố Hồ Chí Minh",
   };
@@ -44,10 +45,16 @@ const ShopDetail = () => {
               <div className="detail_name">{customer.name}</div>
             </div>
             <div>
+              <img src={require("../../assets/star.png")} />
+              <p>Đánh giá : </p>
+              <div className="detail_location">{customer.rating}</div>
+            </div>
+            <div>
               <img src={require("../../assets/gmail.png")} />
               <p>Email : </p>
               <div className="detail_email">{customer.email}</div>
             </div>
+
             <div>
               <img src={require("../../assets/phone-call.png")} />
               <p>Số điện thoại : </p>

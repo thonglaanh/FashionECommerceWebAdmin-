@@ -2,20 +2,16 @@ import React, { useEffect, useState } from "react";
 import "../../styles/Modal.css";
 import axios from "axios";
 
-const CategoryUpdate = ({ openModal, setOpenModal }) => {
+const CategoryUpdate = ({ setOpenModal }) => {
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
   const [img, setImg] = useState(
     "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
   );
-  const [date, setDate] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("email", email);
-      formData.append("date", date);
       formData.append("name", name);
       formData.append("img", selectedImage); // Gửi ảnh đã chọn lên server
       const response = await axios.post(formData);

@@ -13,7 +13,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
     try {
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("img", selectedImage); // Gửi ảnh đã chọn lên server
+      formData.append("img", selectedImage);
       const response = await axios.post(formData);
       localStorage.setItem(
         "account",

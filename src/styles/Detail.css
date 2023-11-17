@@ -1,7 +1,7 @@
 .detail_container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin-top: 80px;
+  margin-top: 100px;
 }
 .detail_container_image {
   display: flex;
