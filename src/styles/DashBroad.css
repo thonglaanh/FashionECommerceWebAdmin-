@@ -119,3 +119,5 @@
 .filter-dropdown-content a:hover {
   background-color: #ddd;
 }
+@media (max-width: 1023px) {
+}
