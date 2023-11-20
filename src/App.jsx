@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashBroad from "./pages/DashBroad";
 import Login from "./pages/Auth/Login";
 import SideBar from "./components/SideBar";
@@ -10,9 +10,12 @@ import Products from "./pages/Products/Products.jsx";
 import CustomerDetail from "./pages/Customers/CustomerDetail";
 import ShopDetail from "./pages/Shops/ShopDetail.jsx";
 import ProductDetail from "./pages/Products/ProductDetail.jsx";
+import { ToastContainer } from "react-toastify";
+import OrderScreen from "./pages/Orders/OderScreen.jsx";
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
@@ -32,7 +35,7 @@ function App() {
           }
         />
         <Route
-          path="/events"
+          path="/discounts"
           element={
             <SideBar>
               <Event />
@@ -52,6 +55,14 @@ function App() {
           element={
             <SideBar>
               <Shop />
+            </SideBar>
+          }
+        />
+        <Route
+          path="/order"
+          element={
+            <SideBar>
+              <OrderScreen />
             </SideBar>
           }
         />
@@ -88,7 +99,7 @@ function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

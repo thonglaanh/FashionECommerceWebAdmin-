@@ -1,59 +1,78 @@
-import React, { useState } from "react";
-import Item from "../../components/Items/ItemProducts";
-import Pagingation from "../../components/Pagingation";
+import React, { useEffect, useState } from "react";
 import ProductAdd from "./ProductAdd";
+import axios from "axios";
+import config from "../../config";
+import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
+import slug from "slugifi";
+import "../../styles/Row.css";
 
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
-  const itemProducts = [
+  const [products, setProducts] = useState([]);
+  const convertToSlug = (text) => {
+    return slug(text, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
+  };
+  useEffect(() => {
+    const fetchData = () => {
+      const userId = localStorage.getItem("userId");
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(userId);
+      console.log(accessToken);
+      axios
+        .get(config.API_IP + "/admin/product", {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          setProducts(res.data.message);
+          console.log(res);
+        });
+    };
+    fetchData();
+  }, []);
+  const columns = [
+    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
     {
-      image:
-        "https://toigingiuvedep.vn/wp-content/uploads/2022/04/ao-thun-in-hinh-1.jpg",
-      name: "Áo thun in hình",
-      price: "210.000vnd",
-      quantity: "100",
-      index: 1,
-    },
-
-    {
-      image:
-        "https://mcdn.coolmate.me/image/June2021/top-7-dia-chi-mua-giay-da-nam-cao-cap-ha-noi-11.jpg",
-      name: "Dày gia nam",
-      price: "590.000vnd",
-      quantity: "98",
-      index: 2,
-    },
-    {
-      image:
-        "https://filebroker-cdn.lazada.vn/kf/Sc3c175e3adfd470aadd84b3107f1720dq.jpg",
-      name: "Balo thời trang",
-      price: "310.000vnd",
-      quantity: "85",
-      index: 3,
-    },
-    {
-      image:
-        "https://vn-live-01.slatic.net/p/cf8553bfffe718788d752eb4e5fa255c.jpg",
-      name: "Quần bò ống vuông nữ",
-      price: "310.000vnd",
-      quantity: "77",
-      index: 4,
-    },
-    {
-      image:
-        "https://bizweb.dktcdn.net/thumb/grande/100/415/697/products/1-2-94da2566-ee60-4219-a8ad-73b351a487fc.jpg?v=1662543595320",
-      name: "Teelab áo sơ mi nam",
-      price: "220.000vnd",
-      quantity: "77",
-      index: 5,
+      name: "Ảnh",
+      selector: (row) => (
+        <img className="row-image" src={row.product_thumb[0]} />
+      ),
+      sortable: true,
     },
     {
-      image:
-        "https://bizweb.dktcdn.net/100/415/697/products/1s-1671872736257.jpg?v=1671872857200",
-      name: "Quần bò ống vuông nữ",
-      price: "310.000vnd",
-      quantity: "77",
-      index: 6,
+      name: "Tên sản phẩm",
+      selector: (row) => row.product_name,
+      sortable: true,
+    },
+    {
+      name: "Giá sản phẩm",
+      selector: (row) => row.product_price,
+      sortable: true,
+    },
+    {
+      name: "Số lượng",
+      selector: (row) => row.product_quantity,
+      sortable: true,
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <Link
+          to={`/products/${convertToSlug(row.product_name)}`}
+          state={{ row }}
+        >
+          <a href="" className="view-detail">
+            View detail
+          </a>
+        </Link>
+      ),
+      sortable: true,
     },
   ];
   return (
@@ -62,35 +81,11 @@ const Products = () => {
         <ProductAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
       <p className="title-product">Products</p>
-      <div className="option-menu">
-        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-          Thêm dữ liệu
-        </button>
-        <div class="filter-dropdown">
-          <select class="filter-dropdown-select">
-            <option value="all">Tất cả</option>
-            <option value="option1">Tùy chọn 1</option>
-            <option value="option2">Tùy chọn 2</option>
-            <option value="option3">Tùy chọn 3</option>
-          </select>
-        </div>
-      </div>
+      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+        Thêm dữ liệu
+      </button>
 
-      <div className="title-table">
-        <p>Index</p>
-        <p>Image</p>
-        <p>Name</p>
-        <p>Price</p>
-        <p>Quantity</p>
-        <p>Action</p>
-      </div>
-
-      {itemProducts.map((item, index) => (
-        <div key={index}>
-          <Item product={item} />
-        </div>
-      ))}
-      <Pagingation />
+      <DataTable columns={columns} data={products} pagination responsive />
     </div>
   );
 };

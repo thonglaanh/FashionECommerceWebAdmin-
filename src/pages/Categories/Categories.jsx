@@ -1,33 +1,72 @@
-import React, { useState } from "react";
-import Pagingation from "../../components/Pagingation";
-import ItemCategory from "../../components/Items/ItemCategory";
+import React, { useEffect, useState } from "react";
 import CategoryAdd from "./CategoryAdd";
 import ModalDelete from "../../components/ModalDelete";
 import CategoryUpdate from "./CategoryUpdate";
+import config from "../../config";
+import axios from "axios";
+import DataTable from "react-data-table-component";
+import "../../styles/Row.css";
 
 const Categoties = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchData = () => {
+      const userId = localStorage.getItem("userId");
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(userId);
+      console.log(accessToken);
+      axios
+        .get(config.API_IP + "/category/getAllCategory", {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          setCategories(res.data.message.category);
+          console.log(categories);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    fetchData();
+  }, []);
+  const columns = [
+    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+    {
+      name: "Ảnh",
+      selector: (row) => <img className="row-image" src={row.category_thumb} />,
+      sortable: true,
+    },
+    {
+      name: "Tên danh mục",
+      selector: (row) => row.category_name,
+      sortable: true,
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <div>
+          <button
+            className="row-action-button "
+            onClick={() => setOpenModalUpdate(true)}
+          >
+            Update
+          </button>
 
-  const itemProducts = [
-    {
-      image:
-        "https://toigingiuvedep.vn/wp-content/uploads/2022/04/ao-thun-in-hinh-1.jpg",
-      name: "Sweather",
-      index: 1,
-    },
-    {
-      image:
-        "https://mcdn.coolmate.me/image/June2021/top-7-dia-chi-mua-giay-da-nam-cao-cap-ha-noi-11.jpg",
-      name: "Sport shoes",
-      index: 2,
-    },
-    {
-      image:
-        "https://mcdn.coolmate.me/image/June2021/top-7-dia-chi-mua-giay-da-nam-cao-cap-ha-noi-11.jpg",
-      name: "T-shirt",
-      index: 4,
+          <button
+            className="row-action-button "
+            onClick={() => setOpenModalDelete(true)}
+          >
+            Delete
+          </button>
+        </div>
+      ),
+      sortable: true,
     },
   ];
   return (
@@ -52,32 +91,8 @@ const Categoties = () => {
         <button class="add-button" onClick={() => setOpenModal(!openModal)}>
           Thêm dữ liệu
         </button>
-        <div class="filter-dropdown">
-          <select class="filter-dropdown-select">
-            <option value="all">Tất cả</option>
-            <option value="option1">Tùy chọn 1</option>
-            <option value="option2">Tùy chọn 2</option>
-            <option value="option3">Tùy chọn 3</option>
-          </select>
-        </div>
       </div>
-
-      <div className="title-table-category">
-        <p>Index</p>
-        <p>Image</p>
-        <p>Name</p>
-        <p>Action</p>
-      </div>
-
-      {itemProducts.map((item, index) => (
-        <div key={index}>
-          <ItemCategory
-            category={item}
-            setOpenModalDelete={setOpenModalDelete}
-            setOpenModalUpdate={setOpenModalUpdate}
-          />
-        </div>
-      ))}
+      <DataTable columns={columns} data={categories} pagination responsive />
     </div>
   );
 };

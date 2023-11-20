@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../styles/Modal.css";
 import axios from "axios";
+import config from "../../config";
 
 const CategoryAdd = ({ openModal, setOpenModal }) => {
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [img, setImg] = useState(
     "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
   );
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [thumb, setThumb] = useState(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem("userId");
+    const accessToken = localStorage.getItem("accessToken");
     try {
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("img", selectedImage);
-      const response = await axios.post(formData);
-      localStorage.setItem(
-        "account",
-        JSON.stringify(response.data.data.account)
-      );
+      formData.append("category_name", name);
+      formData.append("thumb", thumb);
+      await axios.post(config.API_IP + `/category/createCategory`, formData, {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      });
+      setOpenModal(false);
     } catch (error) {
       console.log("Failed" + error);
     }
@@ -34,7 +40,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
           Thêm danh mục
         </p>
         <form>
-          {(selectedImage || img) && (
+          {(thumb || img) && (
             <div
               style={{
                 width: "100%",
@@ -50,7 +56,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
                   borderRadius: "50%",
                   objectFit: "cover",
                 }}
-                src={selectedImage ? URL.createObjectURL(selectedImage) : img}
+                src={thumb ? URL.createObjectURL(thumb) : img}
               />
             </div>
           )}
@@ -58,7 +64,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
             <input
               type="file"
               onChange={(event) => {
-                setSelectedImage(event.target.files[0]);
+                setThumb(event.target.files[0]);
               }}
               style={{ display: "none" }}
             />
@@ -96,7 +102,7 @@ const CategoryAdd = ({ openModal, setOpenModal }) => {
           >
             Hủy
           </button>
-          <button onClick={() => handleSubmit()}>Thêm</button>
+          <button onClick={(e) => handleSubmit(e)}>Thêm</button>
         </form>
       </div>
     </div>

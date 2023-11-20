@@ -3,33 +3,36 @@ import "../../styles/Login.css";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import config from "../../config/index";
+import axios from "axios";
 const Login = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const urlLogin = "http://localhost:8080/v1/api/access/login";
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch(urlLogin, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userEmail, userPassword }),
+    axios
+      .post(
+        config.API_IP + "/access/login",
+        { email: email, password: password },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(async (res) => {
+        console.log(res);
+        localStorage.setItem("userId", res.data.message.userId);
+        localStorage.setItem("accessToken", res.data.message.accessToken);
+        toast.success("Đăng nhập thành công!", {
+          position: "top-center",
+        });
+        navigate("/dashbroads");
+      })
+      .catch((e) => {
+        console.log(e);
       });
-      // localStorage.setItem('account', JSON.stringify(res.data.account));
-      // localStorage.setItem('token', res.data.token);
-      toast.success("Đăng nhập thành công!", { position: "top-center" });
-      navigate("/dashbroad");
-    } catch (error) {
-      if (error.res && error.res.status === 402) {
-        toast.error("Sai mật khẩu!", { position: "top-center" });
-      } else {
-        console.log(error);
-        toast.error("Email không tồn tại!", { position: "top-center" });
-      }
-    }
   };
   return (
     <div className="container__login">
@@ -39,7 +42,7 @@ const Login = () => {
         <input
           type="email"
           name="user_name"
-          onChange={(i) => setUserEmail(i.target.value)}
+          onChange={(i) => setEmail(i.target.value)}
           required
           className="form__inp"
           placeholder="Email hoặc Số điện thoại"

@@ -1,58 +1,82 @@
-import React, { useState } from "react";
-import Pagingation from "../../components/Pagingation";
-import ItemCustomers from "../../components/Items/ItemCustomers";
+import React, { useEffect, useState } from "react";
 import CustomerAdd from "./CustomerAdd";
+import axios from "axios";
+import config from "../../config";
+import DataTable from "react-data-table-component";
+import "../../styles/Row.css";
 
 const Customers = () => {
   const [openModal, setOpenModal] = useState(false);
-  const itemCustomers = [
+  const [customers, setCustomers] = useState([]);
+  useEffect(() => {
+    const fetchData = () => {
+      const userId = localStorage.getItem("userId");
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(userId);
+      console.log(accessToken);
+      axios
+        .get(config.API_IP + "/admin/user", {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          setCustomers(res.data.message);
+          console.log(res.data.message);
+        });
+    };
+    fetchData();
+  }, []);
+  const columns = [
+    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 1,
+      name: "Ảnh",
+      selector: (row) => (
+        <img
+          className="row-image"
+          src={
+            row.information
+              ? row.information.avatar
+                ? `${row.information.avatar}`
+                : "Chưa có"
+              : "Chưa có"
+          }
+        />
+      ),
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 2,
+      name: "Tên khách hàng",
+      selector: (row) => row.user_name,
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 3,
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 4,
+      name: "Địa chỉ",
+      selector: (row) => (
+        <p>
+          {row.information
+            ? row.information.address
+              ? row.information.address
+              : "Chưa có"
+            : "Chưa có"}
+        </p>
+      ),
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 5,
-    },
-    {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      email: "nguyenvana123@gmail.com",
-      location: "Hà Nội",
-      index: 6,
+      name: "Action",
+      selector: (row) => (
+        <div>
+          <button className="row-action-button">Update</button>
+        </div>
+      ),
+      sortable: true,
     },
   ];
   return (
@@ -61,35 +85,11 @@ const Customers = () => {
         <CustomerAdd openModal={openModal} setOpenModal={setOpenModal} />
       )}
       <p className="title-product">Customers</p>
-      <div className="option-menu">
-        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-          Thêm dữ liệu
-        </button>
-        <div class="filter-dropdown">
-          <select class="filter-dropdown-select">
-            <option value="all">Tất cả</option>
-            <option value="option1">Tùy chọn 1</option>
-            <option value="option2">Tùy chọn 2</option>
-            <option value="option3">Tùy chọn 3</option>
-          </select>
-        </div>
-      </div>
+      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+        Thêm dữ liệu
+      </button>
 
-      <div className="title-table">
-        <p>Index</p>
-        <p>Image</p>
-        <p>Name</p>
-        <p>Email</p>
-        <p>Location</p>
-        <p>Action</p>
-      </div>
-
-      {itemCustomers.map((item, index) => (
-        <div key={index}>
-          <ItemCustomers customer={item} />
-        </div>
-      ))}
-      <Pagingation />
+      <DataTable columns={columns} data={customers} pagination responsive />
     </div>
   );
 };

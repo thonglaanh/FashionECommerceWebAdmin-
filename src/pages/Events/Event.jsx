@@ -1,54 +1,80 @@
-import React, { useState } from "react";
-import Pagingation from "../../components/Pagingation";
-import ItemEvents from "../../components/Items/ItemEvents";
+import React, { useEffect, useState } from "react";
 import EventAdd from "./EventAdd";
 import ModalDelete from "../../components/ModalDelete";
 import EventUpdate from "./EventUpdate";
+import axios from "axios";
+import config from "../../config";
+import { Link } from "react-router-dom";
+import slug from "slugifi";
+import DataTable from "react-data-table-component";
+const convertToSlug = (text) => {
+  return slug(text, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
+};
 
 const Event = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const itemEvents = [
+  const [discount, setDiscount] = useState([]);
+  useEffect(() => {
+    const fetchData = () => {
+      const userId = localStorage.getItem("userId");
+      const accessToken = localStorage.getItem("accessToken");
+      axios
+        .get(config.API_IP + "/admin/discount", {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.message);
+          setDiscount(res.data.message);
+        });
+    };
+    fetchData();
+  }, []);
+  const columns = [
+    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      start: "01-01-2024",
-      end: "21-01-2024",
-      index: 7,
+      name: "Tên sản phẩm",
+      selector: (row) => row.discount_name,
+      sortable: true,
+    },
+
+    {
+      name: "Số lượng",
+      selector: (row) => row.discount_code,
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      start: "01-01-2024",
-      end: "21-01-2024",
-      index: 6,
+      name: "Bắt đầu",
+      selector: (row) => row.discount_start_date,
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      start: "01-01-2024",
-      end: "21-01-2024",
-      index: 5,
+      name: "Kết thúc",
+      selector: (row) => row.discount_end_date,
+      sortable: true,
     },
     {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      start: "01-01-2024",
-      end: "21-01-2024",
-      index: 4,
-    },
-    {
-      image:
-        "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg",
-      name: "Nguyễn Văn A",
-      start: "01-01-2024",
-      end: "21-01-2024",
-      index: 3,
+      name: "Action",
+      selector: (row) => (
+        <Link
+          to={`/products/${convertToSlug(row.discount_name)}`}
+          state={{ row }}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <a href="" className="view-detail">
+            View detail
+          </a>
+        </Link>
+      ),
+      sortable: true,
     },
   ];
   return (
@@ -69,39 +95,11 @@ const Event = () => {
         />
       )}
       <p className="title-product">Event</p>
-      <div className="option-menu">
-        <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-          Thêm dữ liệu
-        </button>
-        <div class="filter-dropdown">
-          <select class="filter-dropdown-select">
-            <option value="all">Tất cả</option>
-            <option value="option1">Tùy chọn 1</option>
-            <option value="option2">Tùy chọn 2</option>
-            <option value="option3">Tùy chọn 3</option>
-          </select>
-        </div>
-      </div>
+      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
+        Thêm dữ liệu
+      </button>
 
-      <div className="title-table">
-        <p>Index</p>
-        <p>Image</p>
-        <p>Name</p>
-        <p>Start</p>
-        <p>End</p>
-        <p>Action</p>
-      </div>
-
-      {itemEvents.map((item, index) => (
-        <div key={index}>
-          <ItemEvents
-            event={item}
-            setOpenModalDelete={setOpenModalDelete}
-            setOpenModalUpdate={setOpenModalUpdate}
-          />
-        </div>
-      ))}
-      <Pagingation />
+      <DataTable columns={columns} data={discount} pagination responsive />
     </div>
   );
 };

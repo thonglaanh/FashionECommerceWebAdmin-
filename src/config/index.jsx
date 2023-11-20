@@ -1,5 +1,5 @@
-const API_URL = "http://192.168.1.29:3000";
+const API_IP = "https://serverapiecommercefashion.onrender.com/v1/api";
 
 export default {
-  API_URL,
+  API_IP,
 };
