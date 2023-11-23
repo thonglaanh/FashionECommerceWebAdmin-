@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import "../../styles/Row.css";
 import "../../styles/Modal.css";
 import { Modal } from "antd";
+import moment from "moment/moment";
 
 const OrderScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,7 +119,10 @@ const OrderScreen = () => {
               })}
             </p>
 
-            <p>Thời gian đặt hàng : {selected.createdAt}</p>
+            <p>
+              Thời gian đặt hàng :{" "}
+              {moment(selected.createdAt).format("HH:mm:ss DD/MM/YYYY")}
+            </p>
             <p>Trạng thái : {selected.order_status}</p>
           </div>
         ) : (

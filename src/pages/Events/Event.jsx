@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import slug from "slugifi";
 import DataTable from "react-data-table-component";
 import { Modal } from "antd";
+import moment from "moment";
 const convertToSlug = (text) => {
   return slug(text, {
     lower: true,
@@ -59,12 +60,14 @@ const Event = () => {
     },
     {
       name: "Bắt đầu",
-      selector: (row) => row.discount_start_date,
+      selector: (row) =>
+        moment(selected.discount_start_date).format("HH:mm:ss DD/MM/YYYY"),
       sortable: true,
     },
     {
       name: "Kết thúc",
-      selector: (row) => row.discount_end_date,
+      selector: (row) =>
+        moment(selected.discount_end_date).format("HH:mm:ss DD/MM/YYYY"),
       sortable: true,
     },
     {
@@ -105,8 +108,16 @@ const Event = () => {
             <p>Mã giảm giá : {selected.discount_code}</p>
             <p>Tên mã giảm giá : {selected.discount_name}</p>
             <p>Chi tiết : {selected.discount_des}</p>
-            <p>Bắt đầu : {selected.discount_start_date}</p>
-            <p>Kết thúc : {selected.discount_end_date}</p>
+            <p>
+              Bắt đầu :{" "}
+              {moment(selected.discount_start_date).format(
+                "HH:mm:ss DD/MM/YYYY"
+              )}
+            </p>
+            <p>
+              Kết thúc :{" "}
+              {moment(selected.discount_end_date).format("HH:mm:ss DD/MM/YYYY")}
+            </p>
             <p>Loại mã : {selected.discount_type}</p>
           </div>
         ) : (

@@ -107,18 +107,22 @@ const DashBroad = () => {
       ),
     },
     {
-      name: "Tên",
+      name: "Tên sản phẩm",
       selector: (row) => row.productInfo[0].product_name,
       sortable: true,
     },
     {
       name: "Giá",
-      selector: (row) => row.productInfo[0].product_price,
+      selector: (row) =>
+        row.productInfo[0].product_price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }),
       sortable: true,
     },
     {
       name: "Số lượng",
-      selector: (row) => row.totalSoldQuantity,
+      selector: (row) => row.productInfo[0].product_quantity,
       sortable: true,
     },
     {

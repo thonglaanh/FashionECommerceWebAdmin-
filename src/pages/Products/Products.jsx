@@ -51,7 +51,12 @@ const Products = () => {
     },
     {
       name: "Giá sản phẩm",
-      selector: (row) => row.product_price,
+      selector: (row) =>
+        row.product_price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }),
+
       sortable: true,
     },
     {
@@ -107,7 +112,13 @@ const Products = () => {
             <p>Tên sản phẩm : {selected.product_name}</p>
             <p>Tên cửa hàng : {selected.product_shop.nameShop}</p>
             <p>Đánh giá : {selected.product_ratingAverage}</p>
-            <p>Giá tiền : {selected.product_price}</p>
+            <p>
+              Giá tiền :{" "}
+              {selected.product_price.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </p>
             <p>Còn lại : {selected.product_quantity}</p>
             <p>Chi tiết : {selected.product_description}</p>
           </div>
