@@ -1,33 +1,17 @@
-.modal_container_category,
-.modal_container_event,
-.modal_container_delete,
-.modal_container_shop,
-.modal_container_customer,
-.modal_container_product {
-  z-index: 999;
+.main-container {
+  justify-content: center;
   width: 600px;
-  pointer-events: auto;
+  z-index: 99;
   position: absolute;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: #ffffff;
-  box-sizing: border-box;
+  left: 32vw;
+  background-color: white;
+  padding: 0 15px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border: 1px solid var(--gh-grey-4);
+  flex-direction: column;
+  box-sizing: border-box;
   border-radius: 4px;
-  padding: 0px 20px;
-  color: #333333;
 }
-.main-container {
-  display: flex;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  width: 1200px;
-  height: 100vh;
-  z-index: 9999;
-}
-
 .modal-container input {
   border: none;
   border-bottom: 1px solid #c0c0c0;
@@ -37,7 +21,6 @@
   outline: none;
   font-size: 14px;
 }
-
 .modal-container button,
 .modal_container_delete button {
   background-color: #47474c;
@@ -70,6 +53,4 @@
   left: 320;
   width: 40px;
   height: 40px;
-}
-@media (max-width: 1023px) {
 }

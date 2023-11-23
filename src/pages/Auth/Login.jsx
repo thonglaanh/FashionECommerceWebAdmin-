@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import config from "../../config/index";
 import axios from "axios";
+import { Button, message, Space } from "antd";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,17 +27,22 @@ const Login = () => {
         console.log(res);
         localStorage.setItem("userId", res.data.message.userId);
         localStorage.setItem("accessToken", res.data.message.accessToken);
-        toast.success("Đăng nhập thành công!", {
-          position: "top-center",
+        await messageApi.open({
+          type: "success",
+          content: "Đăng nhập thành công",
         });
         navigate("/dashbroads");
       })
       .catch((e) => {
-        console.log(e);
+        messageApi.open({
+          type: "error",
+          content: "Đăng nhập thất bại",
+        });
       });
   };
   return (
     <div className="container__login">
+      {contextHolder}
       <form className="container__form__login" onSubmit={handleSubmit}>
         <img src={logo} className="logo__login" />
         <p className="title__login">ĐĂNG NHẬP</p>

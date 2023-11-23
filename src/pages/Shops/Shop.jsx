@@ -1,45 +1,73 @@
 import React, { useEffect, useState } from "react";
-import ShopAdd from "./ShopAdd";
 import axios from "axios";
-import config from "../../config";
 import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
-import slug from "slugifi";
+import { Modal } from "antd";
 import "../../styles/Row.css";
+import config from "../../config";
 
-const Shop = () => {
+const Shops = () => {
   const [openModal, setOpenModal] = useState(false);
   const [shops, setShops] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [name, setName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState({});
+  const [img, setImg] = useState(
+    "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
+  );
+  const [email, setEmail] = useState();
+  const [date, setDate] = useState();
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("date", date);
+      formData.append("name", name);
+      formData.append("img", selectedImage);
+      const response = await axios.post(formData);
+      localStorage.setItem(
+        "account",
+        JSON.stringify(response.data.data.account)
+      );
+    } catch (error) {
+      console.log("Failed" + error);
+    }
+  };
+
+  const handleCancel = () => {
+    setOpenModal(false);
+  };
+
   useEffect(() => {
-    const fetchData = () => {
-      const userId = localStorage.getItem("userId");
-      const accessToken = localStorage.getItem("accessToken");
-      axios
-        .get(config.API_IP + "/admin/shop", {
+    const fetchData = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await axios.get(config.API_IP + "/admin/shop", {
           headers: {
             "x-xclient-id": userId,
             authorization: accessToken,
           },
-        })
-        .then((res) => {
-          console.log(res.data.message);
-          setShops(res.data.message);
         });
+        setShops(response.data.message);
+        console.log(response.data.message);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
     fetchData();
   }, []);
-  const convertToSlug = (text) => {
-    return slug(text, {
-      lower: true,
-      remove: /[*+~.()'"!:@]/g,
-    });
-  };
+
   const columns = [
-    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
     {
       name: "Ảnh",
       selector: (row) => <img className="row-image" src={row.avatarShop} />,
-      sortable: true,
     },
     {
       name: "Tên cửa hàng",
@@ -48,6 +76,11 @@ const Shop = () => {
     },
     {
       name: "Email",
+      selector: (row) => row.emailShop,
+      sortable: true,
+    },
+    {
+      name: "Số điện thoại",
       selector: (row) => `0${row.phoneNumberShop}`,
       sortable: true,
     },
@@ -59,32 +92,68 @@ const Shop = () => {
     {
       name: "Action",
       selector: (row) => (
-        <Link
-          to={`/shop/${convertToSlug(row.nameShop)}`}
-          state={{ row }}
-          className="row-action-button"
+        <a
+          className="view-detail"
+          onClick={() => {
+            setIsModalOpen(true);
+            setSelected(row);
+          }}
         >
-          <a href="" className="view-detail">
-            View detail
-          </a>
-        </Link>
+          View detail
+        </a>
       ),
-      sortable: true,
     },
   ];
+  const customHeader = {
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        backgroundColor: "#e0e0e0",
+      },
+    },
+  };
+
   return (
     <div className="selling">
-      {openModal && (
-        <ShopAdd openModal={openModal} setOpenModal={setOpenModal} />
-      )}
-      <p className="title-product">Shops</p>
-      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-        Thêm dữ liệu
-      </button>
+      <div style={{ marginBottom: "10px" }}>
+        <p className="title_page">Cửa hàng</p>
+      </div>
+      <Modal
+        title="Thông tin cửa hàng"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        {isModalOpen == true ? (
+          <div>
+            <img className="detail_image" src={selected.avatarShop} />
+            <div>
+              <p>Id : {selected._id}</p>
+              <p>Tên cửa hàng : {selected.nameShop}</p>
+              <p>Email : {selected.emailShop}</p>
+              <p>Liên hệ : 0{selected.phoneNumberShop}</p>
+              <p>Địa chỉ : {selected.address}</p>
+              <p>Giới thiệu : {selected.des}</p>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Modal>
 
-      <DataTable columns={columns} data={shops} pagination responsive />
+      <DataTable
+        columns={columns}
+        data={shops}
+        pagination
+        responsive
+        paginationPerPage={7}
+        highlightOnHover
+        customStyles={customHeader}
+        striped
+      />
     </div>
   );
 };
 
-export default Shop;
+export default Shops;

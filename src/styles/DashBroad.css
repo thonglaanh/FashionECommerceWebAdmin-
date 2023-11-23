@@ -55,6 +55,10 @@
 .selling {
   margin: 10px 0px;
 }
+.selling.active {
+  background-color: black;
+  z-index: 999;
+}
 
 .title-table {
   display: grid;
@@ -92,6 +96,7 @@
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 /* Styles cho dropdown menu */
@@ -119,5 +124,33 @@
 .filter-dropdown-content a:hover {
   background-color: #ddd;
 }
-@media (max-width: 1023px) {
+.dashbroad-content {
+  display: flex;
+  grid-template-columns: repeat(1fr, 1fr);
+  flex-direction: row;
+  margin-top: 25px;
+}
+.top-selling {
+  width: 50%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-chart {
+  width: 50%;
+  margin: 10px;
+}
+
+.title-dashbroad {
+  font-size: 18px;
+}
+.search-input {
+  padding: 10px;
+  width: 300px;
+  border-radius: 20px;
+  border: 1px solid #c7c7c7;
+  outline: none;
+  margin: 5px 0px;
+  font-size: 12px;
 }

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import ProductAdd from "./ProductAdd";
 import axios from "axios";
 import config from "../../config";
 import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
-import slug from "slugifi";
 import "../../styles/Row.css";
+import { Modal } from "antd";
 
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState([]);
-  const convertToSlug = (text) => {
-    return slug(text, {
-      lower: true,
-      remove: /[*+~.()'"!:@]/g,
-    });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState({});
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
   useEffect(() => {
     const fetchData = () => {
@@ -31,19 +31,18 @@ const Products = () => {
         })
         .then((res) => {
           setProducts(res.data.message);
-          console.log(res);
+          console.log(res.data.message);
         });
     };
     fetchData();
   }, []);
   const columns = [
-    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
     {
       name: "Ảnh",
       selector: (row) => (
         <img className="row-image" src={row.product_thumb[0]} />
       ),
-      sortable: true,
     },
     {
       name: "Tên sản phẩm",
@@ -61,31 +60,71 @@ const Products = () => {
       sortable: true,
     },
     {
-      name: "Action",
-      selector: (row) => (
-        <Link
-          to={`/products/${convertToSlug(row.product_name)}`}
-          state={{ row }}
-        >
-          <a href="" className="view-detail">
-            View detail
-          </a>
-        </Link>
-      ),
+      name: "Đánh giá",
+      selector: (row) => row.product_ratingAverage,
       sortable: true,
     },
+
+    {
+      name: "Action",
+      selector: (row) => (
+        <a
+          onClick={() => {
+            setIsModalOpen(true);
+
+            setSelected(row);
+          }}
+          style={{ color: "blue", cursor: "pointer" }}
+        >
+          View detail
+        </a>
+      ),
+    },
   ];
+  const customHeader = {
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        backgroundColor: "#e0e0e0",
+      },
+    },
+  };
   return (
     <div className="selling">
-      {openModal && (
-        <ProductAdd openModal={openModal} setOpenModal={setOpenModal} />
-      )}
-      <p className="title-product">Products</p>
-      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-        Thêm dữ liệu
-      </button>
+      <div style={{ marginBottom: "10px" }}>
+        <p className="title_page">Cửa hàng</p>
+      </div>
+      <Modal
+        title="Thông tin sản phẩm"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        {isModalOpen == true ? (
+          <div>
+            <img className="detail_image" src={selected.product_thumb[0]} />
+            <p>Tên sản phẩm : {selected.product_name}</p>
+            <p>Tên cửa hàng : {selected.product_shop.nameShop}</p>
+            <p>Đánh giá : {selected.product_ratingAverage}</p>
+            <p>Giá tiền : {selected.product_price}</p>
+            <p>Còn lại : {selected.product_quantity}</p>
+            <p>Chi tiết : {selected.product_description}</p>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Modal>
 
-      <DataTable columns={columns} data={products} pagination responsive />
+      <DataTable
+        columns={columns}
+        data={products}
+        pagination
+        responsive
+        paginationPerPage={7}
+        highlightOnHover
+        customStyles={customHeader}
+      />
     </div>
   );
 };

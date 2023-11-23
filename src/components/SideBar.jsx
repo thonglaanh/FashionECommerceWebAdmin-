@@ -6,8 +6,8 @@ import { useState } from "react";
 import axios from "axios";
 import config from "../config";
 import { ToastContainer, toast } from "react-toastify";
+import { Modal } from "antd";
 const SideBar = ({ children }) => {
-  const [account, setAccount] = useState({});
   const navigate = useNavigate();
   const menuItem = [
     {
@@ -46,6 +46,16 @@ const SideBar = ({ children }) => {
       icon: "assets/order-delivery.png",
     },
   ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    handlerLogout();
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const handlerLogout = async () => {
     try {
       const userId = localStorage.getItem("userId");
@@ -64,7 +74,6 @@ const SideBar = ({ children }) => {
           }
         )
         .then((res) => {
-          console.log(res);
           localStorage.removeItem("userId");
           localStorage.removeItem("accessToken");
           navigate("/");
@@ -79,6 +88,14 @@ const SideBar = ({ children }) => {
   return (
     <div className="main-container-sidebar">
       <div className="sidebar-container">
+        <Modal
+          title="Log out"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>Bạn có chắc chắn muốn đăng xuất không ?</p>
+        </Modal>
         <img className="sidebar-logo" src={require("../assets/logo.png")} />
         {menuItem.map((item, index) => (
           <NavLink
@@ -105,7 +122,7 @@ const SideBar = ({ children }) => {
           <img
             src={require("../assets/exit.png")}
             className="icon__logout"
-            onClick={() => handlerLogout()}
+            onClick={() => showModal()}
           />
         </div>
       </div>

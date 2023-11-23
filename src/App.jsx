@@ -7,15 +7,11 @@ import Customers from "./pages/Customers/Customers.jsx";
 import Shop from "./pages/Shops/Shop";
 import Categories from "./pages/Categories/Categories";
 import Products from "./pages/Products/Products.jsx";
-import CustomerDetail from "./pages/Customers/CustomerDetail";
-import ShopDetail from "./pages/Shops/ShopDetail.jsx";
 import ProductDetail from "./pages/Products/ProductDetail.jsx";
-import { ToastContainer } from "react-toastify";
 import OrderScreen from "./pages/Orders/OderScreen.jsx";
 function App() {
   return (
     <Router>
-      <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
@@ -74,22 +70,7 @@ function App() {
             </SideBar>
           }
         />
-        <Route
-          path="/customers/:slug"
-          element={
-            <SideBar>
-              <CustomerDetail />
-            </SideBar>
-          }
-        />
-        <Route
-          path="/shop/:slug"
-          element={
-            <SideBar>
-              <ShopDetail />
-            </SideBar>
-          }
-        />
+
         <Route
           path="/products/:slug"
           element={

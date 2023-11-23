@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config";
-import { Link } from "react-router-dom";
-import slug from "slugifi";
 import DataTable from "react-data-table-component";
 import "../../styles/Row.css";
-
-const convertToSlug = (text) => {
-  return slug(text, {
-    lower: true,
-    remove: /[*+~.()'"!:@]/g,
-  });
-};
+import "../../styles/Modal.css";
+import { Modal } from "antd";
 
 const OrderScreen = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState({});
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const [orders, setOrder] = useState([]);
   useEffect(() => {
     const fetchData = () => {
@@ -35,7 +35,7 @@ const OrderScreen = () => {
     fetchData();
   }, []);
   const columns = [
-    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
 
     {
       name: "Tên khách hàng",
@@ -60,17 +60,82 @@ const OrderScreen = () => {
     {
       name: "Trạng thái",
       selector: (row) => row.order_status,
-      sortable: true,
+    },
+    {
+      name: "Action",
+      selector: (row) => (
+        <a
+          onClick={() => {
+            setIsModalOpen(true);
+
+            setSelected(row);
+          }}
+          style={{ color: "blue", cursor: "pointer" }}
+        >
+          View detail
+        </a>
+      ),
     },
   ];
+  const customHeader = {
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        backgroundColor: "#e0e0e0",
+      },
+    },
+  };
   return (
     <div className="selling">
-      <p className="title-product">Event</p>
-      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-        Thêm dữ liệu
-      </button>
+      <p className="title_page" style={{ marginBottom: "10px" }}>
+        Order
+      </p>
+      <Modal
+        title="Thông tin đơn hàng"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        style={{ textAlign: "center" }}
+        bodyStyle={{ textAlign: "left", marginTop: "20px" }}
+      >
+        {isModalOpen == true ? (
+          <div>
+            <p>Khách hàng : {selected.order_userId.email}</p>
+            <p>Cửa hàng : {selected.order_userId.email}</p>
+            <p>
+              Sản phẩm :{" + "}
+              {selected.order_products
+                .map((product) => product.shopId)
+                .join("   \n+")}
+            </p>
+            <p>Địa chỉ nhận hàng : {selected.order_shipping.City}</p>
+            <p>
+              Tổng giá đơn hàng :{" "}
+              {selected.order_checkout.totalPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </p>
 
-      <DataTable columns={columns} data={orders} pagination responsive />
+            <p>Thời gian đặt hàng : {selected.createdAt}</p>
+            <p>Trạng thái : {selected.order_status}</p>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Modal>
+
+      <DataTable
+        columns={columns}
+        data={orders}
+        pagination
+        responsive
+        paginationPerPage={7}
+        highlightOnHover
+        customStyles={customHeader}
+        striped
+      />
     </div>
   );
 };

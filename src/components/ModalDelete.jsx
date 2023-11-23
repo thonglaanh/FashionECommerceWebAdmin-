@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Modal.css";
 
-const ModalDelete = ({ openModal, setOpenModal }) => {
+const ModalDelete = ({ openModal, setOpenModal, item }) => {
   return (
     <div className="main-container">
       <div className="modal_container_delete modal-container">
@@ -10,7 +10,8 @@ const ModalDelete = ({ openModal, setOpenModal }) => {
         </p>
         <div
           style={{
-            marginTop: "65px",
+            marginTop: "15px",
+            marginBottom: "15px",
             width: "100%",
             display: "flex",
             flexDirection: "row",

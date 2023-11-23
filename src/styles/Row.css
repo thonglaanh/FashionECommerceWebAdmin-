@@ -1,6 +1,8 @@
 .row-image {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
+  padding: 5px;
+  object-fit: cover;
 }
 .row-action-button {
   width: 100px;
@@ -8,6 +10,7 @@
   border: none;
   background-color: #777777;
   padding: 5px 20px;
+  margin-right: 10px;
 }
 .view-detail {
   text-decoration: none;

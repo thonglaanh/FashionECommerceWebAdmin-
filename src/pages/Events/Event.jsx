@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import EventAdd from "./EventAdd";
-import ModalDelete from "../../components/ModalDelete";
-import EventUpdate from "./EventUpdate";
 import axios from "axios";
 import config from "../../config";
 import { Link } from "react-router-dom";
 import slug from "slugifi";
 import DataTable from "react-data-table-component";
+import { Modal } from "antd";
 const convertToSlug = (text) => {
   return slug(text, {
     lower: true,
@@ -15,10 +13,18 @@ const convertToSlug = (text) => {
 };
 
 const Event = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [discount, setDiscount] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState({});
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     const fetchData = () => {
       const userId = localStorage.getItem("userId");
@@ -38,7 +44,7 @@ const Event = () => {
     fetchData();
   }, []);
   const columns = [
-    { name: "ID", sortable: true, selector: (row, index) => `#${index + 1}` },
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
 
     {
       name: "Tên sản phẩm",
@@ -64,42 +70,60 @@ const Event = () => {
     {
       name: "Action",
       selector: (row) => (
-        <Link
-          to={`/products/${convertToSlug(row.discount_name)}`}
-          state={{ row }}
-          style={{ textDecoration: "none", color: "inherit" }}
+        <a
+          className="view-detail"
+          onClick={() => {
+            showModal();
+            setSelected(row);
+          }}
         >
-          <a href="" className="view-detail">
-            View detail
-          </a>
-        </Link>
+          View detail
+        </a>
       ),
-      sortable: true,
     },
   ];
+  const customHeader = {
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        backgroundColor: "#e0e0e0",
+      },
+    },
+  };
   return (
     <div className="selling">
-      {openModal && (
-        <EventAdd openModal={openModal} setOpenModal={setOpenModal} />
-      )}
-      {openModalDelete && (
-        <ModalDelete
-          openModal={openModalDelete}
-          setOpenModal={setOpenModalDelete}
-        />
-      )}
-      {openModalUpdate && (
-        <EventUpdate
-          openModal={openModalUpdate}
-          setOpenModal={setOpenModalUpdate}
-        />
-      )}
-      <p className="title-product">Event</p>
-      <button class="add-button" onClick={() => setOpenModal(!openModal)}>
-        Thêm dữ liệu
-      </button>
+      <p className="title_page">Discount</p>
+      <Modal
+        title="Thông tin giảm giá"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        {isModalOpen == true ? (
+          <div>
+            <p>Mã giảm giá : {selected.discount_code}</p>
+            <p>Tên mã giảm giá : {selected.discount_name}</p>
+            <p>Chi tiết : {selected.discount_des}</p>
+            <p>Bắt đầu : {selected.discount_start_date}</p>
+            <p>Kết thúc : {selected.discount_end_date}</p>
+            <p>Loại mã : {selected.discount_type}</p>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Modal>
 
-      <DataTable columns={columns} data={discount} pagination responsive />
+      <DataTable
+        columns={columns}
+        data={discount}
+        pagination
+        responsive
+        paginationPerPage={7}
+        highlightOnHover
+        customStyles={customHeader}
+        striped
+      />
     </div>
   );
 };
