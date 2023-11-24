@@ -4,6 +4,9 @@ import axios from "axios";
 import config from "../config";
 import DataTable from "react-data-table-component";
 import { Chart } from "react-google-charts";
+import { Layout } from "antd";
+
+const { Footer } = Layout;
 const DashBroad = () => {
   const [customer, setCustomers] = useState();
   const [category, setCategory] = useState();
@@ -70,31 +73,31 @@ const DashBroad = () => {
     {
       background: "#FFCC99",
       icon: "assets/people.png",
-      title: "Customers",
+      title: "Người dùng",
       statistical: customer,
     },
     {
       background: "#99FF33",
       icon: "assets/category (2).png",
-      title: "Category",
+      title: "Danh mục",
       statistical: category,
     },
     {
       background: "#97FFFF",
       icon: "assets/products.png",
-      title: "Products",
+      title: "Sản phẩm",
       statistical: product,
     },
     {
       background: "#EE82EE",
       icon: "assets/storecolor.png",
-      title: "Stores",
+      title: "Cửa hàng",
       statistical: store,
     },
     {
       background: "#D2B48C",
       icon: "assets/bill.png",
-      title: "Bills",
+      title: "Hóa đơn",
       statistical: bill,
     },
   ];
@@ -107,7 +110,7 @@ const DashBroad = () => {
       ),
     },
     {
-      name: "Tên sản phẩm",
+      name: "Tên",
       selector: (row) => row.productInfo[0].product_name,
       sortable: true,
     },
@@ -121,13 +124,21 @@ const DashBroad = () => {
       sortable: true,
     },
     {
-      name: "Số lượng",
-      selector: (row) => row.productInfo[0].product_quantity,
+      name: "Đã bán",
+      selector: (row) => row.totalSoldQuantity,
       sortable: true,
     },
     {
       name: "Đánh giá",
-      selector: (row) => row.productInfo[0].product_ratingAverage,
+      selector: (row) => (
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <p>{row.productInfo[0].product_ratingAverage}</p>
+          <img
+            src={require("../assets/star.png")}
+            style={{ width: "20px", height: "20px", marginLeft: "7px" }}
+          />
+        </div>
+      ),
       sortable: true,
     },
   ];
@@ -145,7 +156,7 @@ const DashBroad = () => {
     <div>
       <p className="title-home">Trang chủ</p>
       <div className="statistical">
-        <p className="title-block">Statistical</p>
+        <p className="title-block">Tổng quan</p>
         <div className="item-statistical">
           {itemStatistical.map((item, index) => (
             <div className="contaner-statistical">
@@ -186,7 +197,7 @@ const DashBroad = () => {
               justifyContent: "space-between",
             }}
           >
-            <p className="title-dashbroad">Thống kê</p>
+            <p className="title-dashbroad">Thống kê từng năm</p>
             <select
               onChange={(e) => {
                 setYear(e.target.value);
@@ -203,7 +214,7 @@ const DashBroad = () => {
             width="100%"
             height="400px"
             data={chartData}
-          />
+          ></Chart>
         </div>
       </div>
     </div>

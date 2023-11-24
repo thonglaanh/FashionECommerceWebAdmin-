@@ -3,19 +3,12 @@ import axios from "axios";
 import config from "../../config";
 import DataTable from "react-data-table-component";
 import "../../styles/Row.css";
-import { Modal } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Products = () => {
-  const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState({});
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const [search, setSearch] = useState("");
   useEffect(() => {
     const fetchData = () => {
       const userId = localStorage.getItem("userId");
@@ -66,23 +59,27 @@ const Products = () => {
     },
     {
       name: "Đánh giá",
-      selector: (row) => row.product_ratingAverage,
-      sortable: true,
+      selector: (row) => (
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <p>{row.product_ratingAverage}</p>
+          <img
+            src={require("../../assets/star.png")}
+            style={{ width: "20px", height: "20px", marginLeft: "7px" }}
+          />
+        </div>
+      ),
+    },
+    {
+      name: "Trạng thái",
+      selector: (row) => <p>{row.isPublished ? "Hiện thị" : "Ẩn"}</p>,
     },
 
     {
       name: "Action",
       selector: (row) => (
-        <a
-          onClick={() => {
-            setIsModalOpen(true);
-
-            setSelected(row);
-          }}
-          style={{ color: "blue", cursor: "pointer" }}
-        >
+        <Link to={`/products/${row.product_slug}`} state={{ row }}>
           View detail
-        </a>
+        </Link>
       ),
     },
   ];
@@ -92,49 +89,82 @@ const Products = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
+        border: "1px solid #ddd",
+      },
+    },
+    rows: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
       },
     },
   };
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    const result = products.filter((item) => {
+      return search.length !== 0
+        ? item.product_name.toUpperCase().includes(search.toUpperCase())
+        : true;
+    });
+    setFilteredProducts(result);
+  }, [search, products]);
   return (
     <div className="selling">
       <div style={{ marginBottom: "10px" }}>
-        <p className="title_page">Cửa hàng</p>
+        <p className="title_page">Sản phẩm</p>
       </div>
-      <Modal
-        title="Thông tin sản phẩm"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        {isModalOpen == true ? (
-          <div>
-            <img className="detail_image" src={selected.product_thumb[0]} />
-            <p>Tên sản phẩm : {selected.product_name}</p>
-            <p>Tên cửa hàng : {selected.product_shop.nameShop}</p>
-            <p>Đánh giá : {selected.product_ratingAverage}</p>
-            <p>
-              Giá tiền :{" "}
-              {selected.product_price.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </p>
-            <p>Còn lại : {selected.product_quantity}</p>
-            <p>Chi tiết : {selected.product_description}</p>
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </Modal>
-
       <DataTable
         columns={columns}
-        data={products}
+        data={filteredProducts}
         pagination
         responsive
-        paginationPerPage={7}
+        paginationPerPage={6}
         highlightOnHover
         customStyles={customHeader}
+        striped
+        subHeader
+        style={{
+          border: "1px solid red",
+        }}
+        subHeaderComponent={
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
+            >
+              <input
+                type="text"
+                className="search-input"
+                form-control
+                placeholder="Nhập từ khóa tìm kiếm..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <SearchOutlined
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "20px",
+                  color: "black",
+                }}
+              />
+            </div>
+          </div>
+        }
       />
     </div>
   );

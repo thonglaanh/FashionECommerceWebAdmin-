@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import { Button, Modal } from "antd";
 import "../../styles/Row.css";
 import config from "../../config";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Customers = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -12,11 +13,14 @@ const Customers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState({});
   const [name, setName] = useState("");
+  const [filteredCustomer, setFilteredCustomer] = useState([]);
+
   const [img, setImg] = useState(
     "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
   );
   const [email, setEmail] = useState();
   const [date, setDate] = useState();
+  const [search, setSearch] = useState("");
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -137,8 +141,26 @@ const Customers = () => {
         backgroundColor: "#e0e0e0",
       },
     },
+    rows: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
   };
 
+  useEffect(() => {
+    const result = customers.filter((item) => {
+      return search.length !== 0
+        ? item.user_name.toUpperCase().includes(search.toUpperCase())
+        : true;
+    });
+    setFilteredCustomer(result);
+  }, [search, customers]);
   return (
     <div className="selling">
       <div style={{ marginBottom: "10px" }}>
@@ -183,13 +205,48 @@ const Customers = () => {
 
       <DataTable
         columns={columns}
-        data={customers}
+        data={filteredCustomer}
         pagination
         responsive
-        paginationPerPage={7}
+        paginationPerPage={6}
         highlightOnHover
         customStyles={customHeader}
         striped
+        subHeader
+        subHeaderComponent={
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
+            >
+              <input
+                type="text"
+                className="search-input"
+                form-control
+                placeholder="Nhập từ khóa tìm kiếm..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <SearchOutlined
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "20px",
+                  color: "black",
+                }}
+              />
+            </div>
+          </div>
+        }
       />
     </div>
   );

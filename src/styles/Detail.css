@@ -50,8 +50,9 @@
 }
 .detail_content div p {
   color: green;
-  font-size: 17px;
+  font-size: 15px;
   margin: 10px 20px;
+  text-decoration: underline;
 }
 .detail_title {
   font-size: 1.4rem;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { Modal } from "antd";
+import { Button, message, Modal } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import "../../styles/Row.css";
 import config from "../../config";
 
@@ -17,6 +18,7 @@ const Shops = () => {
   );
   const [email, setEmail] = useState();
   const [date, setDate] = useState();
+  const [search, setSearch] = useState("");
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -55,6 +57,17 @@ const Shops = () => {
         });
         setShops(response.data.message);
         console.log(response.data.message);
+
+        const response2 = await axios.get(
+          config.API_IP + "/admin/statisticalByShopId/" + shops[0]._id,
+          {
+            headers: {
+              "x-xclient-id": userId,
+              authorization: accessToken,
+            },
+          }
+        );
+        console.log(response2);
       } catch (error) {
         console.log(error);
       }
@@ -112,7 +125,33 @@ const Shops = () => {
         backgroundColor: "#e0e0e0",
       },
     },
+    rows: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    headCells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
   };
+
+  const [filteredShop, setFilteredShop] = useState([]);
+
+  useEffect(() => {
+    const result = shops.filter((item) => {
+      return search.length !== 0
+        ? item.nameShop.toUpperCase().includes(search.toUpperCase())
+        : true;
+    });
+    setFilteredShop(result);
+  }, [search, shops]);
 
   return (
     <div className="selling">
@@ -144,13 +183,48 @@ const Shops = () => {
 
       <DataTable
         columns={columns}
-        data={shops}
+        data={filteredShop}
         pagination
         responsive
-        paginationPerPage={7}
+        paginationPerPage={6}
         highlightOnHover
         customStyles={customHeader}
         striped
+        subHeader
+        subHeaderComponent={
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+
+              alignItems: "end",
+            }}
+          >
+            <div
+              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
+            >
+              <input
+                type="text"
+                className="search-input"
+                form-control
+                placeholder="Nhập từ khóa tìm kiếm..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <SearchOutlined
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "20px",
+                  color: "black",
+                }}
+              />
+            </div>
+          </div>
+        }
       />
     </div>
   );

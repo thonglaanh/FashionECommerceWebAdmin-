@@ -7,6 +7,9 @@ import axios from "axios";
 import config from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import { Modal } from "antd";
+import { Layout } from "antd";
+
+const { Footer } = Layout;
 const SideBar = ({ children }) => {
   const navigate = useNavigate();
   const menuItem = [
@@ -27,7 +30,7 @@ const SideBar = ({ children }) => {
     },
     {
       path: "/shops",
-      name: "Shop",
+      name: "Cửa hàng",
       icon: "assets/shop.png",
     },
     {
@@ -93,6 +96,7 @@ const SideBar = ({ children }) => {
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          okButtonProps={{ style: { background: "red", borderColor: "red" } }}
         >
           <p>Bạn có chắc chắn muốn đăng xuất không ?</p>
         </Modal>
@@ -127,7 +131,21 @@ const SideBar = ({ children }) => {
         </div>
       </div>
       <ToastContainer />
-      <main>{children}</main>
+      <div style={{ flexDirection: "column" }}>
+        <main>{children}</main>
+        <Footer
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            backgroundColor: "white",
+          }}
+        >
+          TrustyBuy Admin ©2023 Created by Nguyen Huu Thong
+        </Footer>
+      </div>
     </div>
   );
 };

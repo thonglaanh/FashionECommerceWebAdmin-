@@ -6,10 +6,14 @@ import "../../styles/Row.css";
 import "../../styles/Modal.css";
 import { Modal } from "antd";
 import moment from "moment/moment";
+import { SearchOutlined } from "@ant-design/icons";
 
 const OrderScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState({});
+  const [search, setSearch] = useState("");
+  const [filteredOrders, setFilteredOrders] = useState([]);
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -84,9 +88,30 @@ const OrderScreen = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
+        border: "1px solid #ddd",
+      },
+    },
+    rows: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
       },
     },
   };
+  useEffect(() => {
+    const result = orders.filter((item) => {
+      return search.length !== 0
+        ? item.order_userId.user_name
+            .toUpperCase()
+            .includes(search.toUpperCase())
+        : true;
+    });
+    setFilteredOrders(result);
+  }, [search, orders]);
   return (
     <div className="selling">
       <p className="title_page" style={{ marginBottom: "10px" }}>
@@ -99,6 +124,7 @@ const OrderScreen = () => {
         onCancel={handleCancel}
         style={{ textAlign: "center" }}
         bodyStyle={{ textAlign: "left", marginTop: "20px" }}
+        okButtonProps={{ style: { display: "none" } }}
       >
         {isModalOpen == true ? (
           <div>
@@ -132,13 +158,48 @@ const OrderScreen = () => {
 
       <DataTable
         columns={columns}
-        data={orders}
+        data={filteredOrders}
         pagination
         responsive
-        paginationPerPage={7}
+        paginationPerPage={6}
         highlightOnHover
         customStyles={customHeader}
         striped
+        subHeader
+        subHeaderComponent={
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
+            >
+              <input
+                type="text"
+                className="search-input"
+                form-control
+                placeholder="Nhập từ khóa tìm kiếm..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <SearchOutlined
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: "20px",
+                  color: "black",
+                }}
+              />
+            </div>
+          </div>
+        }
       />
     </div>
   );

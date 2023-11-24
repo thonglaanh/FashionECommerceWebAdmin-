@@ -200,28 +200,25 @@ const Categories = () => {
   const [search, setSearch] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
 
-  const handleOk = () => {
-    setOpenModalDelete(false);
+  const fetchData = () => {
+    const userId = localStorage.getItem("userId");
+    const accessToken = localStorage.getItem("accessToken");
+    axios
+      .get(config.API_IP + "/category/getAllCategory", {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        setCategories(res.data.message.category);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      const userId = localStorage.getItem("userId");
-      const accessToken = localStorage.getItem("accessToken");
-      axios
-        .get(config.API_IP + "/category/getAllCategory", {
-          headers: {
-            "x-xclient-id": userId,
-            authorization: accessToken,
-          },
-        })
-        .then((res) => {
-          setCategories(res.data.message.category);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
     fetchData();
   }, []);
 
@@ -285,10 +282,32 @@ const Categories = () => {
         minWidth: "50px",
       },
     },
+    rows: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    headCells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (name.length <= 0 || !thumb) {
+      await messageApi.open({
+        type: "error",
+        content: "Điền đủ thông tin!",
+      });
+      return;
+    }
     const userId = localStorage.getItem("userId");
     const accessToken = localStorage.getItem("accessToken");
     try {
@@ -301,11 +320,12 @@ const Categories = () => {
           authorization: accessToken,
         },
       });
+      setOpenModal(false);
+      fetchData();
       await messageApi.open({
         type: "success",
         content: "Thành công!",
       });
-      setOpenModal(false);
     } catch (error) {
       await messageApi.open({
         type: "error",
@@ -316,6 +336,13 @@ const Categories = () => {
   };
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
+    if (name.length <= 0 || !thumb) {
+      await messageApi.open({
+        type: "error",
+        content: "Điền đủ thông tin!",
+      });
+      return;
+    }
     const userId = localStorage.getItem("userId");
     const accessToken = localStorage.getItem("accessToken");
     try {
@@ -329,11 +356,12 @@ const Categories = () => {
           authorization: accessToken,
         },
       });
+      setOpenModalUpdate(false);
+      fetchData();
       await messageApi.open({
         type: "success",
         content: "Thành công!",
       });
-      setOpenModal(false);
     } catch (error) {
       await messageApi.open({
         type: "error",
@@ -355,7 +383,8 @@ const Categories = () => {
           authorization: accessToken,
         },
       });
-      setOpenModal(false);
+      setOpenModalDelete(false);
+      fetchData();
       await messageApi.open({
         type: "success",
         content: "Thành công!",

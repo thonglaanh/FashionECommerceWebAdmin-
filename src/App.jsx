@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import DashBroad from "./pages/DashBroad";
 import Login from "./pages/Auth/Login";
 import SideBar from "./components/SideBar";
@@ -9,6 +14,8 @@ import Categories from "./pages/Categories/Categories";
 import Products from "./pages/Products/Products.jsx";
 import ProductDetail from "./pages/Products/ProductDetail.jsx";
 import OrderScreen from "./pages/Orders/OderScreen.jsx";
+import { useEffect } from "react";
+import Private from "./components/private/index.jsx";
 function App() {
   return (
     <Router>
@@ -17,66 +24,82 @@ function App() {
         <Route
           path="/dashbroads"
           element={
-            <SideBar>
-              <DashBroad />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <DashBroad />{" "}
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/categories"
           element={
-            <SideBar>
-              <Categories />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <Categories />{" "}
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/discounts"
           element={
-            <SideBar>
-              <Event />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <Event />
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/customers"
           element={
-            <SideBar>
-              <Customers />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <Customers />
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/shops"
           element={
-            <SideBar>
-              <Shop />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <Shop />
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/order"
           element={
-            <SideBar>
-              <OrderScreen />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <OrderScreen />
+              </SideBar>
+            </Private>
           }
         />
         <Route
           path="/products"
           element={
-            <SideBar>
-              <Products />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <Products />
+              </SideBar>
+            </Private>
           }
         />
 
         <Route
           path="/products/:slug"
           element={
-            <SideBar>
-              <ProductDetail />
-            </SideBar>
+            <Private>
+              <SideBar>
+                <ProductDetail />
+              </SideBar>
+            </Private>
           }
         />
       </Routes>
