@@ -143,7 +143,7 @@ const Customers = () => {
     },
     rows: {
       style: {
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #ddd",
       },
     },
     cells: {

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = () => {
       const userId = localStorage.getItem("userId");
@@ -25,6 +26,19 @@ const Products = () => {
         .then((res) => {
           setProducts(res.data.message);
           console.log(res.data.message);
+        });
+      axios
+        .get(config.API_IP + "/category/getAllCategory", {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          setCategories(res.data.message.category);
+        })
+        .catch((e) => {
+          console.log(e);
         });
     };
     fetchData();
@@ -94,7 +108,7 @@ const Products = () => {
     },
     rows: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #000",
       },
     },
     cells: {

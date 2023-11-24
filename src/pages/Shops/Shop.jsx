@@ -123,16 +123,12 @@ const Shops = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
+        border: "1px solid #ddd",
       },
     },
     rows: {
       style: {
-        border: "1px solid #ddd",
-      },
-    },
-    headCells: {
-      style: {
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #ddd",
       },
     },
     cells: {

@@ -5,9 +5,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import config from "../config";
-import { ToastContainer, toast } from "react-toastify";
-import { Modal } from "antd";
-import { Layout } from "antd";
+import { Modal, Layout } from "antd";
 
 const { Footer } = Layout;
 const SideBar = ({ children }) => {
@@ -130,7 +128,6 @@ const SideBar = ({ children }) => {
           />
         </div>
       </div>
-      <ToastContainer />
       <div style={{ flexDirection: "column" }}>
         <main>{children}</main>
         <Footer

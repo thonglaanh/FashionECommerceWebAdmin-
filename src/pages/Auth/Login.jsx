@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../../styles/Login.css";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import config from "../../config/index";
 import axios from "axios";
-import { Button, message, Space } from "antd";
+import { message } from "antd";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

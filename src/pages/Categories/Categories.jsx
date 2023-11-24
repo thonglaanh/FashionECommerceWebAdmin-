@@ -270,7 +270,6 @@ const Categories = () => {
         </div>
       ),
     },
-    { name: "", selector: (row, index) => `` },
   ];
 
   const customHeader = {
@@ -280,14 +279,10 @@ const Categories = () => {
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
         minWidth: "50px",
-      },
-    },
-    rows: {
-      style: {
         border: "1px solid #ddd",
       },
     },
-    headCells: {
+    rows: {
       style: {
         border: "1px solid #ddd",
       },

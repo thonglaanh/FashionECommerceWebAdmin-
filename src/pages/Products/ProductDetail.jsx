@@ -8,6 +8,8 @@ import config from "../../config";
 const ProductDetail = () => {
   const location = useLocation();
   const product = location.state.row;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handlerUnPublish = async () => {
     const userId = localStorage.getItem("userId");
@@ -28,12 +30,35 @@ const ProductDetail = () => {
         },
       }
     );
-    console.log(res);
+    await messageApi.open({
+      type: "success",
+      content: "Thành công",
+    });
+    setIsModalOpen(false);
   };
 
   console.log(product);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    handlerUnPublish();
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div>
+      {contextHolder}
+      <Modal
+        title="Log out"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okButtonProps={{ style: { background: "red", borderColor: "red" } }}
+      >
+        <p>Bạn có chắc chắn muốn vô hiệu hóa sản phẩm này không ?</p>
+      </Modal>
       <div className="detail_container">
         <div className="detail_container_image">
           <img className="detail_image" src={product.product_thumb[0]} />
@@ -70,7 +95,7 @@ const ProductDetail = () => {
               <div className="detail_phone">
                 {product.product_attributes.map((attribute, index) => (
                   <div key={index}>
-                    <div className="detail_phone"> | {attribute.color} | </div>
+                    <div className="detail_phone">{attribute.color}</div>
                   </div>
                 ))}
               </div>
@@ -107,7 +132,7 @@ const ProductDetail = () => {
                 border: "1px solid #e0e0e0",
                 backgroundColor: "red",
               }}
-              onClick={() => handlerUnPublish()}
+              onClick={() => showModal()}
             >
               Vô hiệu hóa sản phẩm
             </button>
