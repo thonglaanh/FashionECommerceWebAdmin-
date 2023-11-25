@@ -124,18 +124,33 @@ const ProductDetail = () => {
               marginTop: "15px",
             }}
           >
-            <button
-              style={{
-                width: "220px",
-                height: "35px",
-                color: "white",
-                border: "1px solid #e0e0e0",
-                backgroundColor: "red",
-              }}
-              onClick={() => showModal()}
-            >
-              Vô hiệu hóa sản phẩm
-            </button>
+            {product.isPublished ? (
+              <button
+                style={{
+                  width: "220px",
+                  height: "35px",
+                  color: "white",
+                  border: "1px solid #e0e0e0",
+                  backgroundColor: "red",
+                }}
+                onClick={() => showModal()}
+              >
+                Vô hiệu hóa sản phẩm
+              </button>
+            ) : (
+              <button
+                style={{
+                  width: "220px",
+                  height: "35px",
+                  color: "white",
+                  backgroundColor: "gray",
+                  border: "none",
+                }}
+                onClick={() => showModal()}
+              >
+                Sản phẩm đã bị vô hiệu hóa
+              </button>
+            )}
           </div>
         </div>
       </div>

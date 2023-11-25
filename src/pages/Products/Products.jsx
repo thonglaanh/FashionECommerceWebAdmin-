@@ -11,38 +11,43 @@ const Products = () => {
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    const fetchData = () => {
-      const userId = localStorage.getItem("userId");
-      const accessToken = localStorage.getItem("accessToken");
-      console.log(userId);
-      console.log(accessToken);
-      axios
-        .get(config.API_IP + "/admin/product", {
+    const fetchData = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+        const accessToken = localStorage.getItem("accessToken");
+
+        const productPromise = axios.get(config.API_IP + "/admin/product", {
           headers: {
             "x-xclient-id": userId,
             authorization: accessToken,
           },
-        })
-        .then((res) => {
-          setProducts(res.data.message);
-          console.log(res.data.message);
         });
-      axios
-        .get(config.API_IP + "/category/getAllCategory", {
+
+        const categoryPromise = axios.get(config.API_IP + "/admin/category", {
           headers: {
             "x-xclient-id": userId,
             authorization: accessToken,
           },
-        })
-        .then((res) => {
-          setCategories(res.data.message.category);
-        })
-        .catch((e) => {
-          console.log(e);
         });
+
+        const [productResponse, categoryResponse] = await Promise.all([
+          productPromise,
+          categoryPromise,
+        ]);
+
+        setProducts(productResponse.data.message);
+        setCategories(categoryResponse.data.message);
+
+        console.log(productResponse.data.message);
+        console.log(categoryResponse.data.message);
+      } catch (error) {
+        console.error(error);
+      }
     };
+
     fetchData();
   }, []);
+
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
     {
@@ -85,7 +90,15 @@ const Products = () => {
     },
     {
       name: "Trạng thái",
-      selector: (row) => <p>{row.isPublished ? "Hiện thị" : "Ẩn"}</p>,
+      selector: (row) => (
+        <div>
+          {row.isPublished ? (
+            <p style={{ color: "green" }}>Hiện thị</p>
+          ) : (
+            <p style={{ color: "red" }}>Ẩn</p>
+          )}
+        </div>
+      ),
     },
 
     {
@@ -106,11 +119,7 @@ const Products = () => {
         border: "1px solid #ddd",
       },
     },
-    rows: {
-      style: {
-        border: "1px solid #000",
-      },
-    },
+
     cells: {
       style: {
         border: "1px solid #ddd",
@@ -122,11 +131,12 @@ const Products = () => {
   useEffect(() => {
     const result = products.filter((item) => {
       return search.length !== 0
-        ? item.product_name.toUpperCase().includes(search.toUpperCase())
+        ? item.product_name.toUpperCase().includes(search.toUpperCase()) &&
+            item.product_name.toUpperCase().includes(search.toUpperCase())
         : true;
     });
     setFilteredProducts(result);
-  }, [search, products]);
+  }, [search, products, categories]);
   return (
     <div className="selling">
       <div style={{ marginBottom: "10px" }}>
@@ -158,6 +168,19 @@ const Products = () => {
             <div
               style={{ position: "relative", flex: "1", marginLeft: "10px" }}
             >
+              <select
+                value={categories}
+                className="filter-dropdown-select"
+                style={{ marginRight: "30px" }}
+                // onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Chọn danh mục</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.category_name}
+                  </option>
+                ))}
+              </select>
               <input
                 type="text"
                 className="search-input"

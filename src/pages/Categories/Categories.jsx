@@ -204,14 +204,15 @@ const Categories = () => {
     const userId = localStorage.getItem("userId");
     const accessToken = localStorage.getItem("accessToken");
     axios
-      .get(config.API_IP + "/category/getAllCategory", {
+      .get(config.API_IP + "/admin/category", {
         headers: {
           "x-xclient-id": userId,
           authorization: accessToken,
         },
       })
       .then((res) => {
-        setCategories(res.data.message.category);
+        setCategories(res.data.message);
+        console.log(res.data.message);
       })
       .catch((e) => {
         console.log(e);
