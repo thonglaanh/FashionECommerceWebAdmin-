@@ -10,6 +10,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,7 +54,7 @@ const Products = () => {
     {
       name: "Ảnh",
       selector: (row) => (
-        <img className="row-image" src={row.product_thumb[0]} />
+        <img className="row-image" src={`uploads/${row.product_thumb[0]}`} />
       ),
     },
     {
@@ -129,14 +130,24 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
+    console.log(selectedCategory);
     const result = products.filter((item) => {
-      return search.length !== 0
-        ? item.product_name.toUpperCase().includes(search.toUpperCase()) &&
-            item.product_name.toUpperCase().includes(search.toUpperCase())
-        : true;
+      const categoryMatches =
+        selectedCategory.length === 0 ||
+        (item.category &&
+          item.category._id
+            .toUpperCase()
+            .includes(selectedCategory.toUpperCase()));
+
+      const nameMatches =
+        search.length === 0 ||
+        item.product_name.toUpperCase().includes(search.toUpperCase());
+
+      return categoryMatches && nameMatches;
     });
     setFilteredProducts(result);
-  }, [search, products, categories]);
+  }, [search, products, selectedCategory]);
+
   return (
     <div className="selling">
       <div style={{ marginBottom: "10px" }}>
@@ -169,10 +180,10 @@ const Products = () => {
               style={{ position: "relative", flex: "1", marginLeft: "10px" }}
             >
               <select
-                value={categories}
+                value={selectedCategory}
                 className="filter-dropdown-select"
                 style={{ marginRight: "30px" }}
-                // onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => setSelectedCategory(e.target.value)}
               >
                 <option value="">Chọn danh mục</option>
                 {categories.map((category) => (
@@ -181,6 +192,7 @@ const Products = () => {
                   </option>
                 ))}
               </select>
+
               <input
                 type="text"
                 className="search-input"

@@ -1,49 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import "../../styles/Row.css";
 import config from "../../config";
 import { SearchOutlined } from "@ant-design/icons";
 
 const Customers = () => {
-  const [openModal, setOpenModal] = useState(false);
   const [customers, setCustomers] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState({});
-  const [name, setName] = useState("");
   const [filteredCustomer, setFilteredCustomer] = useState([]);
-
-  const [img, setImg] = useState(
-    "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
-  );
-  const [email, setEmail] = useState();
-  const [date, setDate] = useState();
   const [search, setSearch] = useState("");
   const handleOk = () => {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("date", date);
-      formData.append("name", name);
-      formData.append("img", selectedImage);
-      const response = await axios.post(formData);
-      localStorage.setItem(
-        "account",
-        JSON.stringify(response.data.data.account)
-      );
-    } catch (error) {
-      console.log("Failed" + error);
-    }
-  };
-
   const handleCancel = () => {
-    setOpenModal(false);
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -171,30 +145,75 @@ const Customers = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        style={{ textAlign: "center" }}
+        bodyStyle={{
+          textAlign: "left",
+          marginTop: "20px",
+          width: "90vw",
+          marginLeft: "15px",
+        }}
+        okButtonProps={{ style: { display: "none" } }}
       >
         {isModalOpen == true ? (
           <div>
             {selected.information != null ? (
-              <img className="detail_image" src={selected.information.avatar} />
+              <img
+                style={{
+                  width: "140px",
+                  height: "150px",
+                  objectFit: "cover",
+                  marginLeft: "11%",
+                  marginBottom: "20px",
+                  borderRadius: "5%",
+                }}
+                src={selected.information.avatar}
+              />
             ) : (
               <></>
             )}
-            <p>Tên khách hàng : {selected.user_name}</p>
-            <p>Email : {selected.email}</p>
 
             {selected.information == null ? (
               <div>
-                <p>Địa chỉ :chưa có</p>
-                <p>Tên đầy đủ : chưa có</p>
-                <p>Giới tính : Chưa có</p>
-                <p>Số điện thoại : Chưa có</p>
+                <p>
+                  <b>Tên khách hàng : </b>
+                  {selected.user_name}
+                </p>
+                <p>
+                  <b> Email :</b> {selected.email}
+                </p>
+                <p>
+                  <b>Địa chỉ :</b> Chưa có
+                </p>
+                <p>
+                  <b>Tên đầy đủ :</b> chưa có
+                </p>
+                <p>
+                  <b>Giới tính :</b> Chưa có
+                </p>
+                <p>
+                  <b>Số điện thoại :</b> Chưa có
+                </p>
               </div>
             ) : (
               <>
-                <p>Địa chỉ : {selected.information.address}</p>
-                <p>Tên đầy đủ : {selected.information.fullName}</p>
-                <p>Giới tính : {selected.information.gender}</p>
-                <p>Số điện thoại : 0{selected.information.phoneNumber}</p>
+                <p>
+                  <b>Tên khách hàng :</b> {selected.user_name}
+                </p>
+                <p>
+                  <b>Tên đầy đủ :</b> {selected.information.fullName}
+                </p>
+                <p>
+                  <b>Email :</b> {selected.email}
+                </p>
+                <p>
+                  <b>Số điện thoại :</b> 0{selected.information.phoneNumber}
+                </p>
+                <p>
+                  <b>Địa chỉ :</b> {selected.information.address}
+                </p>
+                <p>
+                  <b>Giới tính :</b> {selected.information.gender}
+                </p>
               </>
             )}
           </div>

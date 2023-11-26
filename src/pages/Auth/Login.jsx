@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(
         config.API_IP + "/access/login",
         { email: email, password: password },
@@ -33,6 +33,7 @@ const Login = () => {
         navigate("/dashbroads");
       })
       .catch((e) => {
+        console.log(e);
         messageApi.open({
           type: "error",
           content: "Đăng nhập thất bại",

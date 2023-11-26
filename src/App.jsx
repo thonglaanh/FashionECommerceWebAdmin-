@@ -16,6 +16,7 @@ import ProductDetail from "./pages/Products/ProductDetail.jsx";
 import OrderScreen from "./pages/Orders/OderScreen.jsx";
 import { useEffect } from "react";
 import Private from "./components/private/index.jsx";
+import ShopDetail from "./pages/Shops/ShopDetail.jsx";
 function App() {
   return (
     <Router>
@@ -67,6 +68,16 @@ function App() {
             <Private>
               <SideBar>
                 <Shop />
+              </SideBar>
+            </Private>
+          }
+        />
+        <Route
+          path="/shops/:slug"
+          element={
+            <Private>
+              <SideBar>
+                <ShopDetail />
               </SideBar>
             </Private>
           }

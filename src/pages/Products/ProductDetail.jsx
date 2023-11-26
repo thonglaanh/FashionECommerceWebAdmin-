@@ -61,7 +61,10 @@ const ProductDetail = () => {
       </Modal>
       <div className="detail_container">
         <div className="detail_container_image">
-          <img className="detail_image" src={product.product_thumb[0]} />
+          <img
+            className="detail_image"
+            src={`/uploads/${product.product_thumb[0]}`}
+          />
         </div>
         <div className="detail_content">
           <div className="detail_content_customer">
@@ -146,6 +149,7 @@ const ProductDetail = () => {
                   backgroundColor: "gray",
                   border: "none",
                 }}
+                disabled={true}
                 onClick={() => showModal()}
               >
                 Sản phẩm đã bị vô hiệu hóa

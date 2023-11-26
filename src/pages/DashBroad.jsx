@@ -4,9 +4,7 @@ import axios from "axios";
 import config from "../config";
 import DataTable from "react-data-table-component";
 import { Chart } from "react-google-charts";
-import { Layout } from "antd";
 
-const { Footer } = Layout;
 const DashBroad = () => {
   const [customer, setCustomers] = useState();
   const [category, setCategory] = useState();
@@ -106,18 +104,18 @@ const DashBroad = () => {
     {
       name: "Ảnh",
       selector: (row) => (
-        <img className="row-image" src={row.productInfo[0].product_thumb[0]} />
+        <img className="row-image" src={`uploads/${row.product_thumb[0]}`} />
       ),
     },
     {
       name: "Tên",
-      selector: (row) => row.productInfo[0].product_name,
+      selector: (row) => row.product_name,
       sortable: true,
     },
     {
       name: "Giá",
       selector: (row) =>
-        row.productInfo[0].product_price.toLocaleString("vi-VN", {
+        row.product_price.toLocaleString("vi-VN", {
           style: "currency",
           currency: "VND",
         }),
@@ -125,14 +123,14 @@ const DashBroad = () => {
     },
     {
       name: "Đã bán",
-      selector: (row) => row.totalSoldQuantity,
+      selector: (row) => row.product_sold,
       sortable: true,
     },
     {
       name: "Đánh giá",
       selector: (row) => (
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <p>{row.productInfo[0].product_ratingAverage}</p>
+          <p>{row.product_ratingAverage}</p>
           <img
             src={require("../assets/star.png")}
             style={{ width: "20px", height: "20px", marginLeft: "7px" }}
@@ -176,7 +174,7 @@ const DashBroad = () => {
       </div>
       <div className="dashbroad-content">
         <div className="top-selling">
-          <p className="title-dashbroad" style={{ marginBottom: "25px" }}>
+          <p className="title-dashbroad" style={{ marginBottom: "20px" }}>
             Top bán chạy
           </p>
           <DataTable

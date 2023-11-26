@@ -129,7 +129,7 @@
   display: flex;
   grid-template-columns: repeat(1fr, 1fr);
   flex-direction: row;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 .top-selling {
   width: 50%;
