@@ -4,15 +4,16 @@ import config from "../../config";
 import DataTable from "react-data-table-component";
 import "../../styles/Row.css";
 import "../../styles/Modal.css";
-import { Modal } from "antd";
-import moment from "moment/moment";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Flex, Spin } from "antd";
 
 const OrderScreen = () => {
   const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [orders, setOrder] = useState([]);
+  const [response, setResponse] = useState(null);
   useEffect(() => {
     const fetchData = () => {
       const userId = localStorage.getItem("userId");
@@ -26,6 +27,7 @@ const OrderScreen = () => {
         })
         .then((res) => {
           console.log(res.data.message);
+          setResponse(res);
           setOrder(res.data.message);
         });
     };
@@ -110,55 +112,83 @@ const OrderScreen = () => {
     setFilteredOrders(result);
   }, [search, orders]);
   return (
-    <div className="selling">
-      <p className="title_page" style={{ marginBottom: "10px" }}>
-        Order
-      </p>
-      <DataTable
-        columns={columns}
-        data={filteredOrders}
-        pagination
-        responsive
-        paginationPerPage={6}
-        highlightOnHover
-        customStyles={customHeader}
-        striped
-        subHeader
-        subHeaderComponent={
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
-            >
-              <input
-                type="text"
-                className="search-input"
-                form-control
-                placeholder="Nhập từ khóa tìm kiếm..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <SearchOutlined
+    <div>
+      {response ? (
+        <div className="selling">
+          <p className="title_page" style={{ marginBottom: "10px" }}>
+            Order
+          </p>
+          <DataTable
+            columns={columns}
+            data={filteredOrders}
+            pagination
+            responsive
+            paginationPerPage={6}
+            highlightOnHover
+            customStyles={customHeader}
+            striped
+            subHeader
+            subHeaderComponent={
+              <div
                 style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "20px",
-                  color: "black",
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+
+                  alignItems: "center",
                 }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    flex: "1",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <input
+                    type="text"
+                    className="search-input"
+                    form-control
+                    placeholder="Nhập từ khóa tìm kiếm..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <SearchOutlined
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      fontSize: "20px",
+                      color: "black",
+                    }}
+                  />
+                </div>
+              </div>
+            }
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin
+            indicator={
+              <LoadingOutlined
+                style={{
+                  fontSize: 30,
+                }}
+                spin
               />
-            </div>
-          </div>
-        }
-      />
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };

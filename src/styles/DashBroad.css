@@ -54,6 +54,7 @@
 
 .selling {
   padding: 10px 0px;
+  height: 100vh;
 }
 .selling.active {
   background-color: black;

@@ -5,6 +5,8 @@ import DataTable from "react-data-table-component";
 import "../../styles/Row.css";
 import { Button, message, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Flex, Spin } from "antd";
 
 const AddCategoryModal = ({
   open,
@@ -196,6 +198,7 @@ const Categories = () => {
     "https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg"
   );
   const [thumb, setThumb] = useState(null);
+  const [response, setResponse] = useState(null);
 
   const [search, setSearch] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
@@ -212,6 +215,7 @@ const Categories = () => {
       })
       .then((res) => {
         setCategories(res.data.message);
+        setResponse(res);
         console.log(res.data.message);
       })
       .catch((e) => {
@@ -405,90 +409,118 @@ const Categories = () => {
   }, [search, categories]);
 
   return (
-    <div className="selling">
-      {contextHolder}
-      <AddCategoryModal
-        open={openModal}
-        onCancel={() => setOpenModal(false)}
-        onSubmit={(e) => handleSubmit(e)}
-        name={name}
-        setName={setName}
-        thumb={thumb}
-        setThumb={setThumb}
-        img={img}
-      />
+    <div>
+      {response ? (
+        <div className="selling">
+          {contextHolder}
+          <AddCategoryModal
+            open={openModal}
+            onCancel={() => setOpenModal(false)}
+            onSubmit={(e) => handleSubmit(e)}
+            name={name}
+            setName={setName}
+            thumb={thumb}
+            setThumb={setThumb}
+            img={img}
+          />
 
-      <UpdateCategoryModal
-        open={openModalUpdate}
-        onCancel={() => setOpenModalUpdate(false)}
-        onSubmit={(e) => handleSubmitUpdate(e)}
-        name={name}
-        setName={setName}
-        thumb={thumb}
-        setThumb={setThumb}
-        img={img}
-        selected={selected}
-      />
+          <UpdateCategoryModal
+            open={openModalUpdate}
+            onCancel={() => setOpenModalUpdate(false)}
+            onSubmit={(e) => handleSubmitUpdate(e)}
+            name={name}
+            setName={setName}
+            thumb={thumb}
+            setThumb={setThumb}
+            img={img}
+            selected={selected}
+          />
 
-      <DeleteCategoryModal
-        open={openModalDelete}
-        onCancel={() => setOpenModalDelete(false)}
-        onOk={(e) => handleSubmitDelete(e)}
-        selected={selected}
-      />
+          <DeleteCategoryModal
+            open={openModalDelete}
+            onCancel={() => setOpenModalDelete(false)}
+            onOk={(e) => handleSubmitDelete(e)}
+            selected={selected}
+          />
 
-      <div style={{ marginBottom: "10px" }}>
-        <p className="title_page">Danh mục</p>
-      </div>
-
-      <DataTable
-        columns={columns}
-        data={filteredCategories}
-        pagination
-        responsive
-        paginationPerPage={7}
-        highlightOnHover
-        customStyles={customHeader}
-        striped
-        subHeader
-        subHeaderComponent={
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-
-              alignItems: "center",
-            }}
-          >
-            <Button type="primary" onClick={() => setOpenModal(!openModal)}>
-              Thêm danh mục
-            </Button>
-            <div
-              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
-            >
-              <input
-                type="text"
-                className="search-input"
-                form-control
-                placeholder="Nhập từ khóa tìm kiếm..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <SearchOutlined
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "20px",
-                  color: "black",
-                }}
-              />
-            </div>
+          <div style={{ marginBottom: "10px" }}>
+            <p className="title_page">Danh mục</p>
           </div>
-        }
-      />
+
+          <DataTable
+            columns={columns}
+            data={filteredCategories}
+            pagination
+            responsive
+            paginationPerPage={7}
+            highlightOnHover
+            customStyles={customHeader}
+            striped
+            subHeader
+            subHeaderComponent={
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+
+                  alignItems: "center",
+                }}
+              >
+                <Button type="primary" onClick={() => setOpenModal(!openModal)}>
+                  Thêm danh mục
+                </Button>
+                <div
+                  style={{
+                    position: "relative",
+                    flex: "1",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <input
+                    type="text"
+                    className="search-input"
+                    form-control
+                    placeholder="Nhập từ khóa tìm kiếm..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <SearchOutlined
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      fontSize: "20px",
+                      color: "black",
+                    }}
+                  />
+                </div>
+              </div>
+            }
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin
+            indicator={
+              <LoadingOutlined
+                style={{
+                  fontSize: 30,
+                }}
+                spin
+              />
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };

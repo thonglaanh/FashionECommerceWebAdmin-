@@ -1,7 +1,7 @@
 .detail_container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin-top: 100px;
+  padding-top: 60px;
 }
 .detail_container_image {
   display: flex;
@@ -58,5 +58,27 @@
   font-weight: 500;
   text-decoration: underline;
 }
-@media (max-width: 1023px) {
+/*  */
+.box {
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  margin: 10px;
+}
+.box p {
+  background-color: #efefef;
+  width: 100%;
+  padding: 10px;
+  font-weight: 500;
+  color: #666666;
+  margin: 0;
+}
+.box div {
+  padding: 15px 10px;
+}
+.pay {
+  height: 45vh;
+}
+.pay div {
+  display: flex;
+  justify-content: space-between;
 }

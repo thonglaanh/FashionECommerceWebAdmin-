@@ -6,6 +6,8 @@ import { SearchOutlined } from "@ant-design/icons";
 import "../../styles/Row.css";
 import config from "../../config";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Flex, Spin } from "antd";
 
 const Shops = () => {
   const [shops, setShops] = useState([]);
@@ -13,6 +15,8 @@ const Shops = () => {
   const [selected, setSelected] = useState({});
 
   const [search, setSearch] = useState("");
+  const [response, setResponse] = useState(null);
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -33,18 +37,8 @@ const Shops = () => {
           },
         });
         setShops(response.data.message);
+        setResponse(response);
         console.log(response.data.message);
-
-        const response2 = await axios.get(
-          config.API_IP + "/admin/statisticalByShopId/" + shops[0]._id,
-          {
-            headers: {
-              "x-xclient-id": userId,
-              authorization: accessToken,
-            },
-          }
-        );
-        console.log(response2);
       } catch (error) {
         console.log(error);
       }
@@ -127,77 +121,105 @@ const Shops = () => {
 
   return (
     <div className="selling">
-      <div style={{ marginBottom: "10px" }}>
-        <p className="title_page">Cửa hàng</p>
-      </div>
-      <Modal
-        title="Thông tin cửa hàng"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        {isModalOpen == true ? (
-          <div>
-            <img className="detail_image" src={selected.avatarShop} />
-            <div>
-              <p>Id : {selected._id}</p>
-              <p>Tên cửa hàng : {selected.nameShop}</p>
-              <p>Email : {selected.emailShop}</p>
-              <p>Liên hệ : 0{selected.phoneNumberShop}</p>
-              <p>Địa chỉ : {selected.address}</p>
-              <p>Giới thiệu : {selected.des}</p>
-            </div>
+      {response ? (
+        <>
+          {" "}
+          <div style={{ marginBottom: "10px" }}>
+            <p className="title_page">Cửa hàng</p>
           </div>
-        ) : (
-          <div></div>
-        )}
-      </Modal>
-
-      <DataTable
-        columns={columns}
-        data={filteredShop}
-        pagination
-        responsive
-        paginationPerPage={6}
-        highlightOnHover
-        customStyles={customHeader}
-        striped
-        subHeader
-        subHeaderComponent={
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-
-              alignItems: "end",
-            }}
+          <Modal
+            title="Thông tin cửa hàng"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
           >
-            <div
-              style={{ position: "relative", flex: "1", marginLeft: "10px" }}
-            >
-              <input
-                type="text"
-                className="search-input"
-                form-control
-                placeholder="Nhập từ khóa tìm kiếm..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <SearchOutlined
+            {isModalOpen == true ? (
+              <div>
+                <img className="detail_image" src={selected.avatarShop} />
+                <div>
+                  <p>Id : {selected._id}</p>
+                  <p>Tên cửa hàng : {selected.nameShop}</p>
+                  <p>Email : {selected.emailShop}</p>
+                  <p>Liên hệ : 0{selected.phoneNumberShop}</p>
+                  <p>Địa chỉ : {selected.address}</p>
+                  <p>Giới thiệu : {selected.des}</p>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Modal>
+          <DataTable
+            columns={columns}
+            data={filteredShop}
+            pagination
+            responsive
+            paginationPerPage={6}
+            highlightOnHover
+            customStyles={customHeader}
+            striped
+            subHeader
+            subHeaderComponent={
+              <div
                 style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "20px",
-                  color: "black",
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+
+                  alignItems: "end",
                 }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    flex: "1",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <input
+                    type="text"
+                    className="search-input"
+                    form-control
+                    placeholder="Nhập từ khóa tìm kiếm..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <SearchOutlined
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      fontSize: "20px",
+                      color: "black",
+                    }}
+                  />
+                </div>
+              </div>
+            }
+          />
+        </>
+      ) : (
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin
+            indicator={
+              <LoadingOutlined
+                style={{
+                  fontSize: 24,
+                }}
+                spin
               />
-            </div>
-          </div>
-        }
-      />
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };
