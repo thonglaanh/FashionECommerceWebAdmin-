@@ -148,6 +148,11 @@ const DashBroad = () => {
         backgroundColor: "#e0e0e0",
       },
     },
+    cells: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
   };
 
   return (

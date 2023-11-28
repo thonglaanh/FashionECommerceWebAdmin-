@@ -17,6 +17,7 @@ import OrderScreen from "./pages/Orders/OderScreen.jsx";
 import { useEffect } from "react";
 import Private from "./components/private/index.jsx";
 import ShopDetail from "./pages/Shops/ShopDetail.jsx";
+import OrderDetail from "./pages/Orders/OrderDetail.jsx";
 function App() {
   return (
     <Router>
@@ -88,6 +89,16 @@ function App() {
             <Private>
               <SideBar>
                 <OrderScreen />
+              </SideBar>
+            </Private>
+          }
+        />
+        <Route
+          path="/order/:slug"
+          element={
+            <Private>
+              <SideBar>
+                <OrderDetail />
               </SideBar>
             </Private>
           }

@@ -193,7 +193,7 @@ const Categories = () => {
   const [name, setName] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
   const [img, setImg] = useState(
-    "https://tiemanhsky.com/wp-content/uploads/2020/03/61103071_2361422507447925_6222318223514140672_n_1.jpg"
+    "https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg"
   );
   const [thumb, setThumb] = useState(null);
 

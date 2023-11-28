@@ -6,7 +6,7 @@ import axios from "axios";
 import config from "../../config";
 import DataTable from "react-data-table-component";
 
-const ShopDetail = () => {
+const OrderDetail = () => {
   const location = useLocation();
   const shop = location.state.row;
   const [statistical, setStatistical] = useState([]);
@@ -124,4 +124,4 @@ const ShopDetail = () => {
   );
 };
 
-export default ShopDetail;
+export default OrderDetail;

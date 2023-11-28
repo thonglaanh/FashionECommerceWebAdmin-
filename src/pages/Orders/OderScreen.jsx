@@ -7,19 +7,11 @@ import "../../styles/Modal.css";
 import { Modal } from "antd";
 import moment from "moment/moment";
 import { SearchOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const OrderScreen = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState({});
   const [search, setSearch] = useState("");
   const [filteredOrders, setFilteredOrders] = useState([]);
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   const [orders, setOrder] = useState([]);
   useEffect(() => {
     const fetchData = () => {
@@ -39,6 +31,23 @@ const OrderScreen = () => {
     };
     fetchData();
   }, []);
+
+  //
+  const selectedData = (row) => {
+    const userId = localStorage.getItem("userId");
+    const accessToken = localStorage.getItem("accessToken");
+    axios
+      .get(config.API_IP + "/admin/tradingHistory/" + row._id, {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.message);
+      });
+  };
+  //
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
 
@@ -64,16 +73,9 @@ const OrderScreen = () => {
     {
       name: "Action",
       selector: (row) => (
-        <a
-          onClick={() => {
-            setIsModalOpen(true);
-
-            setSelected(row);
-          }}
-          style={{ color: "blue", cursor: "pointer" }}
-        >
+        <Link to={`/order/${row._id}`} state={{ row }}>
           View detail
-        </a>
+        </Link>
       ),
     },
   ];
@@ -112,45 +114,6 @@ const OrderScreen = () => {
       <p className="title_page" style={{ marginBottom: "10px" }}>
         Order
       </p>
-      <Modal
-        title="Thông tin đơn hàng"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        style={{ textAlign: "center" }}
-        bodyStyle={{ textAlign: "left", marginTop: "20px" }}
-        okButtonProps={{ style: { display: "none" } }}
-      >
-        {isModalOpen == true ? (
-          <div>
-            <p>Khách hàng : {selected.order_userId.email}</p>
-            <p>Cửa hàng : {selected.order_userId.email}</p>
-            <p>
-              Sản phẩm :{" + "}
-              {selected.order_products
-                .map((product) => product.shopId)
-                .join("   \n+")}
-            </p>
-            <p>Địa chỉ nhận hàng : {selected.order_shipping.City}</p>
-            <p>
-              Tổng giá đơn hàng :{" "}
-              {selected.order_checkout.totalPrice.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </p>
-
-            <p>
-              Thời gian đặt hàng :{" "}
-              {moment(selected.createdAt).format("HH:mm:ss DD/MM/YYYY")}
-            </p>
-            <p>Trạng thái : {selected.order_status}</p>
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </Modal>
-
       <DataTable
         columns={columns}
         data={filteredOrders}

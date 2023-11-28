@@ -126,12 +126,34 @@ const Event = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        style={{ textAlign: "center" }}
+        bodyStyle={{
+          textAlign: "left",
+          marginTop: "20px",
+          width: "90vw",
+          marginLeft: "10px",
+        }}
       >
         {isModalOpen == true ? (
           <div>
-            <p>Mã giảm giá : {selected.discount_code}</p>
             <p>Tên mã giảm giá : {selected.discount_name}</p>
+            <p>Mã giảm giá : {selected.discount_code}</p>
+
             <p>Chi tiết : {selected.discount_des}</p>
+            <p>
+              Giảm :{" "}
+              {selected.discount_value.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </p>
+            <p>
+              Giảm cho sản phẩm trên:{" "}
+              {selected.discount_min_order_value.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </p>
             <p>
               Bắt đầu :{" "}
               {moment(selected.discount_start_date).format(
