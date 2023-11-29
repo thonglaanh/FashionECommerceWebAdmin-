@@ -54,13 +54,13 @@ const OrderScreen = () => {
     { name: "ID", selector: (row, index) => `#${index + 1}` },
 
     {
-      name: "Email khách hàng",
-      selector: (row) => row.order_userId.email,
+      name: "SDT khách hàng",
+      selector: (row) => `0${row.order_userId[0].phoneNumber}`,
       sortable: true,
     },
     {
       name: "Tên cửa hàng",
-      selector: (row) => row.order_products[0].shopId,
+      selector: (row) => row.order_products[0].shopId.nameShop,
       sortable: true,
     },
     {

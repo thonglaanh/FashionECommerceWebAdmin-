@@ -20,6 +20,23 @@ const Event = () => {
   const [response, setResponse] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
+  const fetchData = () => {
+    const userId = localStorage.getItem("userId");
+    const accessToken = localStorage.getItem("accessToken");
+    axios
+      .get(config.API_IP + "/admin/discount", {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.message);
+        setResponse(res);
+        setDiscount(res.data.message);
+      });
+  };
+
   const AddDiscountModal = ({ open, onCancel }) => {
     const [name, setName] = useState("");
     const [code, setCode] = useState("");
@@ -29,6 +46,7 @@ const Event = () => {
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
     const [des, setDes] = useState("");
+    const [maxUserPerUses, setMaxUserPerUses] = useState(0);
     const handleSubmit = async () => {
       const userId = localStorage.getItem("userId");
       const accessToken = localStorage.getItem("accessToken");
@@ -49,14 +67,17 @@ const Event = () => {
         return;
       }
       const formData = {
-        discount_name: name,
-        discount_code: code,
-        discount_value: value,
-        discount_max_uses: quantity,
-        discount_min_order_value: minValue,
-        discount_start_date: start,
-        discount_end_date: end,
-        discount_des: des,
+        name: name,
+        code: code,
+        value: value,
+        max_uses: quantity,
+        min_order_value: minValue,
+        max_uses_per_user: maxUserPerUses,
+        uses_count: 0,
+        start_date: start,
+        end_date: end,
+        des: des,
+        applies_to: "all",
       };
       await axios
         .post(`${config.API_IP}/discount`, formData, {
@@ -70,6 +91,7 @@ const Event = () => {
             type: "success",
             content: "Thêm thành công!",
           });
+          fetchData();
           console.log(res);
         })
         .catch((e) => {
@@ -77,6 +99,7 @@ const Event = () => {
             type: "error",
             content: "Thêm thất bại!",
           });
+
           console.log(e);
         });
     };
@@ -113,6 +136,12 @@ const Event = () => {
               placeholder={"Vui lòng nhập số lượng mã"}
               onChange={(e) => setQuantity(e.target.value)}
             />
+            <label>Số lượng dùng tối đa: </label>
+            <input
+              type="number"
+              placeholder={"Vui lòng nhập số lượng mã"}
+              onChange={(e) => setMaxUserPerUses(e.target.value)}
+            />
             <label>Giá trị tối thiểu : </label>
             <input
               type="number"
@@ -145,22 +174,6 @@ const Event = () => {
     setIsModalOpen(false);
   };
   useEffect(() => {
-    const fetchData = () => {
-      const userId = localStorage.getItem("userId");
-      const accessToken = localStorage.getItem("accessToken");
-      axios
-        .get(config.API_IP + "/admin/discount", {
-          headers: {
-            "x-xclient-id": userId,
-            authorization: accessToken,
-          },
-        })
-        .then((res) => {
-          console.log(res.data.message);
-          setResponse(res);
-          setDiscount(res.data.message);
-        });
-    };
     fetchData();
   }, []);
   const columns = [

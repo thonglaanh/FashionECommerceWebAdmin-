@@ -5,13 +5,26 @@ import { Tabs, Modal, Button, message } from "antd";
 import axios from "axios";
 import config from "../../config";
 import DataTable from "react-data-table-component";
-
+import { Chart } from "react-google-charts";
 const { TabPane } = Tabs;
 
 const ShopDetail = () => {
   const location = useLocation();
   const shop = location.state.row;
   const [statistical, setStatistical] = useState([]);
+
+  const [month, setMonth] = useState([]);
+
+  const options = {
+    title: "Thống kê doanh thu cửa hàng",
+    hAxis: {
+      title: "Hàng tháng ",
+      titleTextStyle: { color: "#333" },
+    },
+    vAxis: { minValue: 0 },
+    chartArea: { width: "80%", height: "70%" },
+  };
+  //
 
   const fetchStatistical = async () => {
     const userId = localStorage.getItem("userId");
@@ -27,6 +40,13 @@ const ShopDetail = () => {
       })
       .then((res) => {
         setStatistical(res.data.message.topProductSold);
+        const doanhThu = res.data.message.revenue;
+        const monthData = doanhThu.map((item) => [
+          item.month,
+          item.totalRevenue,
+        ]);
+        setMonth([["Tháng", "Doanh thu"], ...monthData]);
+
         console.log(res);
       });
   };
@@ -35,6 +55,10 @@ const ShopDetail = () => {
   }, []);
 
   const columns = [
+    {
+      name: "Index",
+      selector: (row, index) => `#${index + 1}`,
+    },
     {
       name: "Ảnh",
       selector: (row) => (
@@ -132,7 +156,15 @@ const ShopDetail = () => {
             </div>
           </div>
         </TabPane>
-        <TabPane tab="Doanh thu" key="2"></TabPane>
+        <TabPane tab="Doanh thu" key="2">
+          <Chart
+            chartType="AreaChart"
+            width="100%"
+            height="400px"
+            data={month}
+            options={options}
+          />
+        </TabPane>
         <TabPane tab="Danh sách sản phẩm" key="3">
           <DataTable
             columns={columns}

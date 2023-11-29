@@ -6,7 +6,7 @@ import "../../styles/Row.css";
 import { Button, message, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Flex, Spin } from "antd";
+import { Spin } from "antd";
 
 const AddCategoryModal = ({
   open,
