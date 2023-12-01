@@ -64,8 +64,18 @@ const OrderScreen = () => {
       sortable: true,
     },
     {
-      name: "Địa chỉ",
-      selector: (row) => row.order_shipping.City,
+      name: "Sản phẩm",
+      selector: (row) => row.item_products[0].productId.product_name,
+      sortable: true,
+    },
+    ,
+    {
+      name: "Tổng tiền",
+      selector: (row) =>
+        row.item_products[0].price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }),
       sortable: true,
     },
     {
