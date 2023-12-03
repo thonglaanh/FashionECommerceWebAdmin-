@@ -49,6 +49,22 @@ const OrderScreen = () => {
         console.log(res.data.message);
       });
   };
+  const statusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "orange";
+      case "confirmed":
+        return "cyan";
+      case "shipped":
+        return "blue";
+      case "cancelled":
+        return "red";
+      case "delivered":
+        return "green";
+      default:
+        return "black";
+    }
+  };
   //
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
@@ -80,7 +96,11 @@ const OrderScreen = () => {
     },
     {
       name: "Trạng thái",
-      selector: (row) => row.order_status,
+      selector: (row) => (
+        <p style={{ color: statusColor(row.order_status) }}>
+          {row.order_status}
+        </p>
+      ),
     },
     {
       name: "Action",

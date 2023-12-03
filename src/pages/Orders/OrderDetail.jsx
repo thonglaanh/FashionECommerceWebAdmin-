@@ -38,6 +38,23 @@ const OrderDetail = () => {
   useEffect(() => {
     fetchStatistical();
   }, []);
+
+  const statusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "orange";
+      case "confirmed":
+        return "cyan";
+      case "shipped":
+        return "blue";
+      case "cancelled":
+        return "red";
+      case "delivered":
+        return "green";
+      default:
+        return "black";
+    }
+  };
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
     {
@@ -97,6 +114,7 @@ const OrderDetail = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  padding: "0px",
                 }}
               >
                 <div>
@@ -119,7 +137,7 @@ const OrderDetail = () => {
                 </div>
                 <div
                   style={{
-                    backgroundColor: "#00e600",
+                    backgroundColor: statusColor(orders.order_status),
                     color: "#fff",
                     height: "55px",
                     borderRadius: "10px",
