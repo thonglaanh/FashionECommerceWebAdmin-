@@ -15,7 +15,7 @@ const Login = () => {
     await axios
       .post(
         config.API_IP + "/access/login",
-        { email: email, password: password },
+        { email: email, password: password, role: "Admin" },
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",

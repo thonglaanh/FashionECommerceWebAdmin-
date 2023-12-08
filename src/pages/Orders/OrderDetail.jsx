@@ -60,7 +60,7 @@ const OrderDetail = () => {
     {
       name: "Ảnh",
       selector: (row) => (
-        <img className="row-image" src={`uploads/${row.product_thumb[0]}`} />
+        <img className="row-image" src={`/uploads/${row.product_thumb[0]}`} />
       ),
     },
     {
@@ -226,7 +226,7 @@ const OrderDetail = () => {
                   color: "#00e600",
                 }}
               >
-                {orders.order_checkout.totalCheckout.toLocaleString("vi-VN", {
+                {orders.order_checkout.totalDiscount.toLocaleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}
@@ -247,7 +247,7 @@ const OrderDetail = () => {
                 htmlFor=""
                 style={{ color: "orange", fontWeight: "500", fontSize: "20px" }}
               >
-                {orders.order_checkout.totalCheckout.toLocaleString("vi-VN", {
+                {orders.order_checkout.totalPrice.toLocaleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}

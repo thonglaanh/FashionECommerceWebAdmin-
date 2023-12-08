@@ -7,11 +7,11 @@ import config from "../../config";
 import { SearchOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Spin } from "antd";
+import { Link } from "react-router-dom";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState({});
   const [filteredCustomer, setFilteredCustomer] = useState([]);
   const [search, setSearch] = useState("");
   const [response, setResponse] = useState(null);
@@ -49,19 +49,28 @@ const Customers = () => {
     { name: "ID", selector: (row, index) => `#${index + 1}` },
     {
       name: "Ảnh",
-      selector: (row) => (
-        <img
-          className="row-image"
-          src={
-            row.information
-              ? row.information.avatar
-                ? `${row.information.avatar}`
-                : "Chưa có"
-              : "Chưa có"
-          }
-        />
-      ),
+      selector: (row) => {
+        return (
+          <>
+            {row.information ? (
+              <img
+                className="row-image"
+                src={
+                  row.information.avatar ? row.information.avatar : "Chưa có"
+                }
+                alt="Avatar"
+              />
+            ) : (
+              <img
+                src={require("../../assets/no-pictures.png")}
+                className="row-image"
+              />
+            )}
+          </>
+        );
+      },
     },
+
     {
       name: "Tên khách hàng",
       selector: (row) => row.user_name,
@@ -86,10 +95,8 @@ const Customers = () => {
       name: "Địa chỉ",
       selector: (row) => (
         <p>
-          {row.information
-            ? row.information.address
-              ? row.information.address
-              : "Chưa có"
+          {row.information?.address[0]?.customAddress
+            ? row.information?.address[0]?.customAddress
             : "Chưa có"}
         </p>
       ),
@@ -98,15 +105,9 @@ const Customers = () => {
     {
       name: "Action",
       selector: (row) => (
-        <a
-          className="view-detail"
-          onClick={() => {
-            setIsModalOpen(true);
-            setSelected(row);
-          }}
-        >
+        <Link to={`/customers/${row._id}`} state={{ row }}>
           View detail
-        </a>
+        </Link>
       ),
     },
   ];
@@ -131,6 +132,31 @@ const Customers = () => {
     },
   };
 
+  const handleDisable = async (customer) => {
+    const userId = await localStorage.getItem("userId");
+    const accessToken = await localStorage.getItem("accessToken");
+    console.log(customer._id);
+    console.log(userId);
+    console.log(accessToken);
+    await axios
+      .put(
+        config.API_IP + "/admin/disable/" + customer._id,
+        {},
+        {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
     const result = customers.filter((item) => {
       return search.length !== 0
@@ -146,86 +172,6 @@ const Customers = () => {
           <div style={{ marginBottom: "10px" }}>
             <p className="title_page">Khách hàng</p>
           </div>
-          <Modal
-            title="Thông tin khách hàng"
-            open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            style={{ textAlign: "center" }}
-            bodyStyle={{
-              textAlign: "left",
-              marginTop: "20px",
-              width: "90vw",
-            }}
-            okButtonProps={{ style: { display: "none" } }}
-          >
-            {isModalOpen == true ? (
-              <div>
-                {selected.information != null ? (
-                  <img
-                    style={{
-                      width: "140px",
-                      height: "150px",
-                      objectFit: "cover",
-                      marginLeft: "11%",
-                      marginBottom: "20px",
-                      borderRadius: "5%",
-                    }}
-                    src={selected.information.avatar}
-                  />
-                ) : (
-                  <></>
-                )}
-
-                {selected.information == null ? (
-                  <div>
-                    <p>
-                      <b>Tên khách hàng : </b>
-                      {selected.user_name}
-                    </p>
-                    <p>
-                      <b> Email :</b> {selected.email}
-                    </p>
-                    <p>
-                      <b>Địa chỉ :</b> Chưa có
-                    </p>
-                    <p>
-                      <b>Tên đầy đủ :</b> chưa có
-                    </p>
-                    <p>
-                      <b>Giới tính :</b> Chưa có
-                    </p>
-                    <p>
-                      <b>Số điện thoại :</b> Chưa có
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <p>
-                      <b>Tên khách hàng :</b> {selected.user_name}
-                    </p>
-                    <p>
-                      <b>Tên đầy đủ :</b> {selected.information.fullName}
-                    </p>
-                    <p>
-                      <b>Email :</b> {selected.email}
-                    </p>
-                    <p>
-                      <b>Số điện thoại :</b> 0{selected.information.phoneNumber}
-                    </p>
-                    <p>
-                      <b>Địa chỉ :</b> {selected.information.address}
-                    </p>
-                    <p>
-                      <b>Giới tính :</b> {selected.information.gender}
-                    </p>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </Modal>
 
           <DataTable
             columns={columns}

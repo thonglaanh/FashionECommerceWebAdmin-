@@ -98,7 +98,6 @@ const UpdateCategoryModal = ({
     selected ? selected.category_name : ""
   );
 
-  // Introduce a separate state for the thumbnail in the modal
   const [modalThumb, setModalThumb] = useState(
     selected ? selected.category_thumb : ""
   );
@@ -180,7 +179,13 @@ const UpdateCategoryModal = ({
 
 const DeleteCategoryModal = ({ open, onCancel, onOk, selected }) => {
   return (
-    <Modal title="Xóa danh mục" open={open} onOk={onOk} onCancel={onCancel}>
+    <Modal
+      title="Xóa danh mục"
+      open={open}
+      onOk={onOk}
+      onCancel={onCancel}
+      okButtonProps={{ style: { background: "red", borderColor: "red" } }}
+    >
       <p>Bạn muốn xóa danh mục "{selected.category_name}" này chứ?</p>
     </Modal>
   );
@@ -234,7 +239,7 @@ const Categories = () => {
       selector: (row) => (
         <img
           className="row-image"
-          style={{ padding: "15px" }}
+          style={{ padding: "15px", objectFit: "contain" }}
           src={row.category_thumb}
         />
       ),
@@ -452,7 +457,7 @@ const Categories = () => {
             data={filteredCategories}
             pagination
             responsive
-            paginationPerPage={7}
+            paginationPerPage={5}
             highlightOnHover
             customStyles={customHeader}
             striped
@@ -467,7 +472,14 @@ const Categories = () => {
                   alignItems: "center",
                 }}
               >
-                <Button type="primary" onClick={() => setOpenModal(!openModal)}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setOpenModal(!openModal);
+                    setName("");
+                    setThumb("");
+                  }}
+                >
                   Thêm danh mục
                 </Button>
                 <div

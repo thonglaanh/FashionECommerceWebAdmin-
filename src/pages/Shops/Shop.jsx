@@ -53,10 +53,17 @@ const Shops = () => {
       name: "Ảnh",
       selector: (row) => (
         <>
-          <img className="row-image" src={row.avatarShop} />
+          {row.avatarShop ? (
+            <img className="row-image" src={row.avatarShop} />
+          ) : (
+            <img
+              src={require("../../assets/no-pictures.png")} // Replace with the correct path
+            />
+          )}
         </>
       ),
     },
+
     {
       name: "Tên cửa hàng",
       selector: (row) => row.nameShop,

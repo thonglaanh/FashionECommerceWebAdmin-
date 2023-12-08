@@ -98,7 +98,22 @@ const ProductDetail = () => {
               <div className="detail_phone">
                 {product.product_attributes.map((attribute, index) => (
                   <div key={index}>
-                    <div className="detail_phone">{attribute.color}</div>
+                    <div
+                      style={{
+                        border: "1px solid #000",
+                        borderRadius: "50%",
+                        width: "50px",
+                        height: "50px",
+                        margin: "0 0.5em",
+                        display: "flex",
+                        justifyContent: "center",
+                        backgroundColor: "#fff",
+                      }}
+                    >
+                      <p style={{ textDecoration: "none", color: "#000" }}>
+                        {attribute.color}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>

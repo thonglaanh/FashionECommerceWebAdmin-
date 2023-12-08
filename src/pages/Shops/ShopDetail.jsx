@@ -62,7 +62,7 @@ const ShopDetail = () => {
     {
       name: "Ảnh",
       selector: (row) => (
-        <img className="row-image" src={`uploads/${row.product_thumb[0]}`} />
+        <img className="row-image" src={`/uploads/${row.product_thumb[0]}`} />
       ),
     },
     {
@@ -82,6 +82,16 @@ const ShopDetail = () => {
     {
       name: "Đã bán",
       selector: (row) => row.product_sold,
+      sortable: true,
+    },
+    {
+      name: "Trạng thái",
+      selector: (row) =>
+        !row.isPublished ? (
+          <p style={{ color: "red" }}>Ẩn</p>
+        ) : (
+          <p style={{ color: "green" }}>Hiện thị</p>
+        ),
       sortable: true,
     },
     {
