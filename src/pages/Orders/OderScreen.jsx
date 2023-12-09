@@ -14,6 +14,17 @@ const OrderScreen = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [orders, setOrder] = useState([]);
   const [response, setResponse] = useState(null);
+  const [selected, setSelected] = useState("");
+  const status = [
+    {
+      vie: "Chưa xác nhận",
+      eng: "pending",
+    },
+    { vie: "Xác nhận", eng: "confirmed" },
+    { vie: "Đang giao", eng: "shipped" },
+    { vie: "Đã hủy", eng: "cancelled" },
+    { vie: "Đã nhận", eng: "delivered" },
+  ];
   useEffect(() => {
     const fetchData = () => {
       const userId = localStorage.getItem("userId");
@@ -65,6 +76,22 @@ const OrderScreen = () => {
         return "black";
     }
   };
+  const statusText = (status) => {
+    switch (status) {
+      case "pending":
+        return "Chưa xác nhận";
+      case "confirmed":
+        return "Đã xác nhận";
+      case "shipped":
+        return "Đang giao";
+      case "cancelled":
+        return "Đã hủy";
+      case "delivered":
+        return "Đã nhận";
+      default:
+        return "Không xác định";
+    }
+  };
   //
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
@@ -98,10 +125,11 @@ const OrderScreen = () => {
       name: "Trạng thái",
       selector: (row) => (
         <p style={{ color: statusColor(row.order_status) }}>
-          {row.order_status}
+          {statusText(row.order_status)}
         </p>
       ),
     },
+
     {
       name: "Action",
       selector: (row) => (
@@ -131,16 +159,23 @@ const OrderScreen = () => {
       },
     },
   };
+
   useEffect(() => {
     const result = orders.filter((item) => {
-      return search.length !== 0
-        ? item.order_userId.user_name
-            .toUpperCase()
-            .includes(search.toUpperCase())
-        : true;
+      const matchesSearch =
+        search.length !== 0
+          ? item.order_userId.user_name
+              .toUpperCase()
+              .includes(search.toUpperCase())
+          : true;
+      const matchesStatus =
+        selected.length !== 0 ? item.order_status === selected : true;
+      return matchesSearch && matchesStatus;
     });
+
     setFilteredOrders(result);
-  }, [search, orders]);
+  }, [search, selected, orders]);
+
   return (
     <div>
       {response ? (
@@ -153,7 +188,7 @@ const OrderScreen = () => {
             data={filteredOrders}
             pagination
             responsive
-            paginationPerPage={8}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped
@@ -175,6 +210,20 @@ const OrderScreen = () => {
                     marginLeft: "10px",
                   }}
                 >
+                  <select
+                    value={selected}
+                    className="filter-dropdown-select"
+                    style={{ marginRight: "30px" }}
+                    onChange={(e) => setSelected(e.target.value)}
+                  >
+                    <option value="">Tất cả</option>
+                    {status.map((st) => (
+                      <option key={st.eng} value={st.eng}>
+                        {st.vie}
+                      </option>
+                    ))}
+                  </select>
+
                   <input
                     type="text"
                     className="search-input"

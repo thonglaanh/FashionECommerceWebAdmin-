@@ -180,7 +180,7 @@ const ShopDetail = () => {
             columns={columns}
             data={statistical}
             responsive
-            paginationPerPage={5}
+            paginationPerPage={6}
             highlightOnHover
             customStyles={customHeader}
           />

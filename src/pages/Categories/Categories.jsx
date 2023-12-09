@@ -457,7 +457,7 @@ const Categories = () => {
             data={filteredCategories}
             pagination
             responsive
-            paginationPerPage={5}
+            paginationPerPage={6}
             highlightOnHover
             customStyles={customHeader}
             striped

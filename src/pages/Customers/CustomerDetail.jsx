@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "../../styles/Detail.css";
 import { Link, useLocation } from "react-router-dom";
 import { Spin, Tabs } from "antd";
+import { message } from "antd";
 import axios from "axios";
 import config from "../../config";
 import { LoadingOutlined } from "@ant-design/icons";
 import DataTable from "react-data-table-component";
+import Modal from "antd/es/modal/Modal";
 
 const { TabPane } = Tabs;
 
@@ -16,6 +18,8 @@ const CustomerDetail = () => {
   const [customer, setCustomer] = useState({});
   const [order, setOrder] = useState([]);
   const [response, setResponse] = useState();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +36,7 @@ const CustomerDetail = () => {
           setCustomer(res.data.message.user);
           setResponse(res);
           setOrder(res.data.message.order);
+          console.log(res.data.message?.user);
           console.log(res.data.message.order);
         })
         .catch((e) => {
@@ -121,8 +126,47 @@ const CustomerDetail = () => {
       ),
     },
   ];
+  const handleDisable = async (customer) => {
+    const userId = await localStorage.getItem("userId");
+    const accessToken = await localStorage.getItem("accessToken");
+    console.log(customer._id);
+    console.log(userId);
+    console.log(accessToken);
+    await axios
+      .put(
+        config.API_IP + "/admin/disable/" + customer._id,
+        {},
+        {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        }
+      )
+      .then(async (res) => {
+        console.log(res);
+        await messageApi.open({
+          type: "success",
+          content: "Thành công",
+        });
+        setIsModalOpen(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <div style={{ paddingTop: "30px", height: "100vh" }}>
+      {contextHolder}
+      <Modal
+        title="Vô hiệu hóa"
+        open={isModalOpen}
+        onOk={() => handleDisable(customer)}
+        okButtonProps={{ style: { background: "red", borderColor: "red" } }}
+      >
+        <p>Bạn có chắc chắn muốn vô hiệu hóa tài khoản này ?</p>
+      </Modal>
+
       {response ? (
         <Tabs defaultActiveKey="1" type="card">
           <TabPane tab="Chi tiết khách hàng" key="1">
@@ -130,16 +174,19 @@ const CustomerDetail = () => {
               <div className="detail_container_image">
                 <img
                   className="detail_image"
-                  src={`https://cdnphoto.dantri.com.vn/QhqokpZp0o1InjRhTw4eI3o1BlA=/thumb_w/1020/2023/10/20/z48018417752628cd41ecccb4972f775f704e9aa9629e2-1697796049340.jpg`}
+                  src={`/${customer?.information?.avatar}`}
                 />
               </div>
+
               <div className="detail_content">
                 <div className="detail_content_customer">
-                  <p className="detail_title">Thông tin sản phẩm : </p>
+                  <p className="detail_title">Thông tin tài khoản : </p>
                   <div>
-                    <img src={require("../../assets/shop.png")} />
+                    <img src={require("../../assets/signature.png")} />
                     <p>Tên khách hàng : </p>
-                    <div className="detail_gender">{customer.user_name}</div>
+                    <div className="detail_gender">
+                      {customer?.information?.fullName}
+                    </div>
                   </div>
 
                   <div>
@@ -148,20 +195,22 @@ const CustomerDetail = () => {
                     <div className="detail_phone">{customer.email}</div>
                   </div>
                   <div>
-                    <img src={require("../../assets/placeholder.png")} />
-                    <p>Tên đầy đủ : </p>
-                    <div className="detail_phone">Nguyen Khac Dai</div>
-                  </div>
-                  <div>
                     <img src={require("../../assets/phone-call.png")} />
                     <p>Số điện thoại : </p>
                     <div className="detail_gender">
-                      0{customer.information.phoneNumber}
+                      {customer?.information?.phoneNumber}
+                    </div>
+                  </div>
+                  <div>
+                    <img src={require("../../assets/gender.png")} />
+                    <p>Giới tính : </p>
+                    <div className="detail_gender">
+                      {customer?.information?.gender}
                     </div>
                   </div>
 
                   <div>
-                    <img src={require("../../assets/three.png")} />
+                    <img src={require("../../assets/placeholder.png")} />
                     <p>Địa chỉ : </p>
                     <div
                       className="detail_gender"
@@ -171,7 +220,7 @@ const CustomerDetail = () => {
                         alignItems: "start",
                       }}
                     >
-                      {customer.information.address.map((item, index) => {
+                      {customer?.information?.address.map((item, index) => {
                         return (
                           <div key={index}>
                             <p
@@ -188,6 +237,39 @@ const CustomerDetail = () => {
                       })}
                     </div>
                   </div>
+                  <div
+                    style={{
+                      marginTop: "15px",
+                    }}
+                  >
+                    {!customer.disable ? (
+                      <button
+                        style={{
+                          width: "220px",
+                          height: "45px",
+                          color: "white",
+                          border: "1px solid #e0e0e0",
+                          backgroundColor: "red",
+                        }}
+                        onClick={() => setIsModalOpen(true)}
+                      >
+                        Vô hiệu hóa tài khoản
+                      </button>
+                    ) : (
+                      <button
+                        style={{
+                          width: "220px",
+                          height: "35px",
+                          color: "white",
+                          backgroundColor: "gray",
+                          border: "none",
+                        }}
+                        disabled={true}
+                      >
+                        Tài khoản đã bị vô hiệu hóa
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -198,7 +280,7 @@ const CustomerDetail = () => {
               data={order}
               pagination
               responsive
-              paginationPerPage={6}
+              paginationPerPage={10}
               highlightOnHover
               customStyles={customHeader}
               striped

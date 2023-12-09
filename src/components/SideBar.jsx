@@ -115,10 +115,10 @@ const SideBar = ({ children }) => {
         <div className="sidebar-account">
           <img
             className="avatar"
-            src="https://inanh.net/wp-content/uploads/2020/07/in_anh_the_2.jpg"
+            src={require("../assets/software-engineer.png")}
           />
           <div>
-            <p className="sidebar-account-name">Nguyễn Văn A</p>
+            <p className="sidebar-account-name">Nguyễn Hữu Thông</p>
             <p className="sidebar-account-email">Admin1</p>
           </div>
           <img

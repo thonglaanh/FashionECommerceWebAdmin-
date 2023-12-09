@@ -195,7 +195,7 @@ const Products = () => {
                     style={{ marginRight: "30px" }}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
-                    <option value="">Chọn danh mục</option>
+                    <option value="">Tất cả</option>
                     {categories.map((category) => (
                       <option key={category._id} value={category._id}>
                         {category.category_name}

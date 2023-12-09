@@ -110,18 +110,18 @@ const DashBroad = () => {
     {
       name: "Ảnh",
       selector: (row) => (
-        <img className="row-image" src={`uploads/${row.product_thumb[0]}`} />
+        <img className="row-image" src={`uploads/${row?.product_thumb[0]}`} />
       ),
     },
     {
       name: "Tên",
-      selector: (row) => row.product_name,
+      selector: (row) => row?.product_name,
       sortable: true,
     },
     {
       name: "Giá",
       selector: (row) =>
-        row.product_price.toLocaleString("vi-VN", {
+        row?.product_price.toLocaleString("vi-VN", {
           style: "currency",
           currency: "VND",
         }),
@@ -129,7 +129,7 @@ const DashBroad = () => {
     },
     {
       name: "Đã bán",
-      selector: (row) => row.product_sold,
+      selector: (row) => row?.product_sold,
       sortable: true,
     },
     {

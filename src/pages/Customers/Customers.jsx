@@ -50,30 +50,13 @@ const Customers = () => {
     {
       name: "Ảnh",
       selector: (row) => {
-        return (
-          <>
-            {row.information ? (
-              <img
-                className="row-image"
-                src={
-                  row.information.avatar ? row.information.avatar : "Chưa có"
-                }
-                alt="Avatar"
-              />
-            ) : (
-              <img
-                src={require("../../assets/no-pictures.png")}
-                className="row-image"
-              />
-            )}
-          </>
-        );
+        return <img className="row-image" src={row?.information?.avatar} />;
       },
     },
 
     {
       name: "Tên khách hàng",
-      selector: (row) => row.user_name,
+      selector: (row) => row?.information?.fullName,
       sortable: true,
     },
     {
@@ -83,22 +66,24 @@ const Customers = () => {
     },
     {
       name: "Giới tính",
-      selector: (row) =>
-        row.information
-          ? row.information.gender
-            ? `${row.information.gender}`
-            : "Chưa có"
-          : "Chưa có",
+      selector: (row) => `${row?.information?.gender ?? "Chưa có"}`,
       sortable: true,
     },
     {
       name: "Địa chỉ",
+      selector: (row) => <p>{row?.information?.address[0]?.customAddress}</p>,
+      sortable: true,
+    },
+    {
+      name: "Trạng thái",
       selector: (row) => (
-        <p>
-          {row.information?.address[0]?.customAddress
-            ? row.information?.address[0]?.customAddress
-            : "Chưa có"}
-        </p>
+        <div>
+          {!row.disable ? (
+            <p style={{ color: "green" }}>Hiện thị</p>
+          ) : (
+            <p style={{ color: "red" }}>Ẩn</p>
+          )}
+        </div>
       ),
       sortable: true,
     },
@@ -130,31 +115,6 @@ const Customers = () => {
         border: "1px solid #ddd",
       },
     },
-  };
-
-  const handleDisable = async (customer) => {
-    const userId = await localStorage.getItem("userId");
-    const accessToken = await localStorage.getItem("accessToken");
-    console.log(customer._id);
-    console.log(userId);
-    console.log(accessToken);
-    await axios
-      .put(
-        config.API_IP + "/admin/disable/" + customer._id,
-        {},
-        {
-          headers: {
-            "x-xclient-id": userId,
-            authorization: accessToken,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   };
 
   useEffect(() => {

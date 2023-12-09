@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/Detail.css";
 import { useLocation } from "react-router-dom";
 import { Button, message, Modal } from "antd";
@@ -36,7 +36,6 @@ const ProductDetail = () => {
     });
     setIsModalOpen(false);
   };
-
   console.log(product);
   const showModal = () => {
     setIsModalOpen(true);

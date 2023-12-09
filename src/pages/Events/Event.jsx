@@ -287,6 +287,7 @@ const Event = () => {
                     currency: "VND",
                   })}
                 </p>
+                <p>Số lượng còn lại: {selected.discount_max_uses}</p>
                 <p>
                   Bắt đầu :{" "}
                   {moment(selected.discount_start_date).format(
@@ -311,7 +312,7 @@ const Event = () => {
             data={filteredDiscount}
             pagination
             responsive
-            paginationPerPage={6}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped

@@ -23,17 +23,22 @@ const Login = () => {
         }
       )
       .then(async (res) => {
-        console.log(res);
-        localStorage.setItem("userId", res.data.message.userId);
-        localStorage.setItem("accessToken", res.data.message.accessToken);
-        await messageApi.open({
-          type: "success",
-          content: "Đăng nhập thành công",
-        });
-        navigate("/dashbroads");
+        if (res.data.status == 200) {
+          localStorage.setItem("userId", res.data.message.userId);
+          localStorage.setItem("accessToken", res.data.message.accessToken);
+          await messageApi.open({
+            type: "success",
+            content: "Đăng nhập thành công",
+          });
+          navigate("/dashbroads");
+        } else if (res.data.status == 404) {
+          await messageApi.open({
+            type: "error",
+            content: res.data.error,
+          });
+        }
       })
       .catch((e) => {
-        console.log(e);
         messageApi.open({
           type: "error",
           content: "Đăng nhập thất bại",
