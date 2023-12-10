@@ -166,7 +166,7 @@ const ShopDetail = () => {
             </div>
           </div>
         </TabPane>
-        <TabPane tab="Doanh thu" key="2">
+        <TabPane tab="Doanh thu" key="2" style={{ paddingTop: "50px" }}>
           <Chart
             chartType="AreaChart"
             width="100%"

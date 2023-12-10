@@ -34,7 +34,7 @@ const Login = () => {
         } else if (res.data.status == 404) {
           await messageApi.open({
             type: "error",
-            content: res.data.error,
+            content: res.data.error ,
           });
         }
       })

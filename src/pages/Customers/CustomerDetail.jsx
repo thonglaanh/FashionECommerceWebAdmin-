@@ -129,9 +129,7 @@ const CustomerDetail = () => {
   const handleDisable = async (customer) => {
     const userId = await localStorage.getItem("userId");
     const accessToken = await localStorage.getItem("accessToken");
-    console.log(customer._id);
-    console.log(userId);
-    console.log(accessToken);
+
     await axios
       .put(
         config.API_IP + "/admin/disable/" + customer._id,
@@ -144,23 +142,25 @@ const CustomerDetail = () => {
         }
       )
       .then(async (res) => {
-        console.log(res);
         await messageApi.open({
           type: "success",
           content: "Thành công",
         });
+        window.location.reload();
         setIsModalOpen(false);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+
   return (
     <div style={{ paddingTop: "30px", height: "100vh" }}>
       {contextHolder}
       <Modal
         title="Vô hiệu hóa"
         open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
         onOk={() => handleDisable(customer)}
         okButtonProps={{ style: { background: "red", borderColor: "red" } }}
       >
@@ -170,7 +170,10 @@ const CustomerDetail = () => {
       {response ? (
         <Tabs defaultActiveKey="1" type="card">
           <TabPane tab="Chi tiết khách hàng" key="1">
-            <div className="detail_container">
+            <div
+              className="detail_container"
+              style={{ height: "70vh", padding: "0" }}
+            >
               <div className="detail_container_image">
                 <img
                   className="detail_image"
@@ -245,7 +248,7 @@ const CustomerDetail = () => {
                     {!customer.disable ? (
                       <button
                         style={{
-                          width: "220px",
+                          width: "250px",
                           height: "45px",
                           color: "white",
                           border: "1px solid #e0e0e0",
@@ -258,8 +261,8 @@ const CustomerDetail = () => {
                     ) : (
                       <button
                         style={{
-                          width: "220px",
-                          height: "35px",
+                          width: "250px",
+                          height: "45px",
                           color: "white",
                           backgroundColor: "gray",
                           border: "none",

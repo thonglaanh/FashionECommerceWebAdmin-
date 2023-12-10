@@ -188,7 +188,7 @@ const OrderScreen = () => {
             data={filteredOrders}
             pagination
             responsive
-            paginationPerPage={10}
+            paginationPerPage={9}
             highlightOnHover
             customStyles={customHeader}
             striped

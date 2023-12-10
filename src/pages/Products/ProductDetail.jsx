@@ -12,15 +12,15 @@ const ProductDetail = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const handlerUnPublish = async () => {
-    const userId = localStorage.getItem("userId");
-    const accessToken = localStorage.getItem("accessToken");
+    const userId = await localStorage.getItem("userId");
+    const accessToken = await localStorage.getItem("accessToken");
     const formData = {
       shopId: product.product_shop._id,
       content: "Sản phẩm đã bị vô hiệu hóa do vi phạm nguyên tắc sản phẩm !",
       productId: product._id,
     };
     console.log(formData);
-    const res = await axios.post(
+    await axios.post(
       config.API_IP + "/admin/unpublishedProductByAdmin",
       formData,
       {
@@ -131,11 +131,14 @@ const ProductDetail = () => {
             </div>
 
             <div>
-              <img src={require("../../assets/three.png")} />
-              <p>Chi tiết sản phẩm : </p>
-              <div className="detail_gender">{product.product_description}</div>
+              <div>
+                {" "}
+                <img src={require("../../assets/three.png")} />
+                <p>Chi tiết sản phẩm : </p>
+              </div>
             </div>
           </div>
+          <div className="detail_gender">{product.product_description}</div>
           <div
             style={{
               marginTop: "15px",
@@ -144,7 +147,7 @@ const ProductDetail = () => {
             {product.isPublished ? (
               <button
                 style={{
-                  width: "220px",
+                  width: "250px",
                   height: "35px",
                   color: "white",
                   border: "1px solid #e0e0e0",
@@ -157,7 +160,7 @@ const ProductDetail = () => {
             ) : (
               <button
                 style={{
-                  width: "220px",
+                  width: "250px",
                   height: "35px",
                   color: "white",
                   backgroundColor: "gray",
