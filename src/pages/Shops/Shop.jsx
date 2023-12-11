@@ -36,7 +36,7 @@ const Shops = () => {
             authorization: accessToken,
           },
         });
-        setShops(response.data.message);
+        setShops(response.data.message.mergedData);
         setResponse(response);
         console.log(response.data.message);
       } catch (error) {
@@ -82,6 +82,19 @@ const Shops = () => {
     {
       name: "Địa chỉ",
       selector: (row) => row.address,
+      sortable: true,
+    },
+    {
+      name: "Trạng thái",
+      selector: (row) => (
+        <div>
+          {!row.disable ? (
+            <p style={{ color: "green" }}>Hiện thị</p>
+          ) : (
+            <p style={{ color: "red" }}>Ẩn</p>
+          )}
+        </div>
+      ),
       sortable: true,
     },
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Detail.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, message, Modal } from "antd";
 import axios from "axios";
 import config from "../../config";
@@ -10,6 +10,7 @@ const ProductDetail = () => {
   const product = location.state.row;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const nav = useNavigate();
 
   const handlerUnPublish = async () => {
     const userId = await localStorage.getItem("userId");
@@ -35,6 +36,7 @@ const ProductDetail = () => {
       content: "Thành công",
     });
     setIsModalOpen(false);
+    nav("/products");
   };
   console.log(product);
   const showModal = () => {
@@ -56,7 +58,7 @@ const ProductDetail = () => {
         onCancel={handleCancel}
         okButtonProps={{ style: { background: "red", borderColor: "red" } }}
       >
-        <p>Bạn có chắc chắn muốn vô hiệu hóa sản phẩm này không ?</p>
+        <p>Bạn có chắc chắn muốn ẩn sản phẩm này không ?</p>
       </Modal>
       <div className="detail_container">
         <div className="detail_container_image">
@@ -155,7 +157,7 @@ const ProductDetail = () => {
                 }}
                 onClick={() => showModal()}
               >
-                Vô hiệu hóa sản phẩm
+                Ẩn sản phẩm
               </button>
             ) : (
               <button
@@ -169,7 +171,7 @@ const ProductDetail = () => {
                 disabled={true}
                 onClick={() => showModal()}
               >
-                Sản phẩm đã bị vô hiệu hóa
+                Sản phẩm đã bị ẩn
               </button>
             )}
           </div>

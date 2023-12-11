@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Detail.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tabs, Modal, Button, message } from "antd";
 import axios from "axios";
 import config from "../../config";
@@ -12,8 +12,11 @@ const ShopDetail = () => {
   const location = useLocation();
   const shop = location.state.row;
   const [statistical, setStatistical] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [month, setMonth] = useState([]);
+  const nav = useNavigate();
 
   const options = {
     title: "Thống kê doanh thu cửa hàng",
@@ -108,6 +111,33 @@ const ShopDetail = () => {
       sortable: true,
     },
   ];
+  const handleDisable = async (shop) => {
+    const userId = await localStorage.getItem("userId");
+    const accessToken = await localStorage.getItem("accessToken");
+
+    await axios
+      .put(
+        config.API_IP + "/admin/disable/" + shop._id,
+        {},
+        {
+          headers: {
+            "x-xclient-id": userId,
+            authorization: accessToken,
+          },
+        }
+      )
+      .then(async (res) => {
+        await messageApi.open({
+          type: "success",
+          content: "Thành công",
+        });
+        nav("/shops");
+        setIsModalOpen(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const customHeader = {
     headCells: {
       style: {
@@ -128,6 +158,16 @@ const ShopDetail = () => {
     <div style={{ paddingTop: "30px", height: "100vh" }}>
       <Tabs defaultActiveKey="1" type="card">
         <TabPane tab="Chi tiết cửa hàng" key="1">
+          {contextHolder}
+          <Modal
+            title="Vô hiệu hóa"
+            open={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            onOk={() => handleDisable(shop)}
+            okButtonProps={{ style: { background: "red", borderColor: "red" } }}
+          >
+            <p>Bạn có chắc chắn muốn vô hiệu hóa cửa hàng này ?</p>
+          </Modal>
           <div className="detail_container">
             <div className="detail_container_image">
               <img className="detail_image" src={`/${shop.avatarShop}`} />
@@ -161,6 +201,39 @@ const ShopDetail = () => {
                   <img src={require("../../assets/three.png")} />
                   <p>Chi tiết : </p>
                   <div className="detail_gender">{shop.des}</div>
+                </div>
+                <div
+                  style={{
+                    marginTop: "15px",
+                  }}
+                >
+                  {!shop.disable ? (
+                    <button
+                      style={{
+                        width: "250px",
+                        height: "45px",
+                        color: "white",
+                        border: "1px solid #e0e0e0",
+                        backgroundColor: "red",
+                      }}
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      Vô hiệu hóa cửa hàng
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        width: "250px",
+                        height: "45px",
+                        color: "white",
+                        backgroundColor: "gray",
+                        border: "none",
+                      }}
+                      disabled={true}
+                    >
+                      Cửa hàng đã bị vô hiệu hóa
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-const API_IP = "https://serverapiecommercefashion.onrender.com/v1/api";
+const API_IP = "https://dai.tongdaihoidap.com/v1/api";
 
 export default {
   API_IP,

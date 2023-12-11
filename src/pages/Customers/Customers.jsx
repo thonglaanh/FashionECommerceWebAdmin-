@@ -120,7 +120,9 @@ const Customers = () => {
   useEffect(() => {
     const result = customers.filter((item) => {
       return search.length !== 0
-        ? item.user_name.toUpperCase().includes(search.toUpperCase())
+        ? item?.information?.fullName
+            .toUpperCase()
+            .includes(search.toUpperCase())
         : true;
     });
     setFilteredCustomer(result);
@@ -201,7 +203,7 @@ const Customers = () => {
                 spin
               />
             }
-          />  
+          />
         </div>
       )}
     </div>
