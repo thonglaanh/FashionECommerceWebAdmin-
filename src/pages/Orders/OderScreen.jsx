@@ -223,25 +223,6 @@ const OrderScreen = () => {
                       </option>
                     ))}
                   </select>
-
-                  <input
-                    type="text"
-                    className="search-input"
-                    form-control
-                    placeholder="Nhập từ khóa tìm kiếm..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <SearchOutlined
-                    style={{
-                      position: "absolute",
-                      right: "10px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      fontSize: "20px",
-                      color: "black",
-                    }}
-                  />
                 </div>
               </div>
             }

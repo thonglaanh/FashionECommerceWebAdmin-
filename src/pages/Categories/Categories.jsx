@@ -7,7 +7,7 @@ import { Button, message, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-
+import unorm from "unorm";
 const AddCategoryModal = ({
   open,
   onCancel,
@@ -111,7 +111,7 @@ const UpdateCategoryModal = ({
 
   const handleNameChange = (e) => {
     setUpdatedCategoryName(e.target.value);
-    setName(e.target.value); // Update the parent component's state
+    setName(e.target.value);
   };
 
   return (
@@ -123,14 +123,14 @@ const UpdateCategoryModal = ({
               width: "100%",
               display: "flex",
               justifyContent: "center",
+              padding: "30px",
+              height: "140px",
+              borderRadius: "50%",
             }}
           >
             <img
               alt="not found"
-              width={"140px"}
-              height={"140px"}
               style={{
-                borderRadius: "50%",
                 objectFit: "cover",
               }}
               src={modalThumb}
@@ -405,9 +405,11 @@ const Categories = () => {
   };
 
   useEffect(() => {
+    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
     const result = categories.filter((item) => {
+      const normalizedItem = unorm.nfd(item.category_name.toLowerCase());
       return search.length !== 0
-        ? item.category_name.toUpperCase().includes(search.toUpperCase())
+        ? normalizedItem.includes(normalizedSearchKey)
         : true;
     });
     setFilteredCategories(result);

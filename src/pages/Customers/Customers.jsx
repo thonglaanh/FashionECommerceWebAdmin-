@@ -8,6 +8,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Spin } from "antd";
 import { Link } from "react-router-dom";
+import unorm from "unorm";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
@@ -118,11 +119,13 @@ const Customers = () => {
   };
 
   useEffect(() => {
+    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
     const result = customers.filter((item) => {
+      const normalizedItem = unorm.nfd(
+        item?.information?.fullName.toLowerCase()
+      );
       return search.length !== 0
-        ? item?.information?.fullName
-            .toUpperCase()
-            .includes(search.toUpperCase())
+        ? normalizedItem.includes(normalizedSearchKey)
         : true;
     });
     setFilteredCustomer(result);

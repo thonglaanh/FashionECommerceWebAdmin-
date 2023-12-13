@@ -98,7 +98,7 @@ const SideBar = ({ children }) => {
         >
           <p>Bạn có chắc chắn muốn đăng xuất không ?</p>
         </Modal>
-        <img className="sidebar-logo" src={require("../assets/trusty.jpg")} />
+        <img className="sidebar-logo" src={require("../assets/logo.png")} />
         {menuItem.map((item, index) => (
           <NavLink
             to={item.path}
@@ -130,7 +130,7 @@ const SideBar = ({ children }) => {
       </div>
       <div style={{ flexDirection: "column" }}>
         <main>{children}</main>
-        <Footer
+        {/* <Footer
           style={{
             position: "absolute",
             bottom: 0,
@@ -140,8 +140,8 @@ const SideBar = ({ children }) => {
             backgroundColor: "white",
           }}
         >
-          TrustyBuy Admin ©2023 Created by Nguyen Huu Thong
-        </Footer>
+          TrustyBuy Admin ©2023 Created by Group 5
+        </Footer> */}
       </div>
     </div>
   );

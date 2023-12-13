@@ -9,6 +9,7 @@ import { Button, message, Modal } from "antd";
 
 import moment from "moment";
 import { SearchOutlined } from "@ant-design/icons";
+import unorm from "unorm";
 
 const Event = () => {
   const [discount, setDiscount] = useState([]);
@@ -237,9 +238,11 @@ const Event = () => {
     },
   };
   useEffect(() => {
+    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
     const result = discount.filter((item) => {
+      const normalizedItem = unorm.nfd(item.discount_name.toLowerCase());
       return search.length !== 0
-        ? item.discount_name.toUpperCase().includes(search.toUpperCase())
+        ? normalizedItem.includes(normalizedSearchKey)
         : true;
     });
     setFilteredDiscount(result);

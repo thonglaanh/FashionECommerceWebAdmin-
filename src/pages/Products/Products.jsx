@@ -7,7 +7,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Spin } from "antd";
-
+import unorm from "unorm";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -134,7 +134,7 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    console.log(selectedCategory);
+    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
     const result = products.filter((item) => {
       const categoryMatches =
         selectedCategory.length === 0 ||
@@ -142,10 +142,10 @@ const Products = () => {
           item.category._id
             .toUpperCase()
             .includes(selectedCategory.toUpperCase()));
+      const normalizedItem = unorm.nfd(item.product_name.toLowerCase());
 
       const nameMatches =
-        search.length === 0 ||
-        item.product_name.toUpperCase().includes(search.toUpperCase());
+        search.length === 0 || normalizedItem.includes(normalizedSearchKey);
 
       return categoryMatches && nameMatches;
     });
