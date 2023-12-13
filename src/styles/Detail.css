@@ -7,6 +7,7 @@
 .detail_container_image {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 .detail_image {
   width: 400px;

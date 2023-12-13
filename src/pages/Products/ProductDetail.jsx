@@ -66,6 +66,31 @@ const ProductDetail = () => {
             className="detail_image"
             src={`/uploads/${product.product_thumb[0]}`}
           />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: "10px 200px 10px 10px",
+            }}
+          >
+            {product.product_thumb.map((image, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  style={{ width: "50px", gap: "10px" }}
+                  src={`/uploads/${image}`}
+                  alt={`Thumbnail ${index}`}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="detail_content">
           <div className="detail_content_customer">
