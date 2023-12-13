@@ -170,7 +170,11 @@ const ShopDetail = () => {
           </Modal>
           <div className="detail_container">
             <div className="detail_container_image">
-              <img className="detail_image" src={`/${shop.avatarShop}`} />
+              <img
+                className="detail_image"
+                style={{ height: "65vh" }}
+                src={`/${shop.avatarShop}`}
+              />
             </div>
             <div className="detail_content">
               <div className="detail_content_customer">

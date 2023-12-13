@@ -16,8 +16,9 @@ main {
 }
 
 .sidebar-logo {
-  width: 60%;
-  margin: 10px 17%;
+  width: 55%;
+  margin: 10px 20% 20px 20%;
+  object-fit: contain;
 }
 
 .sidebar-item {
