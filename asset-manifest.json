@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/FashionECommerceWebAdmin-/static/css/main.ac53020f.css",
+    "main.js": "/FashionECommerceWebAdmin-/static/js/main.b3d2869b.js",
+    "static/media/backgroundFashion.jpg": "/FashionECommerceWebAdmin-/static/media/backgroundFashion.1cc3248314cd4426b776.jpg",
+    "static/media/logo.png": "/FashionECommerceWebAdmin-/static/media/logo.af79f3ae9be4acd424c3.png",
+    "static/media/people.png": "/FashionECommerceWebAdmin-/static/media/people.4e29006906b5e0822b45.png",
+    "static/media/trusty.jpg": "/FashionECommerceWebAdmin-/static/media/trusty.5f6f74b97d5c24525ba0.jpg",
+    "static/media/party.png": "/FashionECommerceWebAdmin-/static/media/party.b9fe8849877e684ae2d6.png",
+    "static/media/software-engineer.png": "/FashionECommerceWebAdmin-/static/media/software-engineer.2ba97968a5d41f978d36.png",
+    "static/media/price-tag.png": "/FashionECommerceWebAdmin-/static/media/price-tag.78ed8729dea88c92161e.png",
+    "static/media/products.png": "/FashionECommerceWebAdmin-/static/media/products.ce3d3317c3bda242922e.png",
+    "static/media/bill.png": "/FashionECommerceWebAdmin-/static/media/bill.bdeafbe30bae7db4d213.png",
+    "static/media/overflow.png": "/FashionECommerceWebAdmin-/static/media/overflow.b0f4d40bb6ca327fe3bc.png",
+    "static/media/storecolor.png": "/FashionECommerceWebAdmin-/static/media/storecolor.64e6d825d46daab29ff7.png",
+    "static/media/group.png": "/FashionECommerceWebAdmin-/static/media/group.9b0c33ce296c267bd518.png",
+    "static/media/order-delivery.png": "/FashionECommerceWebAdmin-/static/media/order-delivery.d70255dcb30e7049c2dc.png",
+    "static/media/coupon.png": "/FashionECommerceWebAdmin-/static/media/coupon.72816f955cc48b47a23e.png",
+    "static/media/gallery.png": "/FashionECommerceWebAdmin-/static/media/gallery.2a96ab089aaf120ff3a2.png",
+    "static/media/placeholder.png": "/FashionECommerceWebAdmin-/static/media/placeholder.64cdcb0ef97818161310.png",
+    "static/media/gender.png": "/FashionECommerceWebAdmin-/static/media/gender.5ecf9200617701bdc758.png",
+    "static/media/category (2).png": "/FashionECommerceWebAdmin-/static/media/category (2).6f661eed6ee893bcd450.png",
+    "static/media/shop.png": "/FashionECommerceWebAdmin-/static/media/shop.9b546678d139be1e0191.png",
+    "static/media/star.png": "/FashionECommerceWebAdmin-/static/media/star.618d11e122cbca3f8e9e.png",
+    "static/media/phone-call.png": "/FashionECommerceWebAdmin-/static/media/phone-call.b76498e5c124d5213615.png",
+    "static/media/signature.png": "/FashionECommerceWebAdmin-/static/media/signature.425c2ee9999fb1532665.png",
+    "static/media/dashboard.png": "/FashionECommerceWebAdmin-/static/media/dashboard.568545606c1ff09d4066.png",
+    "static/media/no-pictures.png": "/FashionECommerceWebAdmin-/static/media/no-pictures.5533b14ac3fa8a6eccf1.png",
+    "static/media/gmail.png": "/FashionECommerceWebAdmin-/static/media/gmail.a2f2146f929409405da0.png",
+    "static/media/attribute.png": "/FashionECommerceWebAdmin-/static/media/attribute.3235073bbf24ed6472a3.png",
+    "static/media/categories.png": "/FashionECommerceWebAdmin-/static/media/categories.c5587b259d4e4a001ba8.png",
+    "static/media/skin-care.png": "/FashionECommerceWebAdmin-/static/media/skin-care.99532272615dd7f05f43.png",
+    "index.html": "/FashionECommerceWebAdmin-/index.html",
+    "main.ac53020f.css.map": "/FashionECommerceWebAdmin-/static/css/main.ac53020f.css.map",
+    "main.b3d2869b.js.map": "/FashionECommerceWebAdmin-/static/js/main.b3d2869b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ac53020f.css",
+    "static/js/main.b3d2869b.js"
+  ]
+}
