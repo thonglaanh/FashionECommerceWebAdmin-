@@ -1,12 +1,18 @@
 main {
   width: 84vw;
   padding-left: 10px;
-  max-height: 100%;
   background-color: #f7f6f6;
+  overflow-y: auto; /* Enable vertical scrolling if the content overflows */
 }
 .main-container-sidebar {
   display: flex;
   justify-content: center;
+  min-height: 100vh;
+}
+.content-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Take up remaining vertical space */
 }
 
 .sidebar-container {

@@ -70,25 +70,18 @@ const ProductDetail = () => {
             style={{
               display: "flex",
               flexDirection: "row",
+              width: "400px",
               justifyContent: "space-between",
-              padding: "10px 200px 10px 10px",
+              margin: "10px 0px",
             }}
           >
-            {product.product_thumb.map((image, index) => (
-              <div
+            {product.product_thumb.slice(0, 4).map((image, index) => (
+              <img
+                style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                src={`/uploads/${image}`}
+                alt={`Thumbnail ${index}`}
                 key={index}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  style={{ width: "50px", gap: "10px" }}
-                  src={`/uploads/${image}`}
-                  alt={`Thumbnail ${index}`}
-                />
-              </div>
+              />
             ))}
           </div>
         </div>

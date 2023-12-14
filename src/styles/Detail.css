@@ -2,12 +2,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding-top: 50px;
-  height: 90vh;
+  height: 100%;
 }
 .detail_container_image {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-left: 100px;
 }
 .detail_image {
   width: 400px;
