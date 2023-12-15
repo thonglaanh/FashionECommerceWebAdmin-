@@ -1,7 +1,7 @@
 .detail_container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding-top: 50px;
+  padding-top: 30px;
   height: 100%;
 }
 .detail_container_image {
@@ -45,7 +45,7 @@
   margin-right: 5px;
 }
 .detail_content div p {
-  color: green;
+  color: #008000;
   font-size: 15px;
   margin: 10px 20px;
   text-decoration: underline;

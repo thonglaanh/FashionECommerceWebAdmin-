@@ -66,24 +66,31 @@ const ProductDetail = () => {
             className="detail_image"
             src={`/uploads/${product.product_thumb[0]}`}
           />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "400px",
-              justifyContent: "space-between",
-              margin: "10px 0px",
-            }}
-          >
-            {product.product_thumb.slice(0, 4).map((image, index) => (
-              <img
-                style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                src={`/uploads/${image}`}
-                alt={`Thumbnail ${index}`}
-                key={index}
-              />
-            ))}
-          </div>
+          {product.product_thumb.length > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "400px",
+                justifyContent: "space-between",
+                margin: "10px 0px",
+              }}
+            >
+              {product.product_thumb.slice(0, 4).map((image, index) => (
+                <img
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                  }}
+                  src={`/uploads/${image}`}
+                  key={index}
+                />
+              ))}
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className="detail_content">
           <div className="detail_content_customer">

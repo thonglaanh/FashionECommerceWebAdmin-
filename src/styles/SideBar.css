@@ -2,7 +2,7 @@ main {
   width: 84vw;
   padding-left: 10px;
   background-color: #f7f6f6;
-  overflow-y: auto; /* Enable vertical scrolling if the content overflows */
+  overflow-y: auto;
 }
 .main-container-sidebar {
   display: flex;
@@ -12,7 +12,7 @@ main {
 .content-container {
   display: flex;
   flex-direction: column;
-  flex: 1; /* Take up remaining vertical space */
+  flex: 1;
 }
 
 .sidebar-container {
