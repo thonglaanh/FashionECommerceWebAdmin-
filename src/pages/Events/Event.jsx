@@ -238,14 +238,16 @@ const Event = () => {
     },
   };
   useEffect(() => {
-    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
-    const result = discount.filter((item) => {
-      const normalizedItem = unorm.nfd(item.discount_name.toLowerCase());
-      return search.length !== 0
-        ? normalizedItem.includes(normalizedSearchKey)
-        : true;
-    });
-    setFilteredDiscount(result);
+    if (discount.length > 0) {
+      const normalizedSearchKey = unorm.nfd(search.toLowerCase());
+      const result = discount.filter((item) => {
+        const normalizedItem = unorm.nfd(item.discount_name.toLowerCase());
+        return search.length !== 0
+          ? normalizedItem.includes(normalizedSearchKey)
+          : true;
+      });
+      setFilteredDiscount(result);
+    }
   }, [search, discount]);
   return (
     <div>

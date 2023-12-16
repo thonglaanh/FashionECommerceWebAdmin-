@@ -405,14 +405,16 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
-    const result = categories.filter((item) => {
-      const normalizedItem = unorm.nfd(item.category_name.toLowerCase());
-      return search.length !== 0
-        ? normalizedItem.includes(normalizedSearchKey)
-        : true;
-    });
-    setFilteredCategories(result);
+    if (categories.length > 0) {
+      const normalizedSearchKey = unorm.nfd(search.toLowerCase());
+      const result = categories.filter((item) => {
+        const normalizedItem = unorm.nfd(item.category_name.toLowerCase());
+        return search.length !== 0
+          ? normalizedItem.includes(normalizedSearchKey)
+          : true;
+      });
+      setFilteredCategories(result);
+    }
   }, [search, categories]);
 
   return (

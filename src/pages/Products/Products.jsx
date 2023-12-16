@@ -134,22 +134,24 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
-    const result = products.filter((item) => {
-      const categoryMatches =
-        selectedCategory.length === 0 ||
-        (item.category &&
-          item.category._id
-            .toUpperCase()
-            .includes(selectedCategory.toUpperCase()));
-      const normalizedItem = unorm.nfd(item.product_name.toLowerCase());
+    if (products.length > 0) {
+      const normalizedSearchKey = unorm.nfd(search.toLowerCase());
+      const result = products.filter((item) => {
+        const categoryMatches =
+          selectedCategory.length === 0 ||
+          (item.category &&
+            item.category._id
+              .toUpperCase()
+              .includes(selectedCategory.toUpperCase()));
+        const normalizedItem = unorm.nfd(item.product_name.toLowerCase());
 
-      const nameMatches =
-        search.length === 0 || normalizedItem.includes(normalizedSearchKey);
+        const nameMatches =
+          search.length === 0 || normalizedItem.includes(normalizedSearchKey);
 
-      return categoryMatches && nameMatches;
-    });
-    setFilteredProducts(result);
+        return categoryMatches && nameMatches;
+      });
+      setFilteredProducts(result);
+    }
   }, [search, products, selectedCategory]);
 
   return (
@@ -195,12 +197,20 @@ const Products = () => {
                     style={{ marginRight: "30px" }}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
-                    <option value="">Tất cả</option>
-                    {categories.map((category) => (
-                      <option key={category._id} value={category._id}>
-                        {category.category_name}
+                    {categories.length > 0 ? (
+                      <>
+                        <option value="">Tất cả</option>
+                        {categories.map((category) => (
+                          <option key={category._id} value={category._id}>
+                            {category.category_name}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      <option value="" disabled>
+                        No categories available
                       </option>
-                    ))}
+                    )}
                   </select>
 
                   <input

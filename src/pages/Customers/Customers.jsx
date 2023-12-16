@@ -119,16 +119,18 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    const normalizedSearchKey = unorm.nfd(search.toLowerCase());
-    const result = customers.filter((item) => {
-      const normalizedItem = unorm.nfd(
-        item?.information?.fullName.toLowerCase()
-      );
-      return search.length !== 0
-        ? normalizedItem.includes(normalizedSearchKey)
-        : true;
-    });
-    setFilteredCustomer(result);
+    if (customers.length > 0) {
+      const normalizedSearchKey = unorm.nfd(search.toLowerCase());
+      const result = customers.filter((item) => {
+        const normalizedItem = unorm.nfd(
+          item?.information?.fullName.toLowerCase()
+        );
+        return search.length !== 0
+          ? normalizedItem.includes(normalizedSearchKey)
+          : true;
+      });
+      setFilteredCustomer(result);
+    }
   }, [search, customers]);
   return (
     <div>
