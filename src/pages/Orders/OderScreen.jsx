@@ -98,24 +98,24 @@ const OrderScreen = () => {
 
     {
       name: "SDT khách hàng",
-      selector: (row) => `0${row.order_userId[0].phoneNumber}`,
+      selector: (row) => `0${row.order_userId[0]?.phoneNumber}`,
       sortable: true,
     },
     {
       name: "Tên cửa hàng",
-      selector: (row) => row.order_products[0].shopId.nameShop,
+      selector: (row) => row.order_products[0]?.shopId?.nameShop,
       sortable: true,
     },
     {
       name: "Sản phẩm",
-      selector: (row) => row.item_products[0].productId.product_name,
+      selector: (row) => row.item_products[0]?.productId?.product_name,
       sortable: true,
     },
     ,
     {
       name: "Tổng tiền",
       selector: (row) =>
-        row.item_products[0].price.toLocaleString("vi-VN", {
+        row?.item_products[0]?.price.toLocaleString("vi-VN", {
           style: "currency",
           currency: "VND",
         }),
