@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/Detail.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Tabs, Modal, Button, message } from "antd";
 import axios from "axios";
 import config from "../../config";
@@ -14,6 +14,7 @@ const ShopDetail = () => {
   const [statistical, setStatistical] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [orderShop, setOrderShop] = useState([]);
 
   const [month, setMonth] = useState([]);
   const nav = useNavigate();
@@ -43,7 +44,9 @@ const ShopDetail = () => {
       })
       .then((res) => {
         setStatistical(res.data.message.topProductSold);
+        setOrderShop(res.data.message.orderShop);
         const doanhThu = res.data.message.revenue;
+
         const monthData = doanhThu.map((item) => [
           item.month,
           item.totalRevenue,
@@ -111,6 +114,52 @@ const ShopDetail = () => {
       sortable: true,
     },
   ];
+  const columnsOrder = [
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
+
+    {
+      name: "SDT khách hàng",
+      selector: (row) => `0${row.order_userId[0]?.phoneNumber}`,
+      sortable: true,
+    },
+    {
+      name: "Tên cửa hàng",
+      selector: (row) => row.order_products[0]?.shopId?.nameShop,
+      sortable: true,
+    },
+    {
+      name: "Sản phẩm",
+      selector: (row) => row.item_products[0]?.productId?.product_name,
+      sortable: true,
+    },
+    ,
+    {
+      name: "Tổng tiền",
+      selector: (row) =>
+        row?.item_products[0]?.price.toLocaleString("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }),
+      sortable: true,
+    },
+    {
+      name: "Trạng thái",
+      selector: (row) => (
+        <p style={{ color: statusColor(row.order_status) }}>
+          {statusText(row.order_status)}
+        </p>
+      ),
+    },
+
+    {
+      name: "Action",
+      selector: (row) => (
+        <Link to={`/order/${row._id}`} state={{ row }}>
+          View detail
+        </Link>
+      ),
+    },
+  ];
   const handleDisable = async (shop) => {
     const userId = await localStorage.getItem("userId");
     const accessToken = await localStorage.getItem("accessToken");
@@ -154,6 +203,38 @@ const ShopDetail = () => {
   };
 
   console.log(shop);
+  const statusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "orange";
+      case "confirmed":
+        return "cyan";
+      case "shipped":
+        return "blue";
+      case "cancelled":
+        return "red";
+      case "delivered":
+        return "green";
+      default:
+        return "black";
+    }
+  };
+  const statusText = (status) => {
+    switch (status) {
+      case "pending":
+        return "Chưa xác nhận";
+      case "confirmed":
+        return "Đã xác nhận";
+      case "shipped":
+        return "Đang giao";
+      case "cancelled":
+        return "Đã hủy";
+      case "delivered":
+        return "Đã nhận";
+      default:
+        return "Không xác định";
+    }
+  };
   return (
     <div style={{ paddingTop: "30px", height: "100vh" }}>
       <Tabs defaultActiveKey="1" type="card">
@@ -188,7 +269,7 @@ const ShopDetail = () => {
                 <div>
                   <img src={require("../../assets/gmail.png")} />
                   <p>Email cửa hàng : </p>
-                  <div className="detail_phone">{shop.emailShop}</div>
+                  <div className="detail_phone">{shop.email}</div>
                 </div>
                 <div>
                   <img src={require("../../assets/placeholder.png")} />
@@ -252,12 +333,25 @@ const ShopDetail = () => {
             options={options}
           />
         </TabPane>
-        <TabPane tab="Danh sách sản phẩm" key="3">
+        <TabPane tab="Đơn hàng" key="3" style={{ paddingTop: "40px" }}>
+          <DataTable
+            columns={columnsOrder}
+            data={orderShop}
+            pagination
+            responsive
+            paginationPerPage={8}
+            highlightOnHover
+            customStyles={customHeader}
+            striped
+          />
+        </TabPane>
+        <TabPane tab="Danh sách sản phẩm" key="4">
           <DataTable
             columns={columns}
             data={statistical}
             responsive
-            paginationPerPage={6}
+            pagination
+            paginationPerPage={8}
             highlightOnHover
             customStyles={customHeader}
           />

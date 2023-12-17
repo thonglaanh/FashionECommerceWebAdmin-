@@ -13,7 +13,7 @@
 .detail_image {
   width: 400px;
   height: 550px;
-  object-fit: cover;
+  object-fit: contain;
 }
 .detail_name,
 .detail_email,

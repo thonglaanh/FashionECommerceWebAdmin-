@@ -71,7 +71,7 @@ const Shops = () => {
     },
     {
       name: "Email",
-      selector: (row) => row.emailShop,
+      selector: (row) => row.email,
       sortable: true,
     },
     {
@@ -159,7 +159,7 @@ const Shops = () => {
                 <div>
                   <p>Id : {selected._id}</p>
                   <p>Tên cửa hàng : {selected.nameShop}</p>
-                  <p>Email : {selected.emailShop}</p>
+                  <p>Email : {selected.email}</p>
                   <p>Liên hệ : 0{selected.phoneNumberShop}</p>
                   <p>Địa chỉ : {selected.address}</p>
                   <p>Giới thiệu : {selected.des}</p>

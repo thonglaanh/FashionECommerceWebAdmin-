@@ -76,11 +76,11 @@ const ProductDetail = () => {
                 margin: "10px 0px",
               }}
             >
-              {product.product_thumb.slice(0, 4).map((image, index) => (
+              {product.product_thumb.slice(0, 5).map((image, index) => (
                 <img
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "50px",
+                    height: "50px",
                     objectFit: "cover",
                   }}
                   src={`/uploads/${image}`}

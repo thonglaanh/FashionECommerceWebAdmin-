@@ -14,45 +14,43 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [response, setResponse] = useState(null);
+  const fetchData = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const accessToken = localStorage.getItem("accessToken");
+
+      const productPromise = axios.get(config.API_IP + "/admin/product", {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      });
+
+      const categoryPromise = axios.get(config.API_IP + "/admin/category", {
+        headers: {
+          "x-xclient-id": userId,
+          authorization: accessToken,
+        },
+      });
+
+      const [productResponse, categoryResponse] = await Promise.all([
+        productPromise,
+        categoryPromise,
+      ]);
+
+      setProducts(productResponse.data.message);
+      setCategories(categoryResponse.data.message);
+      setResponse(productResponse);
+
+      console.log(productResponse.data.message);
+      console.log(categoryResponse.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userId = localStorage.getItem("userId");
-        const accessToken = localStorage.getItem("accessToken");
-
-        const productPromise = axios.get(config.API_IP + "/admin/product", {
-          headers: {
-            "x-xclient-id": userId,
-            authorization: accessToken,
-          },
-        });
-
-        const categoryPromise = axios.get(config.API_IP + "/admin/category", {
-          headers: {
-            "x-xclient-id": userId,
-            authorization: accessToken,
-          },
-        });
-
-        const [productResponse, categoryResponse] = await Promise.all([
-          productPromise,
-          categoryPromise,
-        ]);
-
-        setProducts(productResponse.data.message);
-        setCategories(categoryResponse.data.message);
-        setResponse(productResponse);
-
-        console.log(productResponse.data.message);
-        console.log(categoryResponse.data.message);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchData();
   }, []);
-
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
     {

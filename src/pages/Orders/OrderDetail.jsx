@@ -192,7 +192,7 @@ const OrderDetail = () => {
                   >
                     Số điện thoại: 0{orders.order_userId[0].phoneNumber}
                   </label>
-                  Địa chỉ nhận hàng: {orders.order_shipping.City}
+                  Địa chỉ nhận hàng: {orders.order_shipping.Address}
                 </div>
               </div>
             </div>
@@ -207,7 +207,9 @@ const OrderDetail = () => {
           </div>
           <div className="box pay">
             <p>THANH TOÁN </p>
-            <div>Phương thức thanh toán : VN PAY</div>
+            <div>
+              Phương thức thanh toán : <label htmlFor="">Paypal</label>
+            </div>
             <div>
               Giá tiền :{" "}
               <label htmlFor="" style={{ color: "red" }}>

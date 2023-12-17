@@ -17,6 +17,7 @@ const DashBroad = () => {
 
   const [year, setYear] = useState(2023);
   const [products, setProducts] = useState([]);
+  const [orderByMonth, setOrderByMonth] = useState({});
 
   //
   const [response, setResponse] = useState(null);
@@ -32,6 +33,8 @@ const DashBroad = () => {
             authorization: accessToken,
           },
         });
+        console.log(userId);
+        console.log(accessToken);
         setResponse(response);
         setBill(response.data.message.countOrders);
         setCategory(response.data.message.countCategory);
@@ -66,6 +69,37 @@ const DashBroad = () => {
           ],
         ];
         setChartData(data);
+        //
+
+        const rawData = {
+          "Chưa xác nhận": response.data.message.orderPendingByMonth,
+          "Đã hủy": response.data.message.orderCancelledByMonth,
+          "Đã xác nhận": response.data.message.orderConfirmedByMonth,
+          "Đã nhận": response.data.message.orderDeliveredByMonth,
+          "Đang giao": response.data.message.orderShippedByMonth,
+        };
+        const header = ["Tháng"];
+        const months = Array.from({ length: 12 }, (_, i) => i + 1);
+        for (const key in rawData) {
+          if (rawData.hasOwnProperty(key)) {
+            header.push(key);
+          }
+        }
+        const result = [header];
+        months.forEach((month) => {
+          const row = [month];
+          for (const key in rawData) {
+            if (rawData.hasOwnProperty(key)) {
+              const dataForMonth = rawData[key].find(
+                (item) => item._id === month
+              );
+              row.push(dataForMonth ? dataForMonth.totalOrders : 0);
+            }
+          }
+
+          result.push(row);
+        });
+        setOrderByMonth(result);
       } catch (error) {
         console.log(error);
       }
@@ -160,6 +194,11 @@ const DashBroad = () => {
       },
     },
   };
+  const options = {
+    chart: {
+      title: "Thống kê hóa đơn theo tháng",
+    },
+  };
 
   return (
     <div>
@@ -227,6 +266,15 @@ const DashBroad = () => {
                 data={chartData}
               ></Chart>
             </div>
+          </div>
+          <div style={{ padding: "20px 10px" }}>
+            <Chart
+              chartType="Line"
+              width="100%"
+              height="400px"
+              data={orderByMonth}
+              options={options}
+            />
           </div>
         </div>
       ) : (

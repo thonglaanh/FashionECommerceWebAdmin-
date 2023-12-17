@@ -12,18 +12,9 @@ import unorm from "unorm";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filteredCustomer, setFilteredCustomer] = useState([]);
   const [search, setSearch] = useState("");
   const [response, setResponse] = useState(null);
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,7 +58,7 @@ const Customers = () => {
     },
     {
       name: "Giới tính",
-      selector: (row) => `${row?.information?.gender ?? "Chưa có"}`,
+      selector: (row) => `${row?.information?.gender}`,
       sortable: true,
     },
     {

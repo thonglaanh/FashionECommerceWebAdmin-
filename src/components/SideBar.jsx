@@ -130,7 +130,7 @@ const SideBar = ({ children }) => {
       </div>
       <div style={{ flexDirection: "column" }}>
         <main>{children}</main>
-        <Footer
+        {/* <Footer
           style={{
             position: "absolute",
             bottom: 0,
@@ -141,7 +141,7 @@ const SideBar = ({ children }) => {
           }}
         >
           TrustyBuy Admin ©2023 Created by Group 5
-        </Footer>
+        </Footer> */}
       </div>
     </div>
   );
