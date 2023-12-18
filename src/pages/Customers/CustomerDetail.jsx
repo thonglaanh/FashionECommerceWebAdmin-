@@ -79,8 +79,6 @@ const CustomerDetail = () => {
     }
   };
   const columAdress = [
-    { name: "ID", selector: (row, index) => `#${index + 1}` },
-
     {
       name: "Địa chỉ",
       selector: (row) => `${row.nameAddress}`,
@@ -174,7 +172,7 @@ const CustomerDetail = () => {
         onOk={() => handleDisable(customer)}
         okButtonProps={{ style: { background: "red", borderColor: "red" } }}
       >
-        <p>Bạn có chắc chắn muốn vô hiệu hóa tài khoản này ?</p>
+        <p>Bạn có chắc chắn muốn khóa / mở khóa tài khoản này ?</p>
       </Modal>
 
       {response ? (
@@ -226,48 +224,48 @@ const CustomerDetail = () => {
                     <img src={require("../../assets/placeholder.png")} />
                     <p>Địa chỉ : </p>
                   </div>
-                  <DataTable
-                    columns={columAdress}
-                    className="my-box"
-                    data={address}
-                    responsive
-                    highlightOnHover
-                    customStyles={customHeader}
-                    striped
-                  />
-                  <div
-                    style={{
-                      marginTop: "15px",
-                    }}
-                  >
-                    {!customer.disable ? (
-                      <button
-                        style={{
-                          width: "250px",
-                          height: "45px",
-                          color: "white",
-                          border: "1px solid #e0e0e0",
-                          backgroundColor: "red",
-                        }}
-                        onClick={() => setIsModalOpen(true)}
-                      >
-                        Vô hiệu hóa tài khoản
-                      </button>
-                    ) : (
-                      <button
-                        style={{
-                          width: "250px",
-                          height: "45px",
-                          color: "white",
-                          backgroundColor: "gray",
-                          border: "none",
-                        }}
-                        disabled={true}
-                      >
-                        Tài khoản đã bị vô hiệu hóa
-                      </button>
-                    )}
-                  </div>
+                </div>
+                <DataTable
+                  columns={columAdress}
+                  className="my-box"
+                  data={address}
+                  responsive
+                  highlightOnHover
+                  customStyles={customHeader}
+                  striped
+                />
+                <div
+                  style={{
+                    marginTop: "15px",
+                  }}
+                >
+                  {!customer.disable ? (
+                    <button
+                      style={{
+                        width: "250px",
+                        height: "45px",
+                        color: "white",
+                        border: "1px solid #e0e0e0",
+                        backgroundColor: "red",
+                      }}
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      Vô hiệu hóa tài khoản
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        width: "250px",
+                        height: "45px",
+                        color: "white",
+                        backgroundColor: "gray",
+                        border: "none",
+                      }}
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      Tài khoản đã bị vô hiệu hóa
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

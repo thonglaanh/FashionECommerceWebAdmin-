@@ -249,7 +249,7 @@ const ShopDetail = () => {
             onOk={() => handleDisable(shop)}
             okButtonProps={{ style: { background: "red", borderColor: "red" } }}
           >
-            <p>Bạn có chắc chắn muốn vô hiệu hóa cửa hàng này ?</p>
+            <p>Bạn có chắc chắn muốn khóa / mở khóa cửa hàng này ?</p>
           </Modal>
           <div className="detail_container">
             <div className="detail_container_image">
@@ -316,7 +316,7 @@ const ShopDetail = () => {
                         backgroundColor: "gray",
                         border: "none",
                       }}
-                      disabled={true}
+                      onClick={() => setIsModalOpen(true)}
                     >
                       Cửa hàng đã bị vô hiệu hóa
                     </button>
