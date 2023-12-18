@@ -51,7 +51,7 @@ const DashBroad = () => {
           ["Element", "Density", { role: "style" }],
           [
             "Danh mục",
-            response.data.message.mergedData[year].ordertCount,
+            response.data.message.mergedData[year].categoryCount,
             "green",
           ],
           [

@@ -181,7 +181,7 @@ const OrderDetail = () => {
                       width: "100%",
                     }}
                   >
-                    {orders.shopInOrder[0].user_name}
+                    {orders.shopdetailInOrder[0].nameShop}
                   </label>
                   Thông tin liên hệ: {orders.shopInOrder[0].email}
                 </div>

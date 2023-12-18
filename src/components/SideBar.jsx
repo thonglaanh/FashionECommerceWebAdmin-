@@ -106,7 +106,10 @@ const SideBar = ({ children }) => {
         >
           <p>Bạn có chắc chắn muốn đăng xuất không ?</p>
         </Modal>
-        <img className="sidebar-logo" src={require("../assets/logo.png")} />
+        <img
+          className="sidebar-logo"
+          src={require("../assets/trustybuy.png")}
+        />
         {menuItem.map((item, index) => (
           <NavLink
             to={item.path}

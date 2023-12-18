@@ -20,6 +20,7 @@ const CustomerDetail = () => {
   const [response, setResponse] = useState();
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [address, setAddress] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +37,8 @@ const CustomerDetail = () => {
           setCustomer(res.data.message.user);
           setResponse(res);
           setOrder(res.data.message?.order);
-          console.log(res.data.message?.user);
-          console.log(res.data.message.order);
+          setAddress(res.data.message.user?.information?.address);
+          console.log(res.data.message.user?.information?.address);
         })
         .catch((e) => {
           console.log(e);
@@ -77,6 +78,20 @@ const CustomerDetail = () => {
         return "black";
     }
   };
+  const columAdress = [
+    { name: "ID", selector: (row, index) => `#${index + 1}` },
+
+    {
+      name: "Địa chỉ",
+      selector: (row) => `${row.nameAddress}`,
+      sortable: true,
+    },
+    {
+      name: "Chi tiết",
+      selector: (row) => row.customAddress,
+      sortable: true,
+    },
+  ];
   const columns = [
     { name: "ID", selector: (row, index) => `#${index + 1}` },
 
@@ -87,15 +102,14 @@ const CustomerDetail = () => {
     },
     {
       name: "Tên cửa hàng",
-      selector: (row) => row.shopInOrder[0].user_name,
+      selector: (row) => row.order_products[0].shopId.nameShop,
       sortable: true,
     },
     {
       name: "Sản phẩm",
-      selector: (row) => row.productInfo[0][0].product_name,
+      selector: (row) => row.item_products[0].productId.product_name,
       sortable: true,
     },
-    ,
     {
       name: "Tổng tiền",
       selector: (row) =>
@@ -211,31 +225,16 @@ const CustomerDetail = () => {
                   <div>
                     <img src={require("../../assets/placeholder.png")} />
                     <p>Địa chỉ : </p>
-                    <div
-                      className="detail_gender"
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "start",
-                      }}
-                    >
-                      {customer?.information?.address.map((item, index) => {
-                        return (
-                          <div key={index}>
-                            <p
-                              style={{
-                                color: "#000",
-                                textDecoration: "none",
-                                margin: "0",
-                              }}
-                            >
-                              + {item.customAddress}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
                   </div>
+                  <DataTable
+                    columns={columAdress}
+                    className="my-box"
+                    data={address}
+                    responsive
+                    highlightOnHover
+                    customStyles={customHeader}
+                    striped
+                  />
                   <div
                     style={{
                       marginTop: "15px",
