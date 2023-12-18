@@ -35,7 +35,7 @@ const CustomerDetail = () => {
         .then((res) => {
           setCustomer(res.data.message.user);
           setResponse(res);
-          setOrder(res.data.message.order);
+          setOrder(res.data.message?.order);
           console.log(res.data.message?.user);
           console.log(res.data.message.order);
         })

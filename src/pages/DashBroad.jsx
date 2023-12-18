@@ -13,6 +13,7 @@ const DashBroad = () => {
   const [product, setProduct] = useState();
   const [store, setStore] = useState();
   const [bill, setBill] = useState();
+  const [discount, setDiscount] = useState();
   const [chartData, setChartData] = useState([]);
 
   const [year, setYear] = useState(2023);
@@ -41,6 +42,7 @@ const DashBroad = () => {
         setCustomers(response.data.message.countUsers);
         setStore(response.data.message.countShops);
         setProduct(response.data.message.countProducts);
+        setDiscount(response.data.message.countDiscount);
         //
         setProducts(response.data.message.topProductSold);
 
@@ -48,7 +50,7 @@ const DashBroad = () => {
         const data = [
           ["Element", "Density", { role: "style" }],
           [
-            "Đơn hàng",
+            "Danh mục",
             response.data.message.mergedData[year].ordertCount,
             "green",
           ],
@@ -67,16 +69,26 @@ const DashBroad = () => {
             response.data.message.mergedData[year].userCount,
             "color: purple",
           ],
+          [
+            "Hóa đơn",
+            response.data.message.mergedData[year].orderCount,
+            "color: blue",
+          ],
+          [
+            "Mã giảm giá",
+            response.data.message.mergedData[year].discountCount,
+            "color: orange",
+          ],
         ];
         setChartData(data);
         //
 
         const rawData = {
           "Chưa xác nhận": response.data.message.orderPendingByMonth,
-          "Đã hủy": response.data.message.orderCancelledByMonth,
           "Đã xác nhận": response.data.message.orderConfirmedByMonth,
-          "Đã nhận": response.data.message.orderDeliveredByMonth,
           "Đang giao": response.data.message.orderShippedByMonth,
+          "Đã nhận": response.data.message.orderDeliveredByMonth,
+          "Đã hủy": response.data.message.orderCancelledByMonth,
         };
         const header = ["Tháng"];
         const months = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -135,8 +147,14 @@ const DashBroad = () => {
     {
       background: "#D2B48C",
       icon: "assets/bill.png",
-      title: "Hóa đơn",
+      title: "Đơn hàng",
       statistical: bill,
+    },
+    {
+      background: "#F3DDB3",
+      icon: "assets/discount.png",
+      title: "Giảm giá",
+      statistical: discount,
     },
   ];
 
@@ -281,14 +299,15 @@ const DashBroad = () => {
               ></Chart>
             </div>
           </div>
-          <div style={{ padding: "20px 10px" }}>
+          <div
+            style={{ padding: "20px 10px", width: "98%", borderRadius: "8px" }}
+          >
             <Chart
               chartType="Line"
               style={{
                 border: "1px solid #ddd",
                 width: "100%",
                 height: "400px",
-                borderRadius: "8px",
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
               data={orderByMonth}

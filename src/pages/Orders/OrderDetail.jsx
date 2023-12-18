@@ -31,8 +31,7 @@ const OrderDetail = () => {
       .then((res) => {
         setResponse(res);
         setorders(res.data.message.getTradeing[0]);
-        console.log(res.data.message.getTradeing[0].productInfo[0]);
-        console.log(res);
+        console.log(res.data.message.getTradeing[0]);
       });
   };
   useEffect(() => {
@@ -225,13 +224,13 @@ const OrderDetail = () => {
           <div className="box pay">
             <p>THANH TOÁN </p>
             <div>
-              Phương thức thanh toán : <label htmlFor="">Paypal</label>
+              Phương thức thanh toán : <label>{orders.order_payment}</label>
             </div>
             <div>
               Giá tiền :{" "}
               <label htmlFor="" style={{ color: "red" }}>
                 {" "}
-                {orders.order_checkout.totalCheckout.toLocaleString("vi-VN", {
+                {orders.order_checkout.totalPrice.toLocaleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}
@@ -266,7 +265,7 @@ const OrderDetail = () => {
                 htmlFor=""
                 style={{ color: "orange", fontWeight: "500", fontSize: "20px" }}
               >
-                {orders.order_checkout.totalPrice.toLocaleString("vi-VN", {
+                {orders.order_checkout.totalCheckout.toLocaleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}
