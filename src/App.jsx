@@ -19,6 +19,7 @@ import Private from "./components/private/index.jsx";
 import ShopDetail from "./pages/Shops/ShopDetail.jsx";
 import OrderDetail from "./pages/Orders/OrderDetail.jsx";
 import CustomerDetail from "./pages/Customers/CustomerDetail.jsx";
+import GoToTop from "./components/go_to_top.jsx";
 function App() {
   return (
     <Router>
@@ -136,6 +137,7 @@ function App() {
           }
         />
       </Routes>
+      <GoToTop />
     </Router>
   );
 }

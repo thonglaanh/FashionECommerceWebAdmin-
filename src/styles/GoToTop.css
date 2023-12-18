@@ -1,0 +1,43 @@
+/* scroll-up-animation.css */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.scrollUpButton {
+  position: fixed;
+  right: 30px;
+  bottom: 80px;
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+  border: 2px solid #777777;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  animation: scrollUp 0.5s ease-in-out both;
+  display: none;
+}
+
+.scrollUpButton.show {
+  display: block;
+}
+
+@media (max-width: 1023px) {
+  .scrollUpButton {
+    width: 15px;
+    height: 15px;
+    bottom: 20px;
+    right: 15px;
+  }
+}
