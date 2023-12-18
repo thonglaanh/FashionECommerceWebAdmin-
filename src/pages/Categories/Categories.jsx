@@ -252,7 +252,12 @@ const Categories = () => {
       selector: (row) => (
         <div>
           <a
-            style={{ color: "green", cursor: "pointer", fontSize: "14px" }}
+            style={{
+              color: "green",
+              cursor: "pointer",
+              fontSize: "14px",
+              textDecoration: "underline",
+            }}
             onClick={() => {
               setOpenModalUpdate(true);
               setSelected(row);
@@ -266,6 +271,7 @@ const Categories = () => {
               cursor: "pointer",
               marginLeft: "15px",
               fontSize: "14px",
+              textDecoration: "underline",
             }}
             onClick={() => {
               setOpenModalDelete(true);

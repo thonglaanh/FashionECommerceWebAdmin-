@@ -208,6 +208,9 @@ const Event = () => {
       selector: (row) => (
         <a
           className="view-detail"
+          style={{
+            textDecoration: "underline",
+          }}
           onClick={() => {
             showModal();
             setSelected(row);
@@ -261,6 +264,7 @@ const Event = () => {
             onOk={handleOk}
             onCancel={handleCancel}
             style={{ textAlign: "center" }}
+            okButtonProps={{ style: { display: "none" } }}
             bodyStyle={{
               textAlign: "left",
               marginTop: "20px",

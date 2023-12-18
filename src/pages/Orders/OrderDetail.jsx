@@ -95,6 +95,22 @@ const OrderDetail = () => {
       },
     },
   };
+  const statusText = (status) => {
+    switch (status) {
+      case "pending":
+        return "Chưa xác nhận";
+      case "confirmed":
+        return "Đã xác nhận";
+      case "shipped":
+        return "Đang giao";
+      case "cancelled":
+        return "Đã hủy";
+      case "delivered":
+        return "Đã nhận";
+      default:
+        return "Không xác định";
+    }
+  };
   return (
     <div>
       {response ? (
@@ -144,7 +160,7 @@ const OrderDetail = () => {
                     margin: "20px",
                   }}
                 >
-                  Trạng thái đơn hàng : {orders.order_status}
+                  Trạng thái đơn hàng : {statusText(orders.order_status)}
                 </div>
               </div>
             </div>

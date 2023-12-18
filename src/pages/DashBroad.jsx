@@ -247,7 +247,7 @@ const DashBroad = () => {
                 customStyles={customHeader}
               />
             </div>
-            f
+
             <div className="bar-chart">
               <div
                 style={{
