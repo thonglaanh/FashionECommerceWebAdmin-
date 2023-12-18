@@ -1,15 +1,16 @@
-import React from "react";
-import "../styles/SideBar.css";
-import { useNavigate, NavLink } from "react-router-dom";
-
-import { useState } from "react";
+import React, { useState } from "react";
+import { Layout, Modal } from "antd";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import config from "../config";
-import { Modal, Layout } from "antd";
+import "../styles/SideBar.css";
 
-const { Footer } = Layout;
+const { Header, Footer } = Layout;
+
 const SideBar = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const menuItem = [
     {
       path: "/dashbroads",
@@ -47,16 +48,21 @@ const SideBar = ({ children }) => {
       icon: "assets/order-delivery.png",
     },
   ];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     handlerLogout();
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   const handlerLogout = async () => {
     try {
       const userId = localStorage.getItem("userId");
@@ -86,6 +92,8 @@ const SideBar = ({ children }) => {
       console.log(error);
     }
   };
+  const activeItem = menuItem.find((item) => item.path === location.pathname);
+  const pageTitle = activeItem ? activeItem.name : "Chi tiết";
   return (
     <div className="main-container-sidebar">
       <div className="sidebar-container">
@@ -112,36 +120,89 @@ const SideBar = ({ children }) => {
             <div className="sidebar-label">{item.name}</div>
           </NavLink>
         ))}
-        <div className="sidebar-account">
-          <img
-            className="avatar"
-            src={require("../assets/software-engineer.png")}
-          />
-          <div>
-            <p className="sidebar-account-name">Nguyễn Hữu Thông</p>
-            <p className="sidebar-account-email">Admin1</p>
-          </div>
-          <img
-            src={require("../assets/exit.png")}
-            className="icon__logout"
-            onClick={() => showModal()}
-          />
-        </div>
       </div>
       <div style={{ flexDirection: "column" }}>
-        <main>{children}</main>
-        {/* <Footer
+        <Header
           style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
+            width: "100%",
+            display: "flex",
+            height: "70px",
+            zIndex: 1,
+            backgroundColor: "white",
+            justifyContent: "space-between",
+            alignItems: "center",
+            // position: "fixed",
+            // left: "0",
+            // right: "0",
+          }}
+        >
+          <p
+            style={{
+              color: "black",
+              fontSize: "28px",
+              padding: "0px",
+              margin: "0px",
+            }}
+          >
+            {pageTitle}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              zIndex: 1,
+              justifyContent: "right",
+              alignItems: "center",
+            }}
+          >
+            <img
+              className="avatar"
+              src={require("../assets/Avatar.jpg")}
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "cover",
+                borderRadius: "50%",
+                marginRight: "15px",
+              }}
+            />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <p
+                style={{
+                  margin: "0px",
+                  color: "#777777",
+                  height: "20px",
+                  fontSize: "12px",
+                }}
+              >
+                Admin
+              </p>
+              <p
+                style={{
+                  margin: "0px",
+                  color: "black",
+                  height: "65px",
+                  fontSize: "13px",
+                }}
+              >
+                Nguyễn Hữu Thông
+              </p>
+            </div>
+            <img
+              src={require("../assets/logout.png")}
+              onClick={() => showModal()}
+              style={{ width: "35px", height: "35px", marginLeft: "20px" }}
+            />
+          </div>
+        </Header>
+        <main>{children}</main>
+        <Footer
+          style={{
             textAlign: "center",
             backgroundColor: "white",
           }}
         >
           TrustyBuy Admin ©2023 Created by Group 5
-        </Footer> */}
+        </Footer>
       </div>
     </div>
   );

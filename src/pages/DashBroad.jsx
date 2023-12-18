@@ -204,8 +204,7 @@ const DashBroad = () => {
     <div>
       {response ? (
         <div>
-          <p className="title-home">Trang chủ</p>
-          <div className="statistical">
+          <div className="statistical" style={{ marginTop: "10px" }}>
             <p className="title-block">Tổng quan</p>
             <div className="item-statistical">
               {itemStatistical.map((item, index) => (
@@ -233,7 +232,7 @@ const DashBroad = () => {
                 columns={columns}
                 data={products}
                 responsive
-                paginationPerPage={5}
+                paginationPerPage={10}
                 highlightOnHover
                 customStyles={customHeader}
               />

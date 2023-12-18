@@ -180,15 +180,12 @@ const OrderScreen = () => {
     <div>
       {response ? (
         <div className="selling">
-          <p className="title_page" style={{ marginBottom: "10px" }}>
-            Order
-          </p>
           <DataTable
             columns={columns}
             data={filteredOrders}
             pagination
             responsive
-            paginationPerPage={9}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped

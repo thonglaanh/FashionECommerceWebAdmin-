@@ -258,7 +258,6 @@ const Event = () => {
             open={openModal}
             onCancel={() => setOpenModal(false)}
           />
-          <p className="title_page">Giảm giá</p>
           <Modal
             title="Thông tin giảm giá"
             open={isModalOpen}

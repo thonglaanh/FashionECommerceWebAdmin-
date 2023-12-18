@@ -144,9 +144,6 @@ const Shops = () => {
       {response ? (
         <>
           {" "}
-          <div style={{ marginBottom: "10px" }}>
-            <p className="title_page">Cửa hàng</p>
-          </div>
           <Modal
             title="Thông tin cửa hàng"
             open={isModalOpen}
@@ -174,7 +171,7 @@ const Shops = () => {
             data={filteredShop}
             pagination
             responsive
-            paginationPerPage={6}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped

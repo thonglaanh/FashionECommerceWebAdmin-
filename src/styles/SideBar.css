@@ -7,7 +7,7 @@ main {
 .main-container-sidebar {
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  background-color: #001529;
 }
 .content-container {
   display: flex;
@@ -18,7 +18,7 @@ main {
 .sidebar-container {
   width: 20%;
   height: 100vh;
-  background-color: #fff;
+  background-color: #001529;
 }
 
 .sidebar-logo {
@@ -35,7 +35,7 @@ main {
   margin-bottom: 20px;
   text-decoration: none;
   height: 40px;
-  color: black;
+  color: white;
 }
 
 .sidebar-label {
@@ -45,6 +45,7 @@ main {
 .sidebar-icon img {
   width: 30px;
   height: 30px;
+  filter: brightness(0) invert(1);
 }
 
 .active {
@@ -100,7 +101,4 @@ main {
   height: 14%;
   margin: 7% 0 0 -10px;
   cursor: pointer;
-}
-.title_page {
-  font-size: 28px;
 }

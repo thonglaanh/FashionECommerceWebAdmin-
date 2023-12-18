@@ -339,7 +339,7 @@ const ShopDetail = () => {
             data={orderShop}
             pagination
             responsive
-            paginationPerPage={8}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped
@@ -351,7 +351,7 @@ const ShopDetail = () => {
             data={statistical}
             responsive
             pagination
-            paginationPerPage={8}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
           />

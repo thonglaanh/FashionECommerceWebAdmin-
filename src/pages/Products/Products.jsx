@@ -156,15 +156,12 @@ const Products = () => {
     <div>
       {response ? (
         <div className="selling">
-          <div style={{ marginBottom: "10px" }}>
-            <p className="title_page">Sản phẩm</p>
-          </div>
           <DataTable
             columns={columns}
             data={filteredProducts}
             pagination
             responsive
-            paginationPerPage={6}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped

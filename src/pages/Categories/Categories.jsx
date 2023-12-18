@@ -452,16 +452,12 @@ const Categories = () => {
             selected={selected}
           />
 
-          <div style={{ marginBottom: "10px" }}>
-            <p className="title_page">Danh mục</p>
-          </div>
-
           <DataTable
             columns={columns}
             data={filteredCategories}
             pagination
             responsive
-            paginationPerPage={6}
+            paginationPerPage={10}
             highlightOnHover
             customStyles={customHeader}
             striped
