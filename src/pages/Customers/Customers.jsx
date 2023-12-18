@@ -95,16 +95,13 @@ const Customers = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-      },
-    },
-    rows: {
-      style: {
-        borderBottom: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -130,6 +127,7 @@ const Customers = () => {
           <DataTable
             columns={columns}
             data={filteredCustomer}
+            className="my-box"
             pagination
             responsive
             paginationPerPage={10}

@@ -140,8 +140,15 @@
 }
 
 .bar-chart {
-  width: 50%;
+  width: 45%;
   margin: 10px;
+}
+/* CSS Style */
+.my-box {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .title-dashbroad {

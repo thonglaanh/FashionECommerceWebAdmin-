@@ -140,9 +140,7 @@ const UpdateCategoryModal = ({
             <input
               type="file"
               onChange={(event) => {
-                // Update the modalThumb state with the selected file
                 setModalThumb(URL.createObjectURL(event.target.files[0]));
-                // Update the parent component's state (setThumb)
                 setThumb(event.target.files[0]);
               }}
               style={{ display: "none" }}
@@ -288,18 +286,13 @@ const Categories = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-        minWidth: "50px",
-        border: "1px solid #ddd",
-      },
-    },
-    rows: {
-      style: {
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -455,9 +448,10 @@ const Categories = () => {
           <DataTable
             columns={columns}
             data={filteredCategories}
+            className="my-box"
             pagination
             responsive
-            paginationPerPage={10}
+            paginationPerPage={7}
             highlightOnHover
             customStyles={customHeader}
             striped

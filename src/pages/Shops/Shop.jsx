@@ -113,17 +113,13 @@ const Shops = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-        border: "1px solid #ddd",
-      },
-    },
-    rows: {
-      style: {
-        borderBottom: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -176,6 +172,7 @@ const Shops = () => {
             customStyles={customHeader}
             striped
             subHeader
+            className="my-box"
             subHeaderComponent={
               <div
                 style={{

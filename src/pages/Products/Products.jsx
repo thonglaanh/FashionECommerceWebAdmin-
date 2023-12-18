@@ -119,13 +119,13 @@ const Products = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
-
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -161,10 +161,11 @@ const Products = () => {
             data={filteredProducts}
             pagination
             responsive
-            paginationPerPage={10}
+            paginationPerPage={7}
             highlightOnHover
             customStyles={customHeader}
             striped
+            className="my-box"
             subHeader
             style={{
               border: "1px solid red",

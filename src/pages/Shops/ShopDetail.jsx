@@ -193,11 +193,13 @@ const ShopDetail = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -341,6 +343,7 @@ const ShopDetail = () => {
             responsive
             paginationPerPage={10}
             highlightOnHover
+            className="my-box"
             customStyles={customHeader}
             striped
           />
@@ -353,6 +356,7 @@ const ShopDetail = () => {
             pagination
             paginationPerPage={10}
             highlightOnHover
+            className="my-box"
             customStyles={customHeader}
           />
         </TabPane>

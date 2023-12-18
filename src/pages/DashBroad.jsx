@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/DashBroad.css";
 import axios from "axios";
 import config from "../config";
-import DataTable from "react-data-table-component";
+import DataTable, { Direction } from "react-data-table-component";
 import { Chart } from "react-google-charts";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Spin } from "antd";
@@ -186,14 +186,17 @@ const DashBroad = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
+
   const options = {
     chart: {
       title: "Thống kê hóa đơn theo tháng",
@@ -208,7 +211,14 @@ const DashBroad = () => {
             <p className="title-block">Tổng quan</p>
             <div className="item-statistical">
               {itemStatistical.map((item, index) => (
-                <div className="contaner-statistical">
+                <div
+                  className="contaner-statistical"
+                  style={{
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
                   <div
                     className="statistical-icon"
                     style={{ backgroundColor: `${item.background}` }}
@@ -230,14 +240,14 @@ const DashBroad = () => {
               </p>
               <DataTable
                 columns={columns}
+                className="my-box"
                 data={products}
                 responsive
-                paginationPerPage={10}
                 highlightOnHover
                 customStyles={customHeader}
               />
             </div>
-
+            f
             <div className="bar-chart">
               <div
                 style={{
@@ -260,8 +270,13 @@ const DashBroad = () => {
               </div>
               <Chart
                 chartType="ColumnChart"
-                width="100%"
-                height="400px"
+                style={{
+                  border: "1px solid #ddd",
+                  width: "100%",
+                  height: "412px",
+                  borderRadius: "10px",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                }}
                 data={chartData}
               ></Chart>
             </div>
@@ -269,8 +284,13 @@ const DashBroad = () => {
           <div style={{ padding: "20px 10px" }}>
             <Chart
               chartType="Line"
-              width="100%"
-              height="400px"
+              style={{
+                border: "1px solid #ddd",
+                width: "100%",
+                height: "400px",
+                borderRadius: "8px",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
               data={orderByMonth}
               options={options}
             />

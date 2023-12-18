@@ -51,17 +51,13 @@ const CustomerDetail = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-        border: "1px solid #ddd",
-      },
-    },
-    rows: {
-      style: {
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -280,6 +276,7 @@ const CustomerDetail = () => {
           <TabPane tab="Danh sách hóa đơn" key="3">
             <DataTable
               columns={columns}
+              className="my-box"
               data={order}
               pagination
               responsive

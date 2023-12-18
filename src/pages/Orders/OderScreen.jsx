@@ -145,17 +145,13 @@ const OrderScreen = () => {
         fontSize: "14px",
         fontWeight: "bold",
         backgroundColor: "#e0e0e0",
-        border: "1px solid #ddd",
-      },
-    },
-    rows: {
-      style: {
-        border: "1px solid #ddd",
+        borderBottom: "1px solid #777777",
       },
     },
     cells: {
       style: {
-        border: "1px solid #ddd",
+        border: "1px solid #777777",
+        borderTop: "none",
       },
     },
   };
@@ -183,6 +179,7 @@ const OrderScreen = () => {
           <DataTable
             columns={columns}
             data={filteredOrders}
+            className="my-box"
             pagination
             responsive
             paginationPerPage={10}

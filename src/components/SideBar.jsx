@@ -98,7 +98,7 @@ const SideBar = ({ children }) => {
     <div className="main-container-sidebar">
       <div className="sidebar-container">
         <Modal
-          title="Log out"
+          title="Đăng xuất"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
